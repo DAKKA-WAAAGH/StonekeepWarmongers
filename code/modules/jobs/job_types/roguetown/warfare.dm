@@ -13,8 +13,11 @@
 	if(H)
 		var/mob/living/carbon/human/HU = H
 
+		if(istype(HU.client.equippedPerk))
+			HU.client.equippedPerk.apply(H)
+
 		if(aspect_chosen(/datum/round_aspect/squishyhumans))
-			HU.STACON = 6
+			HU.STACON = 3
 			ADD_TRAIT(HU, TRAIT_BRITTLE, TRAIT_GENERIC)
 
 		if(aspect_chosen(/datum/round_aspect/kicking))
