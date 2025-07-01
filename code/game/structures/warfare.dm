@@ -11,7 +11,11 @@
 		if(aspect_chosen(/datum/round_aspect/halo))
 			SEND_SOUND(world, haloalertsound)
 		else
-			SEND_SOUND(world, alertsound)
+			for(var/mob/living/carbon/human/M in GLOB.player_list)
+				if(hasvar(M, "warfare_faction") && M.warfare_faction == BLUE_WARTEAM)
+					SEND_SOUND(M, 'sound/vo/wc/gren/grenzroundstart.ogg')
+				if(hasvar(M, "warfare_faction") && M.warfare_faction == RED_WARTEAM)
+					SEND_SOUND(M, 'sound/vo/wc/felt/heartroundstart.ogg')
 
 // TDM
 
@@ -27,9 +31,19 @@
 	haloalertsound = 'sound/vo/halo/exterminatus.mp3'
 	var/stalemate_kills = 98
 	var/win_kills = 50
+	var/base_player_count = 16
+
+	var/min_win_kills = 10
+	var/max_win_kills = 200
+	var/min_stalemate_kills = 20
+	var/max_stalemate_kills = 400
 
 /obj/structure/warobjective/bloodstatue/Initialize()
 	. = ..()
+	var/player_count = get_active_player_count()
+	win_kills = clamp(round(50 * (player_count / base_player_count)), min_win_kills, max_win_kills)
+	stalemate_kills = clamp(round(98 * (player_count / base_player_count)), min_stalemate_kills, max_stalemate_kills)
+
 	START_PROCESSING(SSprocessing, src)
 	blurb = "Secure [win_kills] kills for your team to win!"
 
@@ -145,6 +159,7 @@
 	haloalertsound = 'sound/vo/halo/ctf.mp3'
 	blurb = "Capture the enemy flag and take it to your PONR!"
 	var/team = BLUE_WARTEAM
+	var/wealreadywon = FALSE
 
 /obj/structure/warobjective/ponr/Initialize()
 	. = ..()
@@ -161,8 +176,9 @@
 	if(ishuman(user))
 		H = user
 	if(H.warfare_faction == team)
-		if(C.crownbearer == H && SSticker.force_ending != TRUE)
+		if(C.crownbearer == H && !wealreadywon)
 			C.do_war_end(H, team)
+			wealreadywon = TRUE
 			if(aspect_chosen(/datum/round_aspect/halo))
 				SEND_SOUND(world, 'sound/vo/halo/flag_cap.mp3')
 		else if(C.crownbearer != H)
@@ -276,9 +292,17 @@
 
 /obj/structure/shopkeep/attack_hand(mob/user)
 	. = ..()
+	if(!ishuman(user))
+		say("FUCK YOU! YOU'RE JUST AN ANIMAL, FIEND!")
+		playsound(src, 'sound/misc/machineno.ogg', 50, FALSE)
+		return
 	if(leaving)
 		to_chat(user, "<span class='warning'>NO! NO! I FORGOT TO GET MY CHANGE! NOOOOOOOOO!</span>")
 		user.playsound_local(src, 'sound/misc/zizo.ogg', 50, FALSE)
+		return
+	if(user.client.equippedPerk.type != /datum/warperk)
+		say("SORRY! YOU ARE ALREADY EMPOWERED!")
+		playsound(src, 'sound/misc/machinetalk.ogg', 50, FALSE)
 		return
 	playsound(src, 'sound/misc/keyboard_enter.ogg', 100, FALSE, -1)
 
@@ -297,5 +321,6 @@
 				return
 			user.adjust_triumphs(-WP.cost)
 			user.client.equippedPerk = WP
+			user.client.equippedPerk.apply(user)
 			say("THANK YOU FOR SHOPPING WITH US TODAE!")
 			playsound(src, 'sound/misc/machinetalk.ogg', 50, FALSE)

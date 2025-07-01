@@ -135,8 +135,10 @@
 							shoutbubble()
 						else
 							emote("painscream")
-							if(client.hasPerk(/datum/warperk/madness))
+							if(client?.hasPerk(/datum/warperk/madness))
 								reagents.add_reagent(/datum/reagent/medicine/healthpot, 15)
+								playsound_local(get_turf(src), 'sound/misc/notice.ogg')
+								to_chat(src, "<span class='info'>ᛉ PERK ACTIVATED.</span>")
 						Jitter(10)
 						stuttering += 5
 					else

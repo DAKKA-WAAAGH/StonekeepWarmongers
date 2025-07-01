@@ -219,7 +219,7 @@
 				sleep(10)
 				C.mob.playsound_local(C.mob, 'sound/vo/halo/blowmeaway.mp3', 100, FALSE)
 			else
-				C.mob.playsound_local(C.mob, 'sound/music/rainingdownofathousandsouls.ogg', 100, FALSE)
+				C.mob.playsound_local(C.mob, 'sound/blank.ogg', 100, FALSE)
 		if(isliving(C.mob) && C.ckey)
 			key_list += C.ckey
 //	if(key_list.len)
@@ -297,10 +297,7 @@
 
 	CHECK_TICK
 	SSdbcore.SetRoundEnd()
-	//Collects persistence features
-	if(mode.allow_persistence_save)
-		SSpersistence.CollectData()
-
+	
 	//stop collecting feedback during grifftime
 	SSblackbox.Seal()
 
@@ -385,11 +382,12 @@
 /datum/controller/subsystem/ticker/proc/stats_report()
 	var/list/shit = list()
 	shit += "<br><span class='bold'>Δ--------------------Δ</span><br>"
-	shit += "<br><font color='#d4ff00'><span class='bold'>Weapons Shot:</span></font> [musketsshot]"
+	shit += "<br><font color='#d4ff00'><span class='bold'>Weapons Shot:</span></font> [muskshots]"
 	shit += "<br><font color='#680000'><span class='bold'>Heartfelt Deaths:</span></font> [heartfelt_deaths]"
 	shit += "<br><font color='#001a68'><span class='bold'>Grenzelhoft Deaths:</span></font> [grenzelhoft_deaths]"
 	shit += "<br><font color='#000000'><span class='bold'>Total Deaths:</span></font> [deaths]"
 	shit += "<br><font color='#af2323'><span class='bold'>Blood spilt:</span></font> [round(blood_lost / 100, 1)]L"
+	shit += "<br><font color='#af2323'><span class='bold'>Teeth lost:</span></font> [lostteeth]"
 //	if(cuckers.len)
 //		shit += "<br><font color='#4e488a'><span class='bold'>Adulterers:</span></font> "
 //		for(var/x in cuckers.len)
