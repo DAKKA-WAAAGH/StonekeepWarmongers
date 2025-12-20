@@ -18,6 +18,10 @@
 	M.adjustOxyLoss(-10)
 	M.blood_volume += 25
 
+	for(var/O in M.internal_organs)
+		var/obj/item/organ/organ = O
+		organ.setOrganDamage(0)
+
 	..()
 	. = 1
 

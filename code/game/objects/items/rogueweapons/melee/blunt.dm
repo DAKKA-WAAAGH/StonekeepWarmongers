@@ -389,109 +389,35 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-//...............Kaizoku Content................
-/obj/item/rogueweapon/mace/goden/otsuchi
-	force = 10
-	force_wielded = 25
-	possible_item_intents = list(/datum/intent/mace/strike)
-	gripped_intents = list(/datum/intent/mace/heavy/strike, /datum/intent/mace/heavy/smash)
-	name = "otsuchi"
-	desc = "A wooden greathammer of Abyssariad make, heavy enough to give any warrior pause. Often used by Yamabushi warriors."
-	icon_state = "otsuchi"
-	icon = 'icons/roguetown/weapons/64.dmi'
-	sharpness = IS_BLUNT
-	wlength = WLENGTH_GREAT
-	w_class = WEIGHT_CLASS_BULKY
-	slot_flags = ITEM_SLOT_BACK
-	associated_skill = /datum/skill/combat/axesmaces
-	smeltresult = /obj/item/ash
-	swingsound = BLUNTWOOSH_HUGE
-	max_integrity = 250
-	minstr = 10
-	wdefense = 3
-	pixel_y = -16
-	pixel_x = -16
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
-	bigboy = TRUE
-	gripsprite = TRUE
+//.................Warmongers...............
 
-/obj/item/rogueweapon/mace/goden/kanabo
-	name = "kanabo"
-	desc = "A heavy two handed club, reinforced with an iron sleeve. Most commonly seen in the hands of Onis and Yamabushis."
-	icon_state = "kanabo"
-	possible_item_intents = list(/datum/intent/mace/heavy/strike)
-	gripped_intents = list(/datum/intent/mace/heavy/smash) //Can't spear people, but can make them bleed due to spikes.
-	sharpness = IS_SHARP
-	icon = 'icons/roguetown/weapons/64.dmi'
-	parrysound = "parrywood"
-	swingsound = BLUNTWOOSH_MED
-	pixel_y = -16
-	pixel_x = -16
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
-	bigboy = TRUE
-	gripsprite = TRUE
-	slowdown = 1
-
-/obj/item/rogueweapon/mace/goden/steel/tetsubo
-	name = "tetsubo"
-	desc = "A heavier variant of the kanabo, fitted with a steel sleeve bearing menacing spikes and favored by Ogrun Warlords. Requires immense strength to use, but hits like a raging bull."
-	icon_state = "tetsubo"
-	possible_item_intents = list(/datum/intent/mace/heavy/strike)
-	gripped_intents = list(/datum/intent/mace/heavy/smash) //Can't spear people, but can make them bleed due to spikes.
-	sharpness = IS_SHARP
-	icon = 'icons/roguetown/weapons/64.dmi'
-	pixel_y = -16
-	pixel_x = -16
-	inhand_x_dimension = 64
-	inhand_y_dimension = 64
-
-/obj/item/rogueweapon/mace/ararebo
-	name = "ararebo"
-	icon = 'icons/roguetown/weapons/32.dmi'
-	icon_state = "ararebo"
-	desc = "A large, iron-capped club used by Abyssariads as a armor-breaking tool. Most suitable to breach Grezenholftean cuirass while still holding a shield in the off-hand."
-
-/obj/item/rogueweapon/mace/ararebo/obsidian
-	name = "obsidian club"
-	icon_state = "obsidian_club"
-	desc = "A large, wooden club with sharp flakes of obsidian embedded into it. Its appearance is similar to a flanged mace, but it inflicts deep cuts."
-	max_integrity = 150
-	wlength = WLENGTH_SHORT
-	w_class = WEIGHT_CLASS_NORMAL
-	sharpness = IS_SHARP
-	wbalance = -1
-	minstr = 0
-	wdefense = 3
-
-/obj/item/rogueweapon/mace/steel/ararebo
-	name = "steel ararebo"
-	icon = 'icons/roguetown/weapons/32.dmi'
-	icon_state = "sararebo"
-	desc = "A large, steel-capped club used by Abyssariads as a armor-breaking tool. Most suitable to breach Grezenholftean cuirass while still holding a shield in the off-hand."
-
-/obj/item/rogueweapon/mace/cudgel/rungu
+/obj/item/rogueweapon/mace/cudgel/war
 	force = 15
 	force_wielded = 20
-	name = "rungu club"
-	desc = "A more well defined, chiseled and ashed wooden club that can be throw at enemies. Used by Undine warriors."
-	icon_state = "rungu"
-	icon = 'icons/roguetown/weapons/32.dmi'
+	name = "masher"
+	icon_state = "masher"
+	desc = "A stick with a leather grip and a spiked head, good for mashing up brains."
+	gripped_intents = null
+	smeltresult = /obj/item/ash
+	wlength = WLENGTH_SHORT
+	w_class = WEIGHT_CLASS_NORMAL
+	max_integrity = 180
 	wbalance = 0
-	wdefense = 1
+	minstr = 0
+	wdefense = 3
+
+/obj/item/rogueweapon/mace/cudgel/pick
+	force = 20
+	force_wielded = 25
+	name = "pick"
+	icon_state = "pick"
+	desc = "An unwieldy warpick, designed to penetrate armor."
+	possible_item_intents = list(/datum/intent/dagger/thrust/pick)
+	gripped_intents = list(/datum/intent/mace/strike, /datum/intent/mace/smash, /datum/intent/dagger/thrust/pick)
+	smeltresult = /obj/item/ash
 	wlength = WLENGTH_NORMAL
 	w_class = WEIGHT_CLASS_NORMAL
-	max_integrity = 150
-	possible_item_intents = list(/datum/intent/mace/strike/wood)
-	gripped_intents = list(/datum/intent/mace/strike/wood, /datum/intent/mace/smash/wood)
-	smeltresult = /obj/item/ash
+	max_integrity = 180
+	wbalance = 0
 	minstr = 0
-	throwforce = 25
-
-/obj/item/rogueweapon/mace/cudgel/jitte
-	name = "jitte"
-	desc = "An abyssariad Ashigaru guard weapon. The hook along the shaft allows the club to arrest a blade that has been parried, increasing the defensive utility of a otherwise simple baton."
-	icon = 'icons/roguetown/weapons/32.dmi'
-	icon_state = "jitte"
-	wdefense = 4
+	wdefense = 3

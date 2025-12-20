@@ -32,13 +32,13 @@
 	if(stat == DEAD)
 		return
 
-	if(mind)
+	if(mind && SSwarmongers.warfare_ready_to_die)
 		SSticker.deaths++
 		switch(warfare_faction)
 			if(RED_WARTEAM)
-				SSticker.heartfelt_deaths++
+				SSticker.unionist_deaths++
 			if(BLUE_WARTEAM)
-				SSticker.grenzelhoft_deaths++
+				SSticker.regime_deaths++
 
 	if(HAS_TRAIT(src, TRAIT_JESTER))
 		if(aspect_chosen(/datum/round_aspect/halo))
@@ -54,27 +54,36 @@
 			var/turf/turfa = get_ranged_target_turf(src, turn(dir, 180), 2)
 			W.obj_break()
 			throw_at(turfa, 4, 1, null, TRUE)
+	if(istype(get_step(src, turn(dir, 180)), /turf/open/transparent/openspace))
+		var/turf/turfa = get_ranged_target_turf(src, turn(dir, 180), 1)
+		throw_at(turfa, 4, 1, null, TRUE)
+
+	for(var/obj/item/clothing/head/roguetown/warmongers/WC in src)
+		to_chat(world, "<span class='info'>\The [WC] has been dropped.</span>")
+		doUnEquip(WC, FALSE, get_turf(src))
 
 	var/obj/item/IT = get_item_by_slot(ITEM_SLOT_BACK_L)
 	if(istype(IT, /obj/item/rogue/musicpack))
 		var/obj/item/rogue/musicpack/MP = IT
 		MP.soundloop.stop()
 
-	if(istype(SSticker.mode, /datum/game_mode/warfare))
-		var/datum/game_mode/warfare/C = SSticker.mode
-
-		if(C.crownbearer == src)
-			C.crownbearer = null // stupid hack for PONR (ctf) gamemode
-			var/team = RED_WARTEAM
-			if(warfare_faction == RED_WARTEAM)
-				team = BLUE_WARTEAM
-			to_chat(world, "<span class='userdanger'>[uppertext(team)] FLAG DROPPED.</span>")
+	remove_coldbreath()
+	if(istype(SSticker.mode, /datum/game_mode/warmongers))
+		var/datum/game_mode/warmongers/C = SSticker.mode
+		if(istype(C.warmode, /datum/warmode/noreturn))
+			var/datum/warmode/noreturn/NR = C.warmode
+			if(NR.blu_flag == src)
+				NR.blu_flag = null
+				to_chat(world, "<span class='userdanger'>REGIMIAN FLAG DROPPED.</span>")
+			if(NR.red_flag == src)
+				NR.red_flag = null
+				to_chat(world, "<span class='userdanger'>UNIONIST FLAG DROPPED.</span>")
 			if(aspect_chosen(/datum/round_aspect/halo))
 				SEND_SOUND(world, 'sound/vo/halo/flag_drop.mp3')
 
-		if(istype(SSjob.GetJob(job),/datum/job/roguetown/warfare/red/lord))
+		if(istype(SSjob.GetJob(job),/datum/job/roguetown/warmongers/red/lord))
 			testing("Red lord is dead!")
-			for(var/client/X in C.heartfelts)
+			for(var/client/X in C.unionists)
 				var/mob/living/carbon/human/V = X.mob
 				to_chat(V, "<span class='red'>OUR LORD IS DEAD! WE ARE DOOMED! DOOMED!</span>")
 				if(aspect_chosen(/datum/round_aspect/halo))
@@ -82,9 +91,9 @@
 				else
 					V.playsound_local(get_turf(V), 'sound/music/faceoff.ogg', 20, FALSE, pressure_affected = FALSE)
 				V.add_stress(/datum/stressevent/deadlord)
-		if(istype(SSjob.GetJob(job),/datum/job/roguetown/warfare/blu/lord))
+		if(istype(SSjob.GetJob(job),/datum/job/roguetown/warmongers/blu/lord))
 			testing("Blue lord is dead!")
-			for(var/client/X in C.grenzels)
+			for(var/client/X in C.regimians)
 				var/mob/living/carbon/human/V = X.mob
 				to_chat(V, "<span class='red'>OUR LORD IS DEAD! WE ARE DOOMED! DOOMED!</span>")
 				if(aspect_chosen(/datum/round_aspect/halo))
@@ -102,13 +111,11 @@
 		for(var/mob/living/carbon/human/HU in viewers(7, src))
 			if(HU != src && !HAS_TRAIT(HU, TRAIT_BLIND))
 				if(!HAS_TRAIT(HU, TRAIT_VILLAIN))
-					if(HU.dna?.species && dna?.species)
-						if(HU.dna.species.id == dna.species.id)
-							HU.add_stress(/datum/stressevent/viewdeath)
+					HU.add_stress(/datum/stressevent/viewdeath)
 				if(client?.hasPerk(/datum/warperk/saint))
 					HU.apply_status_effect(/datum/status_effect/buff/saint)
 					HU.playsound_local(get_turf(HU), 'sound/misc/notice.ogg')
-					to_chat(HU, "<span class='info'>ᛉ A SAINT HAS DIED.</span>")
+					to_chat(HU, "<span class='info'>A SAINT HAS DIED.</span>")
 
 	. = ..()
 
@@ -140,6 +147,7 @@
 		var/mob/dead/observer/rogue/G = ghostize()
 
 		if(G?.client)
+			G << sound(null) // Stop all sounds
 			SSdroning.kill_droning(G.client)
 			SSdroning.kill_loop(G.client)
 			SSdroning.kill_rain(G.client)
@@ -147,7 +155,7 @@
 			if(aspect_chosen(/datum/round_aspect/halo) && prob(45))
 				G.playsound_local(src, 'sound/vo/halo/copedie.mp3', 100)
 			else
-				G.playsound_local(src, 'sound/foley/death.ogg', 100)
+				G.playsound_local(src, 'sound/misc/deth.ogg', 100)
 
 			var/atom/movable/screen/gameover/hog/H = new()
 			var/list/iconstato = list(

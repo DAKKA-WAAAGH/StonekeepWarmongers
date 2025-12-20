@@ -1,5 +1,5 @@
 /obj/effect/sunlight
-	var/brightness = 10
+	var/brightness = 25
 	light_power = 1
 	light_color = "#2f1313"
 	layer = BELOW_MOB_LAYER
@@ -597,6 +597,7 @@
 	base_state = "chand"
 	icon = 'icons/roguetown/misc/tallwide.dmi'
 	density = FALSE
+	max_integrity = 20
 	brightness = 10
 	pixel_x = -10
 	pixel_y = -10

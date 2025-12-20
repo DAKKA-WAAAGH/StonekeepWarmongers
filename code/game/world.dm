@@ -79,12 +79,12 @@ GLOBAL_VAR(restart_counter)
 		fdel(RESTART_COUNTER_PATH)
 
 	if(prob(1))
-		if(prob(1))
-			name = "super pregnancy sex simulator ojh my gawd"
-		else
-			name = "WARMONGRELS"
+		name = "WARMONGRELS"
 	else
-		name = "WARMONGERS"
+		if(prob(20))
+			name = "WARMONGERERS" // thanks runner on discord (runnerr7)
+		else
+			name = "WARMONGERS"
 
 	if(NO_INIT_PARAMETER in params)
 		return
@@ -261,12 +261,11 @@ GLOBAL_VAR(restart_counter)
 //	else
 //	to_chat(world, "<span class='boldannounce'><b><u><a href='byond://winset?command=.reconnect'>CLICK TO RECONNECT</a></u></b></span>")
 
-	var/quote = pick("When you see a rattlesnake poised to bite, you do not wait until he has struck to crush him.", "If the Grenzelhoft invaded the Zed's hell I would make at least a favorable reference to the devil in Royal Council House.", "Isn't it dreadful? Here we are, two officers of the Grenzelhoft general staff discussing how best to murder our commander-in-chief.", "I ask you, do you want total war? If necessary, do you want a war more total and radical than anything we can yet imagine?")
+	var/quote = pick("It is not enough to win, there are only two outcomes, total victory or total defeat, and a true victory can only ever be a total one.", "Only a commander such as ours could so bravely snatch defeat from the jaws of victory.", "Bury me by the Root, so that it can take my body and feast on whats left.", "The No-Lifers bleed for the state, the Some-lifers lead for the state, and the Full-lifers are the state. Hail KAITZAR.")
 	var/round_end_sound = pick('sound/roundend/mildenjoymentofwar.ogg',
 	'sound/roundend/abattlewon.ogg',
 	'sound/roundend/thatssoldiering.ogg',
 	'sound/roundend/nevermeetagain.ogg',
-	'sound/roundend/thiswarsgonnaend.ogg',
 	'sound/roundend/war.ogg')
 	
 	for(var/client/thing in GLOB.clients)
@@ -315,9 +314,9 @@ GLOBAL_VAR(restart_counter)
 	..()
 
 /world/proc/update_status()
-	var/datum/game_mode/warfare/W = SSticker.mode
+	var/datum/game_mode/warmongers/W = SSticker.mode
 	var/s = ""
-	s += "<center><a href=\"https://discord.gg/stonekeep\">"
+	s += "<center><a href=\"https://discord.gg/KMq9VGEuXx\">"
 	s += "<big><b>WARMONGERS</b></big></a><br>"
 	s += "<b>Fantasy PvP Musket-based Top-down Shooter<b><br>"
 

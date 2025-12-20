@@ -282,7 +282,10 @@
 	immobilize = 1
 	hitsound = 'sound/combat/hits/hi_bolt (2).ogg'
 	embedchance = 100
-	woundclass = BCLASS_STAB
+	obj_flags = CAN_BE_HIT
+	woundclass = BCLASS_BULLET
+	hitscan = TRUE
+	tracer_type = /obj/effect/projectile/tracer/bullet
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 	flag = "bullet"
 	armor_penetration = 75
@@ -296,6 +299,13 @@
 /obj/projectile/bullet/reusable/bullet/iron
 	damage = 65
 	armor_penetration = 90
+
+/obj/projectile/bullet/reusable/bullet/maxim
+	damage = 30
+	armor_penetration = 40
+
+/obj/projectile/bullet/reusable/bullet/maxim/handle_drop()
+	return
 
 /obj/projectile/bullet/fragment
 	name = "fragment"
@@ -318,12 +328,13 @@
 	name = "lead ball"
 	desc = "A round lead shot, simple and spherical."
 	projectile_type = /obj/projectile/bullet/reusable/bullet
+	blade_dulling = DULLING_BASHCHOP
 	caliber = "musketball"
 	icon = 'icons/roguetown/weapons/ammo.dmi'
 	icon_state = "musketball"
 	dropshrink = 0.5
 	possible_item_intents = list(/datum/intent/use)
-	max_integrity = 0
+	max_integrity = 10
 	force = 20
 
 /obj/item/ammo_casing/caseless/rogue/bullet/iron
@@ -332,36 +343,12 @@
 	projectile_type = /obj/projectile/bullet/reusable/bullet/iron
 
 /obj/item/ammo_casing/caseless/rogue/bullet/wood
-	name = "wooden ball"
-	desc = "A small wooden ball. You're the biggest fucking idiot I have ever heard of. But it does shatter when it's fired, so that's something."
+	name = "fragmentation ball"
+	desc = "A small wooden ball. It shatters into multiple pellets when shot."
 	icon_state = "woodenball"
 	pellets = 7
 	variance = 25
 	projectile_type = /obj/projectile/bullet/fragment
-
-/obj/projectile/sanctiflux
-	name = "sanctiflux"
-	desc = "Oh shit."
-	damage = 300
-	damage_type = BURN
-	icon = 'icons/roguetown/items/misc.dmi'
-	icon_state = "gourd"
-	range = 999
-	hitsound = 'sound/combat/hits/hi_bolt (2).ogg'
-	spread = 0
-	woundclass = BCLASS_SMASH
-	impact_effect_type = /obj/effect/temp_visual/impact_effect
-	flag = "bullet"
-	hitscan = FALSE
-	armor_penetration = 100
-	speed = 0.8
-
-/obj/projectile/sanctiflux/on_hit(atom/target,blocked = FALSE)
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
-		M.fire_act(20, 40)
-	explosion(target, light_impact_range = 5, flame_range = 4, smoke = TRUE, soundin = pick('sound/misc/explode/incendiary (1).ogg','sound/misc/explode/incendiary (2).ogg'))
-	..(target, blocked)
 
 /obj/projectile/bullet/reusable/cannonball
 	name = "large lead ball"
@@ -390,18 +377,28 @@
 		var/mob/living/carbon/M = target
 		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
 		M.gib()
-	explosion(get_turf(target), heavy_impact_range = 4, light_impact_range = 6, flame_range = 0, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
+	explosion(get_turf(target), heavy_impact_range = 4, light_impact_range = 6, flame_range = 0, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg','sound/misc/explode/bottlebomb (3).ogg'))
 	..(target, blocked)
 
 /obj/item/ammo_casing/caseless/rogue/cball
 	name = "large lead ball"
 	desc = "A round lead ball. Complex and still spherical."
 	icon = 'icons/roguetown/weapons/ammo.dmi'
+	obj_flags = CAN_BE_HIT
+	blade_dulling = DULLING_BASHCHOP
 	projectile_type = /obj/projectile/bullet/reusable/cannonball
 	icon_state = "cball"
 	caliber = "cannoball"
 	possible_item_intents = list(/datum/intent/use)
-	max_integrity = 100
+	static_debris = list(/obj/item/rogue/maxim_ammo = 2)
+	max_integrity = 30
 	randomspread = 0
 	variance = 0
 	force = 20
+
+/obj/item/rogue/maxim_ammo
+	name = "lead fragments"
+	desc = "Pellets of leaded origin, you count twenty-five. Perhaps they'll be of use somewhere?"
+	icon = 'icons/roguetown/weapons/ammo.dmi'
+	icon_state = "pellets"
+	w_class = WEIGHT_CLASS_TINY

@@ -246,17 +246,17 @@
 					to_chat(M, "<br><span class='alert'>Incoming universal message: [message]</span>")
 					M.playsound_local(M.loc, 'sound/foley/trumpt.ogg', 75)
 		else
-			if(istype(SSticker.mode, /datum/game_mode/warfare))
-				var/datum/game_mode/warfare/C = SSticker.mode
+			if(istype(SSticker.mode, /datum/game_mode/warmongers))
+				var/datum/game_mode/warmongers/C = SSticker.mode
 				if(!ishuman(user))
 					return
 				var/mob/living/carbon/human/H = user
 				var/team
 				switch(H.warfare_faction)
 					if(BLUE_WARTEAM)
-						team = C.grenzels
+						team = C.regimians
 					if(RED_WARTEAM)
-						team = C.heartfelts
+						team = C.unionists
 				for(var/mob/M in team)
 					if(M.can_hear())
 						to_chat(M, "<br><span class='alert'>Incoming team message: [message]</span>")

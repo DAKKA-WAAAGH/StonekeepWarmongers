@@ -410,7 +410,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("string/rt/Lore_Primer.txt"))
 		if(W.get_team(ckey))
 			if(W.get_team(ckey) != job.faction)
 				return JOB_UNAVAILABLE_GENERIC
-	if(istype(SSticker.mode, /datum/game_mode/warfare))
+	if(istype(SSticker.mode, /datum/game_mode/warmongers))
 		if(client.warfare_faction)
 			if(client.warfare_faction != job.warfare_faction)
 				return JOB_UNAVAILABLE_WRONGTEAM
@@ -425,6 +425,8 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("string/rt/Lore_Primer.txt"))
 	if(SSticker.late_join_disabled)
 		alert(src, "Something went bad.")
 		return FALSE
+
+	SEND_SOUND(src, sound('sound/misc/deploy.ogg', volume=45))
 /*
 	var/arrivals_docked = TRUE
 	if(SSshuttle.arrivals)
@@ -577,9 +579,9 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("string/rt/Lore_Primer.txt"))
 			var/cat_name = ""
 			switch (SSjob.name_occupations[category[1]].department_flag)
 				if (REDSS)
-					cat_name = "Heartfelts"
+					cat_name = "THE PEASANT UNION"
 				if (BLUES)
-					cat_name = "Grenzelhofts"
+					cat_name = "THE HOLY REGIME"
 				if (PEASANTS)
 					cat_name = "Filth"
 
@@ -622,7 +624,7 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("string/rt/Lore_Primer.txt"))
 				dat += "</td><td valign='top'>"
 	dat += "</td></tr></table></center>"
 	dat += "</div></div>"
-	playsound_local(get_turf(src), 'sound/misc/keyboard_enter.ogg', 100, FALSE, -1)
+	playsound_local(get_turf(src), 'sound/misc/type2.ogg', 100, FALSE, -1)
 	var/datum/browser/popup = new(src, "latechoices", "Which side will you fight for?", 295, 620)
 	popup.add_stylesheet("playeroptions", 'html/browser/playeroptions.css')
 	popup.set_content(jointext(dat, ""))
@@ -666,6 +668,17 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("string/rt/Lore_Primer.txt"))
 		transfer_character()
 	GLOB.chosen_names += H.real_name
 
+	var/datum/warperk/WP = H.client.prefs.warperk
+	if(WP)
+		if(H.get_triumphs() < WP.cost)
+			to_chat(H, "<span class='warning'>I haven't TRIUMPHED enough.</span>")
+			H.client.equippedPerk = new /datum/warperk
+			return
+		if(!H.client.haspaid)
+			H.adjust_triumphs(-WP.cost)
+			H.client.haspaid = TRUE
+		H.client.equippedPerk = WP
+		H.client.equippedPerk.apply(H)
 
 /mob/proc/after_creation()
 	return

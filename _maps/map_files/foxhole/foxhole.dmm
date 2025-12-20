@@ -1,133 +1,170 @@
+"aw" = (/obj/effect/shadow{dir = 8},/obj/structure/warfarebarrier,/turf/closed/mineral/rogue/bedrock,/area/rogue/outdoors)
+"aB" = (/obj/effect/shadow,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
 "aG" = (/obj/structure/table/wood/plain,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
+"bA" = (/obj/effect/shadow,/obj/structure/fermenting_barrel/waterwine,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
 "cp" = (/obj/machinery/light/rogue/firebowl/stump,/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
+"cs" = (/obj/effect/shadow{dir = 4},/turf/closed/mineral/rogue/bedrock,/area/rogue/outdoors)
 "cX" = (/obj/machinery/light/rogue/torchholder/c,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
 "dS" = (/obj/item/reagent_containers/glass/bucket/wooden,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
 "dZ" = (/obj/machinery/light/rogue/hearth,/obj/item/cooking/pan,/turf/open/floor/rogue/grass,/area/rogue/outdoors)
-"eR" = (/obj/structure/cannon,/turf/open/floor/rogue/cobble,/area/rogue/outdoors)
-"fG" = (/obj/item/rogueweapon/pick,/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
+"eR" = (/obj/structure/cannon,/turf/open/floor/rogue/cobble,/area/rogue/outdoors{droning_sound = 'sound/music/tunnelrats.ogg'; droning_sound_dusk = 'sound/music/tunnelrats.ogg'; droning_sound_night = 'sound/music/tunnelrats.ogg'; droning_sound_dawn = 'sound/music/tunnelrats.ogg'; droning_sound_current = 'sound/music/tunnelrats.ogg'})
+"fs" = (/obj/machinery/light/rogue/firebowl/stump,/obj/effect/shadow{dir = 1},/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
+"fG" = (/obj/item/rogueweapon/pickwar,/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
+"fN" = (/obj/effect/shadow{dir = 4},/obj/structure/warfarebarrier/red,/turf/closed/mineral/rogue/bedrock,/area/rogue/outdoors)
 "fO" = (/obj/structure/bed/rogue/sleepingbag,/obj/effect/landmark/start/grenzelinfantry{dir = 1},/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
-"hq" = (/turf/open/floor/rogue/cobble,/area/rogue/outdoors)
-"hY" = (/obj/structure/cannon{dir = 1},/turf/open/floor/rogue/cobble,/area/rogue/outdoors)
-"la" = (/obj/machinery/light/rogue/torchholder/r,/turf/open/floor/rogue/cobble,/area/rogue/outdoors)
+"hm" = (/obj/item/rogue/maxim_ammo,/obj/item/rogue/maxim_ammo,/turf/open/floor/rogue/cobble,/area/rogue/outdoors{droning_sound = 'sound/music/tunnelrats.ogg'; droning_sound_dusk = 'sound/music/tunnelrats.ogg'; droning_sound_night = 'sound/music/tunnelrats.ogg'; droning_sound_dawn = 'sound/music/tunnelrats.ogg'; droning_sound_current = 'sound/music/tunnelrats.ogg'})
+"hq" = (/turf/open/floor/rogue/cobble,/area/rogue/outdoors{droning_sound = 'sound/music/tunnelrats.ogg'; droning_sound_dusk = 'sound/music/tunnelrats.ogg'; droning_sound_night = 'sound/music/tunnelrats.ogg'; droning_sound_dawn = 'sound/music/tunnelrats.ogg'; droning_sound_current = 'sound/music/tunnelrats.ogg'})
+"hY" = (/obj/structure/cannon{dir = 1},/turf/open/floor/rogue/cobble,/area/rogue/outdoors{droning_sound = 'sound/music/tunnelrats.ogg'; droning_sound_dusk = 'sound/music/tunnelrats.ogg'; droning_sound_night = 'sound/music/tunnelrats.ogg'; droning_sound_dawn = 'sound/music/tunnelrats.ogg'; droning_sound_current = 'sound/music/tunnelrats.ogg'})
+"kY" = (/obj/effect/shadow{dir = 1},/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
+"la" = (/obj/machinery/light/rogue/torchholder/r,/turf/open/floor/rogue/cobble,/area/rogue/outdoors{droning_sound = 'sound/music/tunnelrats.ogg'; droning_sound_dusk = 'sound/music/tunnelrats.ogg'; droning_sound_night = 'sound/music/tunnelrats.ogg'; droning_sound_dawn = 'sound/music/tunnelrats.ogg'; droning_sound_current = 'sound/music/tunnelrats.ogg'})
 "mF" = (/obj/structure/roguemachine/musicbox,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
+"nC" = (/obj/structure/closet/crate/chest,/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/obj/effect/shadow{dir = 1},/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
+"op" = (/turf/closed/wall/mineral/rogue/wooddark,/area/rogue/outdoors{droning_sound = 'sound/music/tunnelrats.ogg'; droning_sound_dusk = 'sound/music/tunnelrats.ogg'; droning_sound_night = 'sound/music/tunnelrats.ogg'; droning_sound_dawn = 'sound/music/tunnelrats.ogg'; droning_sound_current = 'sound/music/tunnelrats.ogg'})
 "ou" = (/turf/open/floor/rogue/grass,/area/rogue/outdoors)
+"qJ" = (/obj/effect/shadow,/turf/open/floor/rogue/grass,/area/rogue/outdoors)
 "rv" = (/obj/effect/landmark/start/heartfeltinfantry,/obj/structure/bed/rogue/sleepingbag,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
 "sa" = (/obj/effect/landmark/events/haunts,/turf/open/floor/rogue/grass,/area/rogue/outdoors)
 "so" = (/obj/structure/table/wood{icon_state = "tablewood1"},/obj/item/rogueweapon/tongs,/obj/item/rogueweapon/hammer,/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
-"sv" = (/obj/item/rogueweapon/pick,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
-"sF" = (/obj/item/rogueweapon/pick,/turf/open/floor/rogue/grass,/area/rogue/outdoors)
+"sv" = (/obj/item/rogueweapon/pickwar,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
+"sF" = (/obj/item/rogueweapon/pickwar,/turf/open/floor/rogue/grass,/area/rogue/outdoors)
 "sK" = (/obj/structure/closet/crate/chest,/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/obj/item/reagent_containers/food/snacks/rogue/crackerscooked,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
 "tx" = (/obj/machinery/light/rogue/forge,/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
 "tz" = (/obj/effect/landmark/events/haunts,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
+"tA" = (/obj/effect/shadow,/obj/effect/shadow{dir = 8},/turf/closed/mineral/rogue/bedrock,/area/rogue/outdoors)
 "uv" = (/obj/effect/landmark/events/haunts,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
 "uH" = (/obj/structure/table/wood/plain,/obj/item/reagent_containers/glass/bucket/wooden,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
 "vm" = (/obj/effect/landmark/redreinforcement,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
 "vv" = (/obj/structure/warfarebarrier,/turf/closed/mineral/random/rogue/high,/area/rogue/outdoors)
 "vH" = (/obj/effect/landmark/start/grenzellord{dir = 1},/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
-"vR" = (/obj/structure/closet/crate/chest,/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel,/obj/item/ingot/steel,/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
+"vR" = (/obj/structure/closet/crate/chest,/obj/item/ingot/iron,/obj/item/ingot/iron,/obj/item/ingot/iron,/obj/item/ingot/iron,/obj/item/ingot/iron,/obj/item/ingot/iron,/obj/item/ingot/iron,/obj/item/ingot/iron,/obj/item/ingot/iron,/obj/item/ingot/iron,/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
+"xV" = (/obj/effect/landmark/start/heartfeltinfantry,/obj/structure/bed/rogue/sleepingbag,/obj/effect/shadow{dir = 1},/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
+"zi" = (/obj/structure/table/wood/plain,/obj/item/reagent_containers/glass/bucket/wooden,/obj/effect/shadow,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
+"zy" = (/obj/effect/shadow{dir = 4},/obj/structure/warfarebarrier,/turf/closed/mineral/rogue/bedrock,/area/rogue/outdoors)
+"zD" = (/obj/structure/maxim/alt{dir = 1},/turf/open/floor/rogue/cobble,/area/rogue/outdoors{droning_sound = 'sound/music/tunnelrats.ogg'; droning_sound_dusk = 'sound/music/tunnelrats.ogg'; droning_sound_night = 'sound/music/tunnelrats.ogg'; droning_sound_dawn = 'sound/music/tunnelrats.ogg'; droning_sound_current = 'sound/music/tunnelrats.ogg'})
+"zH" = (/obj/item/rogue/maxim_ammo,/turf/open/floor/rogue/cobble,/area/rogue/outdoors{droning_sound = 'sound/music/tunnelrats.ogg'; droning_sound_dusk = 'sound/music/tunnelrats.ogg'; droning_sound_night = 'sound/music/tunnelrats.ogg'; droning_sound_dawn = 'sound/music/tunnelrats.ogg'; droning_sound_current = 'sound/music/tunnelrats.ogg'})
+"Ab" = (/obj/structure/bed/rogue/sleepingbag,/obj/effect/landmark/start/grenzelinfantry{dir = 1},/obj/effect/shadow,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
 "AM" = (/turf/closed/mineral/random/rogue/high,/area/rogue/outdoors)
+"Bu" = (/obj/machinery/light/rogue/firebowl/stump,/obj/effect/shadow,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
 "Bz" = (/obj/machinery/light/rogue/firebowl/stump,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
 "BL" = (/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
 "Cb" = (/obj/structure/closet/crate/chest,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/obj/item/flashlight/flare/torch/lantern,/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
+"Cu" = (/obj/structure/maxim,/turf/open/floor/rogue/cobble,/area/rogue/outdoors{droning_sound = 'sound/music/tunnelrats.ogg'; droning_sound_dusk = 'sound/music/tunnelrats.ogg'; droning_sound_night = 'sound/music/tunnelrats.ogg'; droning_sound_dawn = 'sound/music/tunnelrats.ogg'; droning_sound_current = 'sound/music/tunnelrats.ogg'})
+"DS" = (/obj/effect/shadow{dir = 4},/turf/closed/mineral/rogue/bedrock,/area/rogue/outdoors{droning_sound = 'sound/music/tunnelrats.ogg'; droning_sound_dusk = 'sound/music/tunnelrats.ogg'; droning_sound_night = 'sound/music/tunnelrats.ogg'; droning_sound_dawn = 'sound/music/tunnelrats.ogg'; droning_sound_current = 'sound/music/tunnelrats.ogg'})
 "Eh" = (/obj/structure/fluff/grindwheel,/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
+"EF" = (/obj/effect/shadow{dir = 1},/turf/closed/mineral/rogue/bedrock,/area/rogue/outdoors)
 "Fs" = (/obj/machinery/light/rogue/hearth,/obj/item/cooking/pan,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
 "FA" = (/obj/effect/landmark/blureinforcement,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
 "FT" = (/obj/structure/fermenting_barrel/beer,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
-"GK" = (/obj/structure/fermenting_barrel/beer,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
-"Hk" = (/obj/item/rogueweapon/pick,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
+"GK" = (/obj/structure/fermenting_barrel/waterwine,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
+"GY" = (/turf/closed/mineral/random/rogue/high,/area/rogue/outdoors{droning_sound = 'sound/music/tunnelrats.ogg'; droning_sound_dusk = 'sound/music/tunnelrats.ogg'; droning_sound_night = 'sound/music/tunnelrats.ogg'; droning_sound_dawn = 'sound/music/tunnelrats.ogg'; droning_sound_current = 'sound/music/tunnelrats.ogg'})
+"Hg" = (/obj/effect/shadow{dir = 8},/turf/closed/mineral/rogue/bedrock,/area/rogue/outdoors{droning_sound = 'sound/music/tunnelrats.ogg'; droning_sound_dusk = 'sound/music/tunnelrats.ogg'; droning_sound_night = 'sound/music/tunnelrats.ogg'; droning_sound_dawn = 'sound/music/tunnelrats.ogg'; droning_sound_current = 'sound/music/tunnelrats.ogg'})
+"Hk" = (/obj/item/rogueweapon/pickwar,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
 "Hl" = (/obj/machinery/light/rogue/firebowl/stump,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
-"Ho" = (/obj/machinery/light/rogue/firebowl/stump,/obj/item/rogueweapon/pick,/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
+"Ho" = (/obj/machinery/light/rogue/firebowl/stump,/obj/item/rogueweapon/pickwar,/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
 "Hs" = (/obj/machinery/light/rogue/torchholder/r,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
+"Hw" = (/mob/living/simple_animal/pet/rootchilde,/turf/open/floor/rogue/grass,/area/rogue/outdoors)
 "HP" = (/obj/effect/landmark/start/heartfeltlord,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
-"ID" = (/turf/open/lava,/area/rogue/outdoors)
+"ID" = (/turf/open/lava,/area/rogue/outdoors{droning_sound = 'sound/music/tunnelrats.ogg'; droning_sound_dusk = 'sound/music/tunnelrats.ogg'; droning_sound_night = 'sound/music/tunnelrats.ogg'; droning_sound_dawn = 'sound/music/tunnelrats.ogg'; droning_sound_current = 'sound/music/tunnelrats.ogg'})
 "IZ" = (/obj/structure/roguemachine/musicbox,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
 "Jl" = (/obj/effect/landmark/start/heartfeltinfantry,/obj/structure/bed/rogue/sleepingbag,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
 "JG" = (/obj/structure/table/wood/plain,/obj/item/reagent_containers/glass/bucket/wooden,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
 "JS" = (/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
 "Ke" = (/obj/structure/closet/crate/chest,/obj/item/reagent_containers/food/snacks/rogue/meat/steak,/obj/item/reagent_containers/food/snacks/rogue/meat/steak,/obj/item/reagent_containers/food/snacks/rogue/meat/steak,/obj/item/reagent_containers/food/snacks/rogue/meat/steak,/obj/item/reagent_containers/food/snacks/rogue/meat/steak,/obj/item/reagent_containers/food/snacks/rogue/meat/steak,/obj/item/reagent_containers/food/snacks/rogue/meat/steak,/obj/item/reagent_containers/food/snacks/rogue/meat/steak,/obj/item/reagent_containers/food/snacks/rogue/meat/steak,/obj/item/reagent_containers/food/snacks/rogue/meat/steak,/turf/open/floor/rogue/grass,/area/rogue/outdoors)
-"Le" = (/obj/structure/table/wood/plain,/obj/item/rogueweapon/pick,/obj/item/rogueweapon/pick,/obj/item/rogueweapon/pick,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
+"KQ" = (/obj/effect/shadow,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
+"Le" = (/obj/structure/table/wood/plain,/obj/item/rogueweapon/pickwar,/obj/item/rogueweapon/pickwar,/obj/item/rogueweapon/pickwar,/obj/effect/shadow,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
 "LB" = (/obj/machinery/light/rogue/torchholder/c,/obj/structure/fermenting_barrel/beer,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
 "LC" = (/obj/structure/bed/rogue/sleepingbag,/obj/effect/landmark/start/grenzelinfantry{dir = 1},/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
 "Ma" = (/obj/item/roguebin/water/gross,/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
 "Nl" = (/obj/item/grown/log/tree/small,/obj/item/grown/log/tree/small,/obj/item/grown/log/tree/small,/obj/item/grown/log/tree/small,/obj/item/grown/log/tree/small,/obj/item/grown/log/tree/small,/obj/item/grown/log/tree/small,/obj/item/grown/log/tree/small,/obj/item/grown/log/tree/small,/obj/item/grown/log/tree/small,/obj/item/grown/log/tree/small,/obj/structure/closet/crate/chest,/turf/open/floor/rogue/grass,/area/rogue/outdoors)
-"NZ" = (/obj/effect/decal/remains/human,/obj/effect/landmark/observer_start,/turf/open/floor/rogue/cobble,/area/rogue/outdoors)
+"NZ" = (/obj/effect/decal/remains/human,/obj/effect/landmark/observer_start,/turf/open/floor/rogue/cobble,/area/rogue/outdoors{droning_sound = 'sound/music/tunnelrats.ogg'; droning_sound_dusk = 'sound/music/tunnelrats.ogg'; droning_sound_night = 'sound/music/tunnelrats.ogg'; droning_sound_dawn = 'sound/music/tunnelrats.ogg'; droning_sound_current = 'sound/music/tunnelrats.ogg'})
 "Oi" = (/obj/machinery/light/rogue/torchholder/l,/turf/open/floor/rogue/grass,/area/rogue/outdoors)
 "OI" = (/obj/machinery/light/rogue/torchholder/r,/turf/open/floor/rogue/grass,/area/rogue/outdoors)
-"Qv" = (/obj/effect/landmark/events/haunts,/turf/open/floor/rogue/cobble,/area/rogue/outdoors)
+"OW" = (/obj/effect/shadow{dir = 1},/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
+"Qa" = (/obj/effect/shadow{dir = 8},/turf/closed/mineral/rogue/bedrock,/area/rogue/outdoors)
+"Qv" = (/obj/effect/landmark/events/haunts,/turf/open/floor/rogue/cobble,/area/rogue/outdoors{droning_sound = 'sound/music/tunnelrats.ogg'; droning_sound_dusk = 'sound/music/tunnelrats.ogg'; droning_sound_night = 'sound/music/tunnelrats.ogg'; droning_sound_dawn = 'sound/music/tunnelrats.ogg'; droning_sound_current = 'sound/music/tunnelrats.ogg'})
 "QH" = (/obj/structure/warfarebarrier/red,/turf/closed/mineral/random/rogue/high,/area/rogue/outdoors)
+"Rx" = (/obj/effect/shadow{dir = 1},/obj/effect/shadow{dir = 4},/turf/closed/mineral/rogue/bedrock,/area/rogue/outdoors)
 "So" = (/obj/structure/warobjective/ponr,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
-"SH" = (/obj/structure/closet/crate/chest,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/turf/open/floor/rogue/cobble,/area/rogue/outdoors)
+"Sq" = (/obj/effect/shadow{dir = 8},/obj/structure/warfarebarrier/red,/turf/closed/mineral/rogue/bedrock,/area/rogue/outdoors)
+"SH" = (/obj/structure/closet/crate/chest,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/obj/item/ammo_casing/caseless/rogue/cball,/turf/open/floor/rogue/cobble,/area/rogue/outdoors{droning_sound = 'sound/music/tunnelrats.ogg'; droning_sound_dusk = 'sound/music/tunnelrats.ogg'; droning_sound_night = 'sound/music/tunnelrats.ogg'; droning_sound_dawn = 'sound/music/tunnelrats.ogg'; droning_sound_current = 'sound/music/tunnelrats.ogg'})
 "Ty" = (/turf/closed/wall/mineral/rogue/wooddark,/area/rogue/outdoors)
 "Uc" = (/obj/machinery/anvil,/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
 "Vs" = (/obj/structure/warobjective/ponr/red,/turf/open/floor/rogue/dirt,/area/rogue/outdoors)
+"VU" = (/obj/effect/shadow,/obj/effect/shadow{dir = 4},/turf/closed/mineral/rogue/bedrock,/area/rogue/outdoors)
+"Wr" = (/obj/effect/shadow,/turf/closed/mineral/rogue/bedrock,/area/rogue/outdoors)
+"WU" = (/obj/effect/shadow,/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
 "Xm" = (/obj/machinery/light/rogue/torchholder/l,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
+"Xr" = (/obj/structure/bed/rogue/sleepingbag,/obj/effect/landmark/start/grenzelinfantry{dir = 1},/obj/effect/shadow,/turf/open/floor/rogue/dirt/road,/area/rogue/outdoors)
 "Xw" = (/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
+"XB" = (/obj/effect/shadow,/turf/closed/mineral/random/rogue/high,/area/rogue/outdoors)
+"XT" = (/obj/effect/shadow{dir = 1},/obj/effect/shadow{dir = 8},/turf/closed/mineral/rogue/bedrock,/area/rogue/outdoors)
 "Zi" = (/turf/open/water/cleanshallow,/area/rogue/outdoors)
+"Zp" = (/obj/effect/shadow{dir = 1},/turf/open/floor/rogue/cobblerock,/area/rogue/outdoors)
 
 (1,1,1) = {"
-AMAMAMAMAMAMAMAMAMAMAMcpXwJSJSBLJlBLBLJlBLBLBLJlBLBLBLBLBLJlBLBLsKcpAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMXwXwsvouBLHlKeBLsvBLBLBLBLBLBLBLBLJlBLBLBLouJSHkXwAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMXwXwouJSTyTyXmJSBLououJlBLJlsvBLBLBLsvBLrvJSJSXwXwAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMXwouZiTyTyJGsvBLIZBLJSBLBLBLBLJSuvBLBLNlJSXwAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMXwJSJSZiFTLBNlrvJSBLBLousFBLJSdZJSaGBzBLBLJSXwXwAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMXwBzJSJSZiBLBLouBLBLBLJSvmBLJSouHsTyTyZiZiBLXwXwcpAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMtxJSouJSuHFTJSsaBLBLBLHPJSdZouJSTyTyJSZiousvAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMUcJSFTJSJSsKJSouJSsvBLJSXwXwXwXwKeJSJSJSououAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMXwHkJSXwXwHoXwJSVsJSJSfGXwouBzJSXwJSouJSfGXwAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMMaEhvRsoXwAMAMXwBLJScpXwXwAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMfGAMAMAMXwfGAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMCbAMAMAMAMfGAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-QHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQH
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDIDAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDAMAMIDIDIDIDAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDAMIDIDAMIDIDIDIDIDAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDIDIDIDIDIDIDIDIDIDIDAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDIDIDIDQvIDIDIDQvIDAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDAMIDIDIDIDIDIDIDIDIDIDIDAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDIDIDIDIDIDhYhqhYIDIDIDIDAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDIDIDIDSHhqNZlaTyIDIDIDIDAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDIDIDIDIDhqhqhqIDIDIDIDIDAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDIDIDIDIDIDeRhqeRIDQvIDIDIDIDAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDQvIDIDQvIDIDIDIDQvIDIDIDIDAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDIDIDIDIDIDIDQvIDIDIDIDIDIDIDIDAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDIDIDIDIDIDIDIDIDIDAMAMIDIDIDIDAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDIDIDIDAMAMAMAMIDIDAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDIDAMAMAMAMAMAMAMAMIDIDIDIDAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDIDAMAMAMAMAMAMAMAMAMAMAMIDIDIDAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDIDAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMIDAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMCbAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMMaEhvRsoAMAMAMAMAMAMAMAMXwAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMUcXwXwXwXwXwXwAMAMAMAMAMfGXwAMAMAMAMAMAMAMAMAMAMAMXwAMAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMtxXwXwXwBLBLNlouAMAMAMXwBLXwfGXwAMAMAMAMAMAMAMAMAMXwXwXwXwAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMXwXwBLBLsKTyTyOiBLJSBLBLSoBLBLBLJSsKJSBzBLBLsvBLBLBLXwXwXwAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMXwBLBLBLouBLTyTyououBzJSBLJSFABLOITyTyJSBLBLZiBLouBLBLAMXwAMAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMXwBLououBLouBLuvcXJSHkJSJSmFJSvHJSHkTyTyJSBLZiZiBLBLBLBLAMAMAMAMAMAMAMAMAMAMAM
-AMAMAMAMXwXwXwBLBLououBLBLKeFsJSJSJSJSJSJSdSJSJSNlcXJSHlBLJSdSfOJSBLXwXwAMAMAMAMAMAMAMAMAM
-AMAMAMAMXwXwXwXwBLZiZiBLFsBLouKeJSJSHkJSJSJSJSJSJSHkJSJStzJSJSJSJSBLXwXwXwAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMXwXwBLZiHlJSFTJSJSJSfOJSJSJSJSLCBLBLLCBLfOJSJSfOJSsvBLXwXwXwAMAMAMAMAMAMAMAM
-AMAMAMAMAMXwXwXwXwBLBLGKJSHkJSFTJSBLBLBLfOHkJSBLouououBLBLBLBLBLLCBLAMXwXwAMAMAMAMAMAMAMAM
-AMAMAMAMAMAMAMAMAMBLBLBLGKuHBLLeGKLCBLfOJSJSfOJSJSfOououBLLCBLBLouHlAMXwAMAMAMAMAMAMAMAMAM
+XTEFEFEFEFEFEFEFEFEFEFfsZpkYkYOWxVOWOWxVOWOWOWxVOWOWOWOWOWxVOWOWnCfsEFEFEFEFEFEFEFEFEFEFRx
+QaAMAMAMAMAMAMAMAMAMXwXwsvouBLHlKeBLsvBLBLBLBLBLBLBLBLJlBLBLBLouJSHkXwAMAMAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMAMAMAMAMAMXwXwouJSTyTyXmJSBLououJlBLJlsvBLBLBLsvBLrvJSJSXwXwAMAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMAMAMAMAMAMAMXwouZiTyTyJGsvBLIZBLJSBLBLBLBLJSuvBLBLNlJSXwAMAMAMAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMAMAMAMAMAMXwJSJSZiFTLBNlrvJSBLBLHwsFBLJSdZJSaGBzBLBLJSXwXwAMAMAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMAMAMAMAMAMXwBzJSJSZiBLBLouBLBLBLJSvmBLJSouHsTyTyZiZiBLXwXwcpAMAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMAMAMAMAMAMAMtxJSouJSuHFTJSsaBLBLBLHPJSdZouJSTyTyJSZiousvAMAMAMAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMAMAMAMAMAMAMUcJSFTJSJSsKJSouJSsvBLJSXwXwXwXwKeJSJSJSououAMAMAMAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMAMAMAMAMAMAMAMXwHkJSXwXwHoXwJSVsJSJSfGXwouBzJSXwJSouJSfGXwAMAMAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMAMAMAMAMAMAMAMMaEhvRsoXwAMAMXwBLJScpXwXwAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMfGAMAMAMXwfGAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMCbAMAMAMAMfGAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMcs
+SqQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHQHfN
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYIDGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYIDIDGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYIDGYGYIDIDIDIDGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYIDGYIDIDGYIDIDIDIDIDGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYIDIDIDIDIDIDIDIDIDIDIDGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYIDIDIDIDQvIDIDIDQvIDGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYhqzDGYGYGYGYGYGYGYIDGYIDIDIDIDIDIDIDIDIDIDIDGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYhqGYhqhqhqhqhqGYGYGYGYGYIDIDIDIDIDIDhYhqhYIDIDIDIDGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYhqhqQvhqhqzHhqGYGYGYGYGYGYIDIDIDIDSHhqNZlaopIDIDIDIDGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYhqzHzHzHQvhqhqGYGYGYGYGYIDIDIDIDIDhqhqhqIDIDIDIDIDGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYzHhmhmzHQvhqGYGYGYGYIDIDIDIDIDIDeRhqeRIDQvIDIDIDIDGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYhqzHzHzHzHzHGYGYGYGYGYIDQvIDIDQvIDIDIDIDQvIDIDIDIDGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYhqhqhqGYGYGYGYGYGYIDIDIDIDIDIDIDQvIDIDIDIDIDIDIDIDGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYCuGYGYGYGYGYGYGYGYIDIDIDIDIDIDIDIDIDIDGYGYIDIDIDIDGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYIDIDIDIDGYGYGYGYIDIDGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYIDIDGYGYGYGYGYGYGYGYIDIDIDIDGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYIDIDGYGYGYGYGYGYGYGYGYGYGYIDIDIDGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYIDIDGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYIDGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYIDGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+HgGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYGYDS
+awvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvzy
+QaAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMCbAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMAMAMMaEhvRsoAMAMAMAMAMAMAMAMXwAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMAMUcXwXwXwXwXwXwAMAMAMAMAMfGXwAMAMAMAMAMAMAMAMAMAMAMXwAMAMAMAMAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMAMtxXwXwXwBLBLNlouAMAMAMXwBLXwfGXwAMAMAMAMAMAMAMAMAMXwXwXwXwAMAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMAMAMXwXwBLBLsKTyTyOiBLJSBLBLSoBLBLBLJSsKJSBzBLBLsvBLBLBLXwXwXwAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMAMXwBLBLBLouGKTyTyououBzJSBLJSFABLOITyTyJSBLBLZiBLouBLBLAMXwAMAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMXwBLououBLouBLuvcXJSHkJSJSmFJSvHJSHkTyTyJSBLZiZiBLBLBLBLAMAMAMAMAMAMAMAMAMAMcs
+QaAMAMAMXwXwXwBLBLououBLBLKeFsJSJSJSJSJSJSdSJSJSNlcXJSHlBLJSdSfOJSBLXwXwAMAMAMAMAMAMAMAMcs
+QaAMAMAMXwXwXwXwBLZiZiGKFsGKouKeJSJSHkJSJSJSJSJSJSHkJSJStzJSJSJSJSBLXwXwXwAMAMAMAMAMAMAMcs
+QaAMAMAMAMAMAMXwXwBLZiHlJSJSJSJSJSfOJSJSJSJSLCBLBLLCBLfOJSJSfOJSsvBLXwXwXwAMAMAMAMAMAMAMcs
+QaAMAMAMAMXwXwXwXwBLBLBLJSHkJSJSJSBLBLBLfOHkJSBLouououBLBLBLBLBLLCBLAMXwXwAMAMAMAMAMAMAMcs
+tAWrWrWrWrWrWrWrWraBaBaBbAziaBLebAAbaBXrKQKQXrKQKQXrqJqJaBAbaBaBqJBuXBWUWrWrWrWrWrWrWrWrVU
 "}

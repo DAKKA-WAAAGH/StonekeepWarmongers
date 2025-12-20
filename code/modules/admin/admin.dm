@@ -588,12 +588,20 @@
 	if(confirm == "Cancel")
 		return
 	if(confirm == "Yes")
-		SSticker.force_ending = 1
+		var/winner = alert("Who's the winner?", "End Round", "Regime", "Unionists", "Stalemate")
+		var/datum/game_mode/warmongers/W = SSticker.mode
+		if(istype(W))
+			switch(winner)
+				if("Regime")
+					W.do_war_end(null, BLUE_WARTEAM)
+				if("Unionists")
+					W.do_war_end(null, RED_WARTEAM)
+				if("Stalemate")
+					W.do_war_end()
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "End Round") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
-
 /datum/admins/proc/announce()
-	set category = "Special Verbs"
+	set category = "Specials"
 	set name = "Announce"
 	set desc="Announce your desires to the world"
 	if(!check_rights(0))
@@ -608,7 +616,7 @@
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Announce") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /datum/admins/proc/set_admin_notice()
-	set category = "Special Verbs"
+	set category = "Specials"
 	set name = "Set Admin Notice"
 	set desc ="Set an announcement that appears to everyone who joins the server. Only lasts this round"
 	if(!check_rights(0))
@@ -673,8 +681,8 @@
 	set category = "Server"
 	set desc="Start the round RIGHT NOW"
 	set name="Ready2Die Now"
-	if(!SSticker.warfare_ready_to_die)
-		SSticker.ReadyToDie()
+	if(!SSwarmongers.warfare_ready_to_die)
+		SSwarmongers.ReadyToDie()
 		log_admin("[usr.key] has started the game.")
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Ready2Die Now") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return 1
@@ -687,29 +695,29 @@
 	set category = "GameMaster"
 	set name = "One Team Mode"
 
-	if(SSticker.oneteammode)
-		SSticker.oneteammode = FALSE
+	if(SSwarmongers.oneteammode)
+		SSwarmongers.oneteammode = FALSE
 		to_chat(usr, "off")
 	else
-		SSticker.oneteammode = TRUE
+		SSwarmongers.oneteammode = TRUE
 		to_chat(usr, "on")
 
 /datum/admins/proc/settechlevel()
 	set category = "GameMaster"
 	set name = "Set Techlevel"
 
-	if(SSticker.warfare_techlevel)
+	if(SSwarmongers.warfare_techlevel)
 		var/inss = input(usr, "Choose tech level (1 MUSKETS, 2 REPEATERS, 3 NO GUNS, 4 AUTOMATIC HOLY SHIT)", "WARMONGERS", "1") as anything in list("1","2","3","4")
 		if(inss)
 			switch(inss)
 				if("1")
-					SSticker.warfare_techlevel = WARMONGERS_TECHLEVEL_FLINTLOCKS
+					SSwarmongers.warfare_techlevel = WARMONGERS_TECHLEVEL_FLINTLOCKS
 				if("2")		
-					SSticker.warfare_techlevel = WARMONGERS_TECHLEVEL_COWBOY
+					SSwarmongers.warfare_techlevel = WARMONGERS_TECHLEVEL_COWBOY
 				if("3")
-					SSticker.warfare_techlevel = WARMONGERS_TECHLEVEL_NONE
+					SSwarmongers.warfare_techlevel = WARMONGERS_TECHLEVEL_NONE
 				if("4")
-					SSticker.warfare_techlevel = WARMONGERS_TECHLEVEL_AUTO
+					SSwarmongers.warfare_techlevel = WARMONGERS_TECHLEVEL_AUTO
 			SSblackbox.record_feedback("tally", "admin_verb", 1, "SetTechLevel") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 			log_admin("[usr.key] has set the tech level to [inss]")
 			return 1
@@ -720,9 +728,9 @@
 	set category = "Server"
 	set desc="Start the round RIGHT NOW"
 	set name="Reinforcements Now"
-	var/datum/game_mode/warfare/W = SSticker.mode
+	var/datum/game_mode/warmongers/W = SSticker.mode
 	if(!(W.reinforcementwave >= 5))
-		SSticker.SendReinforcements()
+		SSwarmongers.SendSupplies()
 		log_admin("[usr.key] has sent reinforcements")
 		SSblackbox.record_feedback("tally", "admin_verb", 1, "Reinforcements Now") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 		return 1
@@ -734,7 +742,7 @@
 /datum/admins/proc/readoutlords()
 	set category = "Debug"
 	set name = "Readout Lords/Crowns"
-	var/datum/game_mode/warfare/W = SSticker.mode
+	var/datum/game_mode/warmongers/W = SSticker.mode
 
 	if(W.blucrown)
 		to_chat(usr, "blu crown found [W.blucrown.loc]")
@@ -759,7 +767,7 @@
 /datum/admins/proc/recallcrown()
 	set category = "Debug"
 	set name = "Recall Crown"
-	var/datum/game_mode/warfare/W = SSticker.mode
+	var/datum/game_mode/warmongers/W = SSticker.mode
 
 	var/pick = input(usr, "Which crown do you recall?", "WARMONGERS") as null|anything in list("Red","Blue")
 
@@ -771,7 +779,7 @@
 			if(!W.redcrown)
 				to_chat(usr, "No red crown!")
 				return
-			var/obj/item/clothing/head/roguetown/crownred/CR = W.redcrown
+			var/obj/item/clothing/head/roguetown/warmongers/crownred/CR = W.redcrown
 			if(ishuman(CR.loc))
 				var/mob/living/carbon/human/H = CR.loc
 				H.dropItemToGround(CR, TRUE)
@@ -783,7 +791,7 @@
 			if(!W.blucrown)
 				to_chat(usr, "No blu crown!")
 				return
-			var/obj/item/clothing/head/roguetown/crownblu/CB = W.blucrown
+			var/obj/item/clothing/head/roguetown/warmongers/crownblu/CB = W.blucrown
 			to_chat(usr, "[CB.loc]")
 			if(ishuman(CB.loc))
 				var/mob/living/carbon/human/H = CB.loc
@@ -793,13 +801,12 @@
 				CB.forceMove(get_turf(usr))
 				to_chat(usr, "Blue crown moved succesfully.")
 
-	var/obj/effect/telefog/NL = new(get_turf(usr))
-	playsound(NL, 'sound/magic/teleport.ogg', 100, FALSE, -1)
+	new /obj/effect/telefog(get_turf(usr))
 
 /datum/admins/proc/teleport2crown()
 	set category = "Debug"
 	set name = "TP2Crown"
-	var/datum/game_mode/warfare/W = SSticker.mode
+	var/datum/game_mode/warmongers/W = SSticker.mode
 
 	var/pick = input(usr, "Which crown?", "WARMONGERS") as null|anything in list("Red","Blue")
 

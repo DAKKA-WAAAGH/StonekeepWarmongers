@@ -44,7 +44,7 @@
 #define TRAIT_SHOCKIMMUNE "Shock Immunity"
 
 #define TRAIT_BASHDOORS "bashdoors"
-#define TRAIT_NOMOOD "no_mood"
+#define TRAIT_NOMOOD "Moodless"
 #define TRAIT_SIMPLE_WOUNDS "simple_wounds"
 #define TRAIT_BANDITCAMP "banditcamp"
 #define TRAIT_VAMPMANSION "vampiremansion"
@@ -53,6 +53,7 @@
 #define TRAIT_STEELHEARTED "steelhearted" //no bad mood from dismembering or seeing this
 #define TRAIT_IWASREVIVED "iwasrevived" //prevents PQ gain from reviving the same person twice
 #define TRAIT_IWASUNZOMBIFIED "iwasunzombified" //prevents PQ gain from curing a zombie twice
+#define TRAIT_BIGHANDS "Heavy Handed"
 
 GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_WEBWALK = "I can move freely between webs.",
@@ -75,12 +76,15 @@ GLOBAL_LIST_INIT(roguetraits, list(
 	TRAIT_JESTER = "I AM JESTER BLOODED! HONK HONK!!! HAHAHAHAHAAAAAAAAAA!",
 	TRAIT_OFFICER = "I know how to see the battlefield and judge it so I can improve our chances of winning.",
 	TRAIT_SNIPER = "Helmets won't stop that lead ball getting inside your noggin, I'll make sure of that.",
+	TRAIT_BLOODLOSS_IMMUNE = "Some measly loss of blood will not stop me from <span class='warning'>enforcing the will of my empire.</span>",
 	TRAIT_RIVERSWIMMER = "I am one Hell of a swimmer.",
 	TRAIT_NINJA = "I am an elite ninja of Heartfelt.",
+	TRAIT_NOMOOD = "I just can't bother to care anymore.",
 	TRAIT_SOUL_EXAMINE = "<span class='deadsay'>I know when someone's soul has departed.</span>",
 	TRAIT_CYCLOPS_RIGHT = "<span class='warning'>My right eye has been poked out...</span>",
 	TRAIT_LEECHIMMUNE = "Leeches are reluctant to bite me.",
-	TRAIT_RETARD_ANATOMY = "My anatomy is inhumen, preventing me from wearing hats and shoes."
+	TRAIT_RETARD_ANATOMY = "My anatomy is inhumen, preventing me from wearing hats and shoes.",
+	TRAIT_BIGHANDS = "I am unable to use certain weapons, such as Barkweapons."
 	))
 
 // trait accessor defines
@@ -240,7 +244,7 @@ Remember to update _globalvars/traits.dm if you're adding/removing/renaming trai
 #define TRAIT_NOPAIN			"no_pain"
 #define TRAIT_DRUQK				"druqk"
 #define TRAIT_BURIED_COIN_GIVEN "buried_coin_given" // prevents a human corpse from being used for a corpse multiple times
-#define TRAIT_BLOODLOSS_IMMUNE "bloodloss_immune" // can bleed, but will never die from blood loss
+#define TRAIT_BLOODLOSS_IMMUNE "Perpetual" // can bleed, but will never die from blood loss
 #define TRAIT_ROTMAN "rotman" //you are a rotman and need occasional maintenance
 #define TRAIT_ZOMBIE_IMMUNE "zombie_immune" //immune to zombie infection
 #define TRAIT_NO_BITE "no_bite" //prevents biting

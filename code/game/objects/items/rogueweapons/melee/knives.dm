@@ -284,35 +284,21 @@
 	wdefense = 3
 	smeltresult = /obj/item/ingot/copper
 
-//........Kaizoku Content.......
+//..............................Warmongers.......................
 
-/obj/item/rogueweapon/huntingknife/kunai //Practically a villager knife with more utility. It helps others to climb walls.
-	name = "kunai"
-	desc = "A simple stabbing weapon made of iron which originated as a masonry or gardening tool, useful for climbing walls in similar ways to pitons."
-	icon = 'icons/roguetown/weapons/32.dmi'
-	icon_state = "kunai"
-	force = 8
+/obj/item/rogueweapon/huntingknife/bayonet
+	possible_item_intents = list(/datum/intent/dagger/thrust)
+	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_MOUTH
+	name = "bayonet"
+	desc = "A triangular blade designed to be fixed to a Barkmusket. Can be used on its own in a pinch for cutting underbrush, cooking meat, and stabbing the foe in the throat."
+	force = 12
+	icon_state = "bayonet"
+	smeltresult = null
 
-/obj/item/rogueweapon/huntingknife/idagger/steel/tanto
-	name = "tanto"
-	icon_state = "tanto"
-	icon = 'icons/roguetown/weapons/32.dmi'
-	desc = "Initially a companion blade to the tachi in a zamurai's daisho, the tanto was later replaced by the wakizashi with the shift to infantry tactics after the Bloody Apotheosis."
-
-/obj/item/rogueweapon/huntingknife/idagger/steel/kaiken
-	name = "kaiken"
-	desc = "The weapon laws in colonized Abyssariad islands, with high humen of elven population, forbade non-warriors from carrying blades in public, so abyssariad colonists made weapons such as this."
-	icon_state = "kaiken"
-	icon = 'icons/roguetown/weapons/32.dmi'
-	possible_item_intents = list(/datum/intent/dagger/thrust,/datum/intent/dagger/cut,/datum/intent/dagger/thrust/pick)
-	w_class = WEIGHT_CLASS_TINY
-
-/obj/item/rogueweapon/huntingknife/idagger/sai //I love gundam for helping me on my request on this sai. I love HIM!!!!!!!!!!!!! -Monochrome
-	name = "sai"
-	desc = "Recognizable by its uniqueness and typically carried in pairs, the sai features a sharply-tapered central rod with two prongs at the cross-guards. It lacks blade for cutting, but it excels in jabbing and defending against other weapons."
-	icon = 'icons/roguetown/weapons/32.dmi'
-	icon_state = "sai"
-	possible_item_intents = list(/datum/intent/dagger/thrust,/datum/intent/dagger/thrust/pick)
-	w_class = WEIGHT_CLASS_NORMAL
-	force = 10
-	wdefense = 5
+/obj/item/rogueweapon/huntingknife/idagger/war
+	possible_item_intents = list(/datum/intent/dagger/thrust,/datum/intent/dagger/cut)
+	name = "sapper knife"
+	desc = "A heavy sapper knife for stabbing foes and cutting lumber to size with its serrated edge."
+	force = 15
+	icon_state = "sapperknife"
+	smeltresult = null

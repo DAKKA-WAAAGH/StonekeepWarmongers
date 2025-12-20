@@ -50,8 +50,6 @@ GLOBAL_LIST_INIT(freqtospan, list(
 	var/freqpart = radio_freq ? "\[[get_radio_name(radio_freq)]\] " : ""
 	//Speaker name
 	var/namepart = "[speaker.GetVoice()]"
-	if(speaker.get_alt_name())
-		namepart = "[speaker.get_alt_name()]"
 	var/colorpart = "<span style='text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'>"
 	if(ishuman(speaker))
 		var/mob/living/carbon/human/H = speaker

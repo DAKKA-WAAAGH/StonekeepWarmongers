@@ -9,9 +9,6 @@
 	decay_factor = 5 * STANDARD_ORGAN_DECAY		//designed to fail about 5 minutes after death
 
 	low_threshold_passed = "<span class='info'>Prickles of pain appear then die out from within my chest...</span>"
-	high_threshold_passed = "<span class='warning'>Something inside my chest hurts, and the pain isn't subsiding. You notice myself breathing far faster than before.</span>"
-	now_fixed = "<span class='info'>My heart begins to beat again.</span>"
-	high_threshold_cleared = "<span class='info'>The pain in my chest has died down, and my breathing becomes more relaxed.</span>"
 
 	// Heart attack code is in code/modules/mob/living/carbon/human/life.dm
 	var/beating = 1
@@ -102,6 +99,16 @@
 				"<span class='danger'>I feel a terrible pain in my chest, as if my heart has stopped!</span>")
 		owner.set_heartattack(TRUE)
 		failed = TRUE
+	
+	if(owner && !owner.stat && !(owner.status_flags & GODMODE))
+		var/damaged_frac = clamp(damage / maxHealth, 0.0, 1.0)
+		// damage begins once heart is at least 25% damaged
+		if(damaged_frac > 0.25)
+			var/dmg = round(damaged_frac * 25)
+			if(dmg < 1)
+				dmg = 1
+			owner.adjustOxyLoss(dmg)
+			owner.adjustToxLoss(dmg / 3)
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"

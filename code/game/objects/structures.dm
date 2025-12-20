@@ -9,7 +9,6 @@
 	var/climb_stun = 0
 	var/climb_sound = 'sound/foley/woodclimb.ogg'
 	var/climbable = FALSE
-	var/w_class = WEIGHT_CLASS_NORMAL
 	var/climb_offset = 0 //offset up when climbed
 	var/mob/living/structureclimber
 	var/broken = 0 //similar to machinery's stat BROKEN
@@ -158,8 +157,10 @@
 		var/healthpercent = (obj_integrity/max_integrity) * 100
 		switch(healthpercent)
 			if(50 to 99)
-				return  "It looks slightly damaged."
+				return  "<span class='info'>It looks slightly damaged.</span>"
 			if(25 to 50)
-				return  "It appears heavily damaged."
-			if(1 to 25)
-				return  "<span class='warning'>It's falling apart!</span>"
+				return  "<span class='warning'It appears heavily damaged.</span>"
+			if(2 to 25)
+				return  "<span class='danger'>It's falling apart!</span>"
+			if(1)
+				return  "<span class='userdanger'>It's CLOSE WAY TO FUNDAY!</span>" // What in the actual fuck?

@@ -158,7 +158,7 @@
 
 /obj/item/gun/proc/shoot_live_shot(mob/living/user as mob|obj, pointblank = 0, mob/pbtarget = null, message = 1)
 	if(recoil)
-		shake_camera(user, recoil + 1, recoil)
+		firearm_recoil_camera(user, recoil + 1, recoil, user.dir)
 
 	if(suppressed)
 		playsound(user, suppressed_sound, suppressed_volume, vary_fire_sound, ignore_walls = FALSE)
@@ -219,7 +219,7 @@
 		return
 
 	if(user?.used_intent.arc_check())
-		if(SSticker.warfare_ready_to_die) // Dumb and stupid check for not allowing people to shoot past barriers of fairness.
+		if(SSwarmongers.warfare_ready_to_die) // Dumb and stupid check for not allowing people to shoot past barriers of fairness.
 			target = get_turf(target)
 
 	//Exclude lasertag guns from the TRAIT_CLUMSY check.

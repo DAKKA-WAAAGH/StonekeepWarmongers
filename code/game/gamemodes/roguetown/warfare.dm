@@ -1,7 +1,7 @@
-/datum/game_mode/warfare
-	name = "warmode"
-	config_tag = "warmode"
-	report_type = "warmode"
+/datum/game_mode/warmongers
+	name = "warmongers"
+	config_tag = "warmongers"
+	report_type = "warmongers"
 	false_report_weight = 0
 	required_players = 0
 	required_enemies = 0
@@ -9,90 +9,87 @@
 	enemy_minimum_age = 0
 
 	var/whowon = null // use RED_WARTEAM and BLUE_WARTEAM
-	var/mob/living/carbon/human/crownbearer
-
 	var/reinforcementwave = 1 // max 5
 
 	var/mob/redlord
-	var/obj/item/clothing/head/roguetown/crownred/redcrown
-	var/red_bonus = 2 // reinforcement points
+	var/obj/item/clothing/head/roguetown/warmongers/crownred/redcrown
+	var/red_bonus = 5 // reinforcement points
 
 	var/mob/blulord
-	var/obj/item/clothing/head/roguetown/crownblu/blucrown
-	var/blu_bonus = 2 // reinforcement points
+	var/obj/item/clothing/head/roguetown/warmongers/crownblu/blucrown
+	var/blu_bonus = 5 // reinforcement points
 
-	var/list/heartfelts = list() // clients
-	var/list/grenzels = list()
+	var/list/unionists = list() // clients
+	var/list/regimians = list()
 
-	var/warfare_start_time = 5 // in minutes
+	var/warfare_start_time = 15 // in minutes
 	var/warfare_reinforcement_time = 5 // in minutes
 	
 	var/stalematecooldown // a cooldown before another stalemate can be held
-	
-	var/warmode = null
+	var/forcestartcooldown
+	var/datum/warmode/warmode = null
 
 	announce_span = "danger"
 	announce_text = "The"
 
-/datum/game_mode/warfare/post_setup(report)
+/datum/game_mode/warmongers/post_setup(report)
 	begin_countDown()
+	SSwarmongers.fuckthisshit.setup()
 	return ..()
 
-/datum/game_mode/warfare/proc/award_triumphs()
+/datum/game_mode/warmongers/proc/award_triumphs()
+	if(whowon == null)
+		for(var/client/C in GLOB.clients)
+			C << sound(null) // Stop all sounds
+			SEND_SOUND(C, sound('sound/music/whocareswhowon.ogg', volume=50))
 	if(whowon == BLUE_WARTEAM)
-		for(var/client/C in grenzels)
+		for(var/client/C in regimians)
 			if(ishuman(C.mob))
 				var/mob/living/carbon/human/H = C.mob
-				if(H.client?.equippedPerk.type == /datum/warperk)
+				if(H.client?.equippedPerk.type == /datum/warperk) // extra triumph
 					H.adjust_triumphs(1)
+				H.adjust_triumphs(1)
 				H << sound(null) // Stop all sounds
-				SEND_SOUND(H, 'sound/vo/wc/gren/grenzvictory.ogg')
-				sleep(30)
-				SEND_SOUND(H, 'sound/vo/wc/gren/grenzvictorysong.ogg')
-		for(var/client/C in heartfelts)
+				SEND_SOUND(H, 'sound/music/whocareswhowon.ogg')
+		for(var/client/C in unionists)
 			if(ishuman(C.mob))
 				var/mob/living/carbon/human/H = C.mob
 				H << sound(null) // Stop all sounds
-				SEND_SOUND(H, 'sound/vo/wc/felt/heartdefeat.ogg')
-				sleep(30)
-				SEND_SOUND(H, 'sound/vo/wc/felt/heartdefeatsong.ogg')
+				SEND_SOUND(H, 'sound/music/whocareswhowon.ogg')
 	if(whowon == RED_WARTEAM)
-		for(var/client/C in heartfelts)
+		for(var/client/C in unionists)
 			if(ishuman(C.mob))
 				var/mob/living/carbon/human/H = C.mob
-				if(H.client?.equippedPerk.type == /datum/warperk)
+				if(H.client?.equippedPerk.type == /datum/warperk) // extra triumph
 					H.adjust_triumphs(1)
+				H.adjust_triumphs(1)
 				H << sound(null) // Stop all sounds
-				SEND_SOUND(H, 'sound/vo/wc/felt/heartvictory.ogg')
-				sleep(30)
-				SEND_SOUND(H, 'sound/vo/wc/felt/heartvictorysong.ogg')
-		for(var/client/C in grenzels)
+				SEND_SOUND(H, 'sound/music/whocareswhowon.ogg')
+		for(var/client/C in regimians)
 			if(ishuman(C.mob))
 				var/mob/living/carbon/human/H = C.mob
 				H << sound(null) // Stop all sounds
-				SEND_SOUND(H, 'sound/vo/wc/gren/grenzdefeat.ogg')
-				sleep(30)
-				SEND_SOUND(H, 'sound/vo/wc/gren/grenzdefeatsong.ogg')
+				SEND_SOUND(H, 'sound/music/whocareswhowon.ogg')
 
-/datum/game_mode/warfare/proc/do_war_end(var/mob/living/carbon/human/crownguy = null, var/team = null) // if you call this with zero arguments, its a stalemate.
+/datum/game_mode/warmongers/proc/do_war_end(var/mob/living/carbon/human/crownguy = null, var/team = null) // if you call this with zero arguments, its a stalemate.
 	whowon = team
 	SSticker.force_ending = TRUE
 	if(crownguy)
-		crownbearer = crownguy
-		crownguy.adjust_triumphs(5)
+		warmode.winner = crownguy
+		warmode.winner.adjust_triumphs(5)
 
-/datum/game_mode/warfare/proc/begin_autobalance_loop()
+/datum/game_mode/warmongers/proc/begin_autobalance_loop()
 	set waitfor = 0
 	while(1)
 		CHECK_TICK
-		if(SSticker.oneteammode)
+		if(SSwarmongers.oneteammode)
 			break
 		CHECK_TICK
 		for(var/mob/dead/new_player/P in GLOB.player_list)
 			CHECK_TICK
 			P.autobalance()
 
-/datum/game_mode/warfare/proc/reinforcements()
+/datum/game_mode/warmongers/proc/supplies()
 	set waitfor = 0
 	while(1)
 		CHECK_TICK
@@ -100,14 +97,14 @@
 			break
 		sleep(warfare_reinforcement_time MINUTES)
 		testing("Sending reinforcement loop works")
-		SSticker.SendReinforcements()
+		SSwarmongers.SendSupplies()
 
-/datum/game_mode/warfare/proc/begin_countDown()
+/datum/game_mode/warmongers/proc/begin_countDown()
 	set waitfor = 0
 	while(1)
-		sleep(1 MINUTES)
+		sleep(5 SECONDS)
 		CHECK_TICK
-		if(SSticker.warfare_ready_to_die)
+		if(SSwarmongers.warfare_ready_to_die)
 			break
 		if(!redlord)
 			continue
@@ -117,5 +114,28 @@
 		CHECK_TICK
 		to_chat(world, "Both sides are present. We will begin in [warfare_start_time] minutes.")
 		sleep(warfare_start_time MINUTES)
-		SSticker.ReadyToDie()
+		SSwarmongers.ReadyToDie()
 		CHECK_TICK
+
+/datum/game_mode/warmongers/proc/HandleNoLords()
+	if(!istype(warmode, /datum/warmode/lords)) // Not required.
+		return
+
+	var/obj/effect/landmark/blureinforcement/blu = locate(/obj/effect/landmark/blureinforcement) in GLOB.landmarks_list
+	var/obj/effect/landmark/redreinforcement/red = locate(/obj/effect/landmark/redreinforcement) in GLOB.landmarks_list
+
+	if(isnull(redlord) || isnull(redcrown)) // You brought this upon yourself, nobody plays lord, no fancy shop and no fancy buffs! DIE!
+		var/datum/job/J = SSjob.GetJobType(/datum/job/roguetown/warmongers/red/lord)
+		J.total_positions = 0
+		J.spawn_positions = 0
+
+		new /obj/effect/telefog(red.loc)
+		new /obj/item/clothing/head/roguetown/warmongers/crownred(red.loc)
+
+	if(isnull(blulord) || isnull(blucrown))
+		var/datum/job/J = SSjob.GetJobType(/datum/job/roguetown/warmongers/blu/lord)
+		J.total_positions = 0
+		J.spawn_positions = 0
+
+		new /obj/effect/telefog(blu.loc)
+		new /obj/item/clothing/head/roguetown/warmongers/crownblu(blu.loc)

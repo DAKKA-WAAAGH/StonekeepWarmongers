@@ -68,6 +68,10 @@
 			if(M.playsound_local(turf_source, soundin, vol, vary, frequency, falloff, channel, pressure_affected, S, repeat))
 				. += M
 
+/proc/playsound_area(var/area/area, sound)
+	for(var/mob/M in area)
+		if(ismob(M) && M.client)
+			M.playsound_local(get_turf(M), sound, 75)
 
 /proc/ping_sound(atom/A)
 	var/image/I = image(icon = 'icons/effects/effects.dmi', loc = A, icon_state = "emote", layer = ABOVE_MOB_LAYER)
@@ -296,7 +300,7 @@
 	UNTIL(SSticker.login_music) //wait for SSticker init to set the login music
 
 	if(prefs && (prefs.toggles & SOUND_LOBBY))
-		SEND_SOUND(src, sound(SSticker.login_music, repeat = 1, wait = 0, volume = prefs.musicvol, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
+		SEND_SOUND(src, sound(SSticker.login_music, repeat = 1, wait = 0, volume = 60, channel = CHANNEL_LOBBYMUSIC)) // MAD JAMS
 
 /proc/get_rand_frequency()
 	return rand(43100, 45100) //Frequency stuff only works with 45kbps oggs.
@@ -342,7 +346,9 @@
 				soundin = pick('sound/combat/fracture/headcrush (1).ogg',
 'sound/combat/fracture/headcrush (2).ogg',
 'sound/combat/fracture/headcrush (3).ogg',
-'sound/combat/fracture/headcrush (4).ogg')
+'sound/combat/fracture/headcrush (4).ogg',
+'sound/combat/fracture/headcrush (5).ogg',
+'sound/combat/fracture/headcrush (6).ogg')
 			if("punch")
 				soundin = pick('sound/combat/hits/punch/punch (1).ogg','sound/combat/hits/punch/punch (2).ogg','sound/combat/hits/punch/punch (3).ogg')
 			if("punch_hard")
@@ -358,7 +364,7 @@
 			if("parrywood")
 				soundin = pick('sound/combat/parry/wood/parrywood (1).ogg','sound/combat/parry/wood/parrywood (2).ogg','sound/combat/parry/wood/parrywood (3).ogg')
 			if("whiz")
-				soundin = pick('sound/foley/whiz (1).ogg','sound/foley/whiz (2).ogg','sound/foley/whiz (3).ogg','sound/foley/whiz (4).ogg')
+				soundin = pick('sound/foley/whiz (1).ogg','sound/foley/whiz (2).ogg','sound/foley/whiz (3).ogg','sound/foley/whiz (4).ogg','sound/foley/whiz (5).ogg','sound/foley/whiz (6).ogg','sound/foley/whiz (7).ogg')
 			if("genslash")
 				soundin = pick('sound/combat/hits/bladed/genslash (1).ogg','sound/combat/hits/bladed/genslash (2).ogg','sound/combat/hits/bladed/genslash (3).ogg')
 			if("bladewooshsmall")

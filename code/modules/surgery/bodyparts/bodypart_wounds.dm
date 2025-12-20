@@ -155,6 +155,22 @@
 					added_wound = /datum/wound/puncture
 				if(1 to 10)
 					added_wound = /datum/wound/puncture/small
+			
+			//Organ damage
+			if(owner.getorganszone(zone_precise) && prob(15 + max(dam, -12.5)))
+				var/newdam = dam
+				//to_chat(world, "origin: [newdam]")
+				if(newdam > 0)
+					var/list/victims = list()
+					var/list/possible_victims = shuffle(owner.getorganszone(zone_precise).Copy())
+					for(var/obj/item/organ/I in possible_victims)
+						if(I.damage < I.maxHealth && (prob((I.w_class * rand(10,15)) * (1 / max(1, victims.len)))))
+							victims += I
+					if(victims.len)
+						for(var/obj/item/organ/victim in victims)
+							newdam = min(newdam, rand(25,30))
+							victim.applyOrganDamage(max(newdam, 0))
+							testing("[victim]: damage [victim.damage]")
 		if(BCLASS_BITE)
 			switch(dam)
 				if(20 to INFINITY)
@@ -163,6 +179,30 @@
 					added_wound = /datum/wound/bite
 				if(1 to 10)
 					added_wound = /datum/wound/bite/small
+		if(BCLASS_BULLET)
+			switch(dam)
+				if(20 to INFINITY)
+					added_wound = /datum/wound/puncture/large
+				if(10 to 20)
+					added_wound = pick(/datum/wound/slash,/datum/wound/puncture)
+				if(1 to 10)
+					added_wound = pick(/datum/wound/puncture/small,/datum/wound/slash/small)
+			
+			//Organ damage
+			if(owner.getorganszone(zone_precise) && prob(15 + max(dam, -12.5)))
+				var/newdam = dam
+				//to_chat(world, "origin: [newdam]")
+				if(newdam > 0)
+					var/list/victims = list()
+					var/list/possible_victims = shuffle(owner.getorganszone(zone_precise).Copy())
+					for(var/obj/item/organ/I in possible_victims)
+						if(I.damage < I.maxHealth && (prob((I.w_class * rand(10,15)) * (1 / max(1, victims.len)))))
+							victims += I
+					if(victims.len)
+						for(var/obj/item/organ/victim in victims)
+							newdam = min(newdam, rand(15,20))
+							victim.applyOrganDamage(max(newdam, 0))
+							testing("[victim]: damage [victim.damage]")
 	if(added_wound)
 		added_wound = add_wound(added_wound, silent, crit_message)
 	if(do_crit)
@@ -185,7 +225,7 @@
 	if(bclass in GLOB.dislocation_bclasses)
 		used = round(damage_dividend * 20 + (dam / 6), 1)
 		if(user && istype(user.rmb_intent, /datum/rmb_intent/strong))
-			used += 10
+			used += 25
 		if(prob(used))
 			if(HAS_TRAIT(src, TRAIT_BRITTLE))
 				attempted_wounds += /datum/wound/fracture
@@ -195,7 +235,7 @@
 		used = round(damage_dividend * 20 + (dam / 6), 1)
 		if(user)
 			if(istype(user.rmb_intent, /datum/rmb_intent/strong))
-				used += 10
+				used += 25
 		if(HAS_TRAIT(src, TRAIT_BRITTLE))
 			used += 10
 		if(prob(used))
@@ -204,12 +244,12 @@
 	if(bclass in GLOB.artery_bclasses)
 		used = round(damage_dividend * 20 + (dam / 6), 1)
 		if(user)
-			if((bclass in GLOB.artery_strong_bclasses) && istype(user.rmb_intent, /datum/rmb_intent/strong))
-				used += 10
-			else if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
+			if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
 				used += 10
 		if(prob(used))
 			attempted_wounds += /datum/wound/artery
+		else if(prob(used+15))
+			attempted_wounds += /datum/wound/tendon
 
 	for(var/wound_type in shuffle(attempted_wounds))
 		var/datum/wound/applied = add_wound(wound_type, silent, crit_message)
@@ -256,10 +296,9 @@
 			else if(istype(user.rmb_intent, /datum/rmb_intent/aimed))
 				used += 5
 		if(prob(used + 10))
-			if((zone_precise == BODY_ZONE_PRECISE_STOMACH || zone_precise == BODY_ZONE_CHEST) && !resistance)
+			if((zone_precise == BODY_ZONE_PRECISE_STOMACH || zone_precise == BODY_ZONE_CHEST) && !resistance && bclass != BCLASS_BULLET)
 				attempted_wounds += /datum/wound/slash/disembowel
 			attempted_wounds += /datum/wound/artery/chest
-
 	for(var/wound_type in shuffle(attempted_wounds))
 		var/datum/wound/applied = add_wound(wound_type, silent, crit_message)
 		if(applied)

@@ -28,6 +28,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	GLOB.landmarks_list -= src
 	return ..()
 
+/obj/effect/landmark/bluairship
+	name = "Blue Airship"
+	icon_state = "reinforcements-blu"
+
+/obj/effect/landmark/bluairship/Initialize()
+	. = ..()
+	SSwarmongers.blue_airship_landmarks += src
+
 /obj/effect/landmark/blureinforcement
 	name = "Blue Reinforcements"
 	icon_state = "reinforcements-blu"
@@ -36,13 +44,21 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	. = ..()
 	new /obj/structure/shopkeep(get_turf(src))
 
+/obj/effect/landmark/redairship
+	name = "Red Airship"
+	icon_state = "reinforcements"
+
+/obj/effect/landmark/redairship/Initialize()
+	. = ..()
+	SSwarmongers.red_airship_landmarks += src
+
 /obj/effect/landmark/redreinforcement
 	name = "Red Reinforcements"
 	icon_state = "reinforcements"
 
 /obj/effect/landmark/redreinforcement/Initialize()
 	. = ..()
-	new /obj/structure/shopkeep(get_turf(src))
+	new /obj/structure/shopkeep/red(get_turf(src))
 
 /obj/effect/landmark/start
 	name = "start"
@@ -306,27 +322,27 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	icon_state = "arrow"
 
 /obj/effect/landmark/start/heartfeltinfantry
-	name = "Heartfelt Infantry"
+	name = "Peasantry Militian"
 	icon_state = "arrow"
-	jobspawn_override = list("Heartfelt Infantry")
+	jobspawn_override = list("Peasantry Militian")
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/heartfeltlord
-	name = "Heartfelt Lord"
+	name = "Fat Official"
 	icon_state = "arrow"
-	jobspawn_override = list("Heartfelt Lord")
+	jobspawn_override = list("Fat Official")
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/grenzelinfantry
-	name = "Grenzelhoft Infantry"
+	name = "Regimian Regiman"
 	icon_state = "arrow_blu"
-	jobspawn_override = list("Grenzelhoft Infantry")
+	jobspawn_override = list("Regimian Regiman")
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/grenzellord
-	name = "Grenzelhoft Lord"
+	name = "Regimian Low-Lord"
 	icon_state = "arrow_blu"
-	jobspawn_override = list("Grenzelhoft Lord")
+	jobspawn_override = list("Regimian Low-Lord")
 	delete_after_roundstart = FALSE
 
 /obj/effect/landmark/start/colonizer

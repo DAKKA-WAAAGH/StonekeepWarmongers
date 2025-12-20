@@ -46,7 +46,6 @@
 			H.mind.adjust_skillrank(/datum/skill/craft/cooking, 1, TRUE)
 			H.mind.adjust_skillrank(/datum/skill/misc/sewing, 1, TRUE)
 		if(H.dna)
-			H.dna.species.random_underwear(H.gender)
 			if(H.dna.species)
 				if(H.dna.species.name in list("Elf"))
 					H.mind.adjust_skillrank(/datum/skill/misc/reading, 1, TRUE)
@@ -55,9 +54,17 @@
 
 /datum/outfit/job/roguetown/post_equip(mob/living/carbon/human/H, visualsOnly = FALSE)
 	. = ..()
+	var/datum/game_mode/warmongers/W = SSticker.mode
+
 	var/datum/job/roguetown/J = SSjob.GetJob(H.job)
-	if(J.tutorial)
+	H.client?.fit_viewport()
+	
+	if(J?.tutorial)
+		to_chat(H, "<span class='info'><b>[uppertext(J.title)]</b></span>")
 		to_chat(H, "<span class='info'>[J.tutorial]</span>")
+		if(H.warfare_faction == RED_WARTEAM && (istype(W.warmode, /datum/warmode/assault) || istype(W.warmode, /datum/warmode/lords)) && !SSwarmongers.warfare_ready_to_die)
+			to_chat(H, "<span class='notice'>YOU'RE PLAYING AS THE UNION! REMEMBER TO BUILD DEFENSES OR YOUR DEATH IS GUARANTEED!</span>")
+
 	for(var/list_key in SStriumphs.post_equip_calls)
 		var/datum/triumph_buy/thing = SStriumphs.post_equip_calls[list_key]
 		thing.on_activate(H)
@@ -65,8 +72,7 @@
 	var/obj/item/clothing/suit/U = H.wear_shirt
 	if(check_badminlist(H.ckey)) // being a badmin takes priority over being a veteran
 		U.attach_accessory(new /obj/item/clothing/accessory/medal/badmin(U))
-	else if(H.client.holder)
+	else if(H.client?.holder)
 		U.attach_accessory(new /obj/item/clothing/accessory/medal/gold/admin(U))
 	if(check_bypasslist(H.ckey))
 		U.attach_accessory(new /obj/item/clothing/accessory/medal/silver/veteran(U))
-	return

@@ -178,6 +178,102 @@
 		var/mob/M = loc
 		M.update_inv_hands()
 
+//............Warmongers............
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/warbow
+	name = "crossbow"
+	desc = "A classic weapon, with a modern upgrade, it can now be cocked by hand using a crank."
+	icon = 'icons/roguetown/weapons/32.dmi'
+	icon_state = "warbow0"
+	item_state = "warbow"
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/warbow/attack_self(mob/living/user)
+	if(chambered)
+		..()
+	else
+		if(!cocked)
+			to_chat(user, "<span class='info'>I begin cranking the cocking mechanism...</span>")
+			if(do_after(user, 40 - user.STASTR, target = user))
+				playsound(user, 'sound/combat/Ranged/crossbow_medium_reload-01.ogg', 100, FALSE)
+				cocked = TRUE
+		else
+			to_chat(user, "<span class='warning'>I carefully de-cock the crossbow.</span>")
+			cocked = FALSE
+	update_icon()
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/warbow/update_icon()
+	. = ..()
+	if(cocked)
+		icon_state = "warbow1"
+	else
+		icon_state = "warbow0"
+	cut_overlays()
+	if(chambered)
+		var/obj/item/I = chambered
+		I.pixel_x = 0
+		I.pixel_y = 0
+		add_overlay(new /mutable_appearance(I))
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/warbow/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.5,"sx" = -4,"sy" = -6,"nx" = 9,"ny" = -6,"wx" = -6,"wy" = -4,"ex" = 4,"ey" = -6,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 90,"wturn" = 93,"eturn" = -12,"nflip" = 0,"sflip" = 1,"wflip" = 0,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/handbow
+	name = "handbow"
+	desc = "A lightweight version of the crossbow of old, easily stored."
+	slot_flags = ITEM_SLOT_HIP
+	w_class = WEIGHT_CLASS_SMALL
+	icon = 'icons/roguetown/weapons/32.dmi'
+	icon_state = "handbow0"
+	item_state = "handbow"
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/handbow/attack_self(mob/living/user)
+	if(chambered)
+		..()
+	else
+		if(!cocked)
+			to_chat(user, "<span class='info'>I grip the bowstring and pull it back with all my might...</span>")
+			if(do_after(user, 40 - user.STASTR, target = user))
+				playsound(user, 'sound/combat/Ranged/crossbow_medium_reload-01.ogg', 100, FALSE)
+				cocked = TRUE
+		else
+			to_chat(user, "<span class='warning'>I carefully de-cock the crossbow.</span>")
+			cocked = FALSE
+	update_icon()
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/handbow/update_icon()
+	. = ..()
+	if(cocked)
+		icon_state = "handbow1"
+	else
+		icon_state = "handbow0"
+	cut_overlays()
+	if(chambered)
+		var/obj/item/I = chambered
+		I.pixel_x = 0
+		I.pixel_y = 0
+		add_overlay(new /mutable_appearance(I))
+	if(ismob(loc))
+		var/mob/M = loc
+		M.update_inv_hands()
+
+/obj/item/gun/ballistic/revolver/grenadelauncher/handbow/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -10,"sy" = -8,"nx" = 13,"ny" = -8,"wx" = -8,"wy" = -7,"ex" = 7,"ey" = -8,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -80,"eturn" = 81,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.5,"sx" = -4,"sy" = -6,"nx" = 5,"ny" = -6,"wx" = 0,"wy" = -6,"ex" = -1,"ey" = -6,"nturn" = 100,"sturn" = 156,"wturn" = 90,"eturn" = 180,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
+
 /obj/item/ammo_box/magazine/internal/shot/xbow
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/bolt
 	caliber = "regbolt"

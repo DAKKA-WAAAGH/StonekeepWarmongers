@@ -26,12 +26,6 @@ SUBSYSTEM_DEF(ticker)
 	var/round_end_sound						//music/jingle played when the world reboots
 	var/round_end_sound_sent = TRUE			//If all clients have loaded it
 
-	var/warfare_ready_to_die = FALSE		// If the barriers for fair play have been removed yet.
-	var/warfare_techlevel = WARMONGERS_TECHLEVEL_FLINTLOCKS
-	var/list/warfare_barriers = list()
-
-	var/oneteammode = FALSE // players only allowed to choose grenzelhoft
-
 	var/list/datum/mind/minds = list()		//The characters in the game. Used for objective tracking.
 
 	var/delay_end = 0						//if set true, the round will not restart on it's own
@@ -82,8 +76,8 @@ SUBSYSTEM_DEF(ticker)
 	//**ROUNDEND STATS**
 	var/deaths = 0			//total deaths in the round
 
-	var/heartfelt_deaths = 0
-	var/grenzelhoft_deaths = 0
+	var/unionist_deaths = 0
+	var/regime_deaths = 0
 
 	var/blood_lost = 0
 	var/tri_gained = 0
@@ -136,9 +130,11 @@ SUBSYSTEM_DEF(ticker)
 					continue
 				music += S
 
-//	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
-//	if(music.len > 1)
-//		music -= old_login_music
+	/*
+	var/old_login_music = trim(file2text("data/last_round_lobby_music.txt"))
+	if(music.len > 1)
+		music -= old_login_music
+	*/
 
 	for(var/S in music)
 		var/list/L = splittext(S,".")
@@ -154,7 +150,8 @@ SUBSYSTEM_DEF(ticker)
 	else
 		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
 
-	login_music = pick('sound/music/dreadfulstench.ogg','sound/music/practiceofwar.ogg','sound/music/faceoff.ogg')
+	login_music = pick('sound/music/warmongrels.ogg', 'sound/music/smellofblackpowder.ogg', 'sound/music/drama.ogg', 'sound/music/thomas.ogg', 'sound/music/draft.ogg', 'sound/music/parade.ogg')
+	SSevents.getHoliday()
 
 	/*
 	if(!GLOB.syndicate_code_phrase)
@@ -213,7 +210,7 @@ SUBSYSTEM_DEF(ticker)
 				return
 			timeLeft -= wait
 
-			if(timeLeft <= 300 && !tipped)
+			if(timeLeft <= 150 && !tipped)
 #ifdef MATURESERVER
 				send_tip_of_the_round()
 #endif
@@ -340,7 +337,9 @@ SUBSYSTEM_DEF(ticker)
 			var/datum/round_aspect/A = thing
 			if(!A.adminonly)
 				possibilities += A
-		var/chosen = pick(possibilities)
+				possibilities[A] = A.weight
+				//to_chat(world, "[A.name] [possibilities[A]]")
+		var/chosen = pickweight(possibilities)
 		round_aspect = new chosen
 		round_aspect.apply()
 
@@ -492,7 +491,7 @@ SUBSYSTEM_DEF(ticker)
 	SSdbcore.SetRoundStart()
 	pickaspect()
 
-	to_chat(world, "<span class='notice'><span class='typewrite'>♔ Praise the Crown! ♔</span></span>")
+	to_chat(world, "<span class='notice'><span class='typewrite'>⏚ Praise the Earth! ⏚</span></span>")
 	
 	spawn(10)
 		to_chat(world, "<span class='notice'>This battle's aspect is: [round_aspect.name]</span>")
@@ -500,27 +499,18 @@ SUBSYSTEM_DEF(ticker)
 	spawn(15)
 		if(end_party)
 			to_chat(world, "<span class='notice'><B>THIS IS THE FINAL STRUGGLE. DON'T LET THOSE BASTARDS WIN! IT'S NOW OR NEVER!!!</B></span>")
-		if(oneteammode)
-			to_chat(world, "<span class='notice'><B>This time you can only play as the Grenzelhofts.</B></span>")
-
-	// handle setting the war mode for this round, this is retarded, but im too lazy to do it any other way
-	var/datum/game_mode/warfare/W = mode
-	if(findtext(SSmapping.config?.map_name, "PONR"))
-		W.warmode = GAMEMODE_PONR
-	if(findtext(SSmapping.config?.map_name, "LS"))
-		W.warmode = GAMEMODE_STAND
-	if(findtext(SSmapping.config?.map_name, "LD"))
-		W.warmode = GAMEMODE_LORD
+		if(SSwarmongers.oneteammode)
+			to_chat(world, "<span class='notice'><B>This time you can only play as the Regimians.</B></span>")
 
 	CHECK_TICK
 
 	for(var/client/C in GLOB.clients)
-		if(oneteammode)
-			C.warfare_faction = "Grenzelhofts"
+		if(SSwarmongers.oneteammode)
+			C.warfare_faction = "Regimians"
 		if(end_party)
 			C.mob.playsound_local(C.mob, 'sound/warmongers.ogg', 70, FALSE)
 		else
-			C.mob.playsound_local(C.mob, 'sound/vote_start.ogg', 70, FALSE)
+			C.mob.playsound_local(C.mob, 'sound/roundstart.ogg', 100, FALSE)
 
 //	SEND_SOUND(world, sound('sound/misc/roundstart.ogg'))
 	current_state = GAME_STATE_PLAYING
@@ -528,13 +518,11 @@ SUBSYSTEM_DEF(ticker)
 	CHECK_TICK
 
 	Master.SetRunLevel(RUNLEVEL_GAME)
-/*
 	if(SSevents.holidays)
 		to_chat(world, "<span class='notice'>and...</span>")
 		for(var/holidayname in SSevents.holidays)
 			var/datum/holiday/holiday = SSevents.holidays[holidayname]
-			to_chat(world, "<h4>[holiday.greet()]</h4>")
-*/
+			to_chat(world, "<h4><span class='notice'><span class='typewrite'>[holiday.greet()]</span></span></h4>")
 
 	CHECK_TICK
 
@@ -919,109 +907,3 @@ SUBSYSTEM_DEF(ticker)
 	update_everything_flag_in_db()
 
 	text2file(login_music, "data/last_round_lobby_music.txt")
-
-/datum/controller/subsystem/ticker/proc/ReadyToDie()
-	var/datum/game_mode/warfare/W = mode
-	if(!warfare_ready_to_die)
-		to_chat(world, "<span class='userdanger'>[pick("FOR THE CROWN! FOR THE EMPIRE!","CHILDREN OF THE NATION, TO YOUR STATIONS!","I'M NOT AFRAID TO DIE!")]</span>")
-		if(!(oneteammode))
-			W.reinforcements()
-		warfare_ready_to_die = TRUE
-
-		// https://imgur.com/a/mzWBurl
-
-		for(var/mob/M in GLOB.player_list)
-			SEND_SOUND(M, 'sound/music/wolfintro.ogg')
-			M.overlay_fullscreen("graghorror", /atom/movable/screen/fullscreen/graghorror)
-			M.clear_fullscreen("graghorror", 5 SECONDS)
-
-		for(var/obj/O in warfare_barriers)
-			if(istype(O, /obj/structure/shopkeep))
-				var/obj/structure/shopkeep/FUCKYOU = O // im not making another var for this candy ass bullshit
-				FUCKYOU.leave()
-			else
-				qdel(O)
-
-		var/obj/structure/warobjective/WO = locate()
-		if(WO)
-			WO.beginround()
-
-/proc/GetMainGunForWarfareHeartfelt()
-	switch(SSticker.warfare_techlevel)
-		if(WARMONGERS_TECHLEVEL_FLINTLOCKS)
-			return /obj/item/gun/ballistic/revolver/grenadelauncher/flintlock/bayo
-		if(WARMONGERS_TECHLEVEL_COWBOY)
-			return /obj/item/gun/ballistic/revolver/grenadelauncher/repeater
-		if(WARMONGERS_TECHLEVEL_AUTO)
-			return /obj/item/gun/ballistic/revolver/grenadelauncher/supermachine
-		if(WARMONGERS_TECHLEVEL_NONE)
-			return null
-
-/proc/GetMainGunForWarfareGrenzelhoft()
-	switch(SSticker.warfare_techlevel)
-		if(WARMONGERS_TECHLEVEL_FLINTLOCKS)
-			return /obj/item/gun/ballistic/revolver/grenadelauncher/flintlock/bayo/grenz
-		if(WARMONGERS_TECHLEVEL_COWBOY)
-			return /obj/item/gun/ballistic/revolver/grenadelauncher/repeater
-		if(WARMONGERS_TECHLEVEL_AUTO)
-			return /obj/item/gun/ballistic/revolver/grenadelauncher/supermachine
-		if(WARMONGERS_TECHLEVEL_NONE)
-			return null
-
-/proc/GetSidearmForWarfare()
-	switch(SSticker.warfare_techlevel)
-		if(WARMONGERS_TECHLEVEL_FLINTLOCKS)
-			return /obj/item/gun/ballistic/revolver/grenadelauncher/flintlock/pistol
-		if(WARMONGERS_TECHLEVEL_COWBOY)
-			return /obj/item/gun/ballistic/revolver/grenadelauncher/revolvashot
-		if(WARMONGERS_TECHLEVEL_NONE)
-			return null
-
-/datum/controller/subsystem/ticker/proc/SendReinforcements()
-	var/datum/game_mode/warfare/W = mode
-
-	var/obj/effect/landmark/blureinforcement/blu = locate(/obj/effect/landmark/blureinforcement) in GLOB.landmarks_list
-	var/obj/effect/landmark/redreinforcement/red = locate(/obj/effect/landmark/redreinforcement) in GLOB.landmarks_list
-
-	W.reinforcementwave++
-	var/list/reinforcementinas = list()
-	switch(W.reinforcementwave)
-		if(1)
-			reinforcementinas += "/obj/item/bomb"
-			reinforcementinas += "/obj/item/bomb/fire/weak"
-		if(2)
-			reinforcementinas += "/obj/item/bomb"
-			reinforcementinas += "/obj/item/bomb"
-			reinforcementinas += "/obj/item/bomb/fire/weak"
-			reinforcementinas += "/obj/item/bomb/smoke"
-			reinforcementinas += "/obj/item/flint"
-			SSticker.warfare_techlevel = WARMONGERS_TECHLEVEL_FLINTLOCKS
-		if(3)
-			reinforcementinas += "/obj/item/bomb/smoke"
-			reinforcementinas += "/obj/item/bomb/fire"
-			reinforcementinas += "/obj/item/bomb/poison"
-			reinforcementinas += "/obj/item/bomb"
-			reinforcementinas += "/obj/item/bomb"
-		if(4)
-			reinforcementinas += "/obj/item/bomb/fire"
-			reinforcementinas += "/obj/item/bomb/fire"
-			reinforcementinas += "/obj/item/bomb/poison"
-			reinforcementinas += "/obj/item/bomb/poison"
-			SSticker.warfare_techlevel = WARMONGERS_TECHLEVEL_COWBOY
-		if(5)
-			reinforcementinas += "/obj/item/bomb"
-			reinforcementinas += "/obj/item/bomb"
-			reinforcementinas += "/obj/item/bomb/fire"
-			reinforcementinas += "/obj/item/bomb/smoke"
-			reinforcementinas += "/obj/item/bomb/poison"
-			reinforcementinas += "/obj/item/bomb/poison"
-	to_chat(world, "<span class='info'><span class='typewrite'>Reinforcements have arrived.</span></span>")
-	for(var/mob/M in GLOB.player_list)
-		if(aspect_chosen(/datum/round_aspect/halo))
-			SEND_SOUND(M, 'sound/vo/halo/reinforcements.mp3')
-		else
-			SEND_SOUND(M, 'sound/music/traitor.ogg')
-	for(var/i in reinforcementinas)
-		var/typepath = text2path(i)
-		new typepath(red.loc)
-		new typepath(blu.loc)

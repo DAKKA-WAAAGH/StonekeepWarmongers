@@ -198,74 +198,63 @@
 	gripped_intents = list(/datum/intent/axe/chop/stone)
 	axe_cut = 8
 
-//..............Kaizoku Content................
-/obj/item/rogueweapon/battle/ono
+//...................Warmongers...............
+
+/obj/item/rogueweapon/woodcut/war
 	slot_flags = ITEM_SLOT_HIP
-	force = 15
+	force = 20
 	force_wielded = 25
-	possible_item_intents = list(/datum/intent/axe/cut)
-	name = "nagai ono"
-	desc = "A battleaxe of Abyssariad design with a longer handle and shorter blade than its Humen counterpart. The increased leverage, reduced weight, and smaller striking area give it greater use against armor, while the longer handle makes it easier to parry with."
-	icon_state = "ono"
-	max_blade_int = 500
-	smeltresult = /obj/item/ingot/steel
-	gripped_intents = list(/datum/intent/axe/cut,/datum/intent/axe/battleaxe/chop)
+	possible_item_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop)
+	name = "hatchet"
+	desc = "The difference between a tool and a weapon is intent."
+	icon_state = "hatchet"
+	icon = 'icons/roguetown/weapons/32.dmi'
+	max_blade_int = 130
+	max_integrity = 200
+	smeltresult = /obj/item/ingot/iron
+	gripped_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop)
 	parrysound = list('sound/combat/parry/wood/parrywood (1).ogg', 'sound/combat/parry/wood/parrywood (2).ogg', 'sound/combat/parry/wood/parrywood (3).ogg')
 	swingsound = BLADEWOOSH_MED
 	associated_skill = /datum/skill/combat/axesmaces
-	minstr = 8
-	icon = 'icons/roguetown/weapons/32.dmi'
-	max_blade_int = 200
-	max_integrity = 300
-	wdefense = 6
+	wdefense = 2
+	minstr = 6
+	axe_cut = 10
 
-/obj/item/rogueweapon/battle/getonmobprop(tag)
+/obj/item/rogueweapon/woodcut/steel/war
+	slot_flags = ITEM_SLOT_BACK
+	name = "war axe"
+	desc = "A heavy axe for cutting down barricades, and cutting up the unworthy."
+	icon_state = "warcutter"
+	icon = 'icons/roguetown/weapons/64.dmi'
+	pixel_y = -16
+	pixel_x = -16
+	inhand_x_dimension = 64
+	inhand_y_dimension = 64
+	bigboy = TRUE
+	gripsprite = TRUE
+	wlength = WLENGTH_GREAT
+	w_class = WEIGHT_CLASS_BULKY
+	slot_flags = ITEM_SLOT_BACK
+	force = 20
+	force_wielded = 25
+	possible_item_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop)
+	max_blade_int = 180
+	max_integrity = 300
+	smeltresult = /obj/item/ingot/steel
+	gripped_intents = list(/datum/intent/axe/cut,/datum/intent/axe/chop)
+	parrysound = list('sound/combat/parry/wood/parrywood (1).ogg', 'sound/combat/parry/wood/parrywood (2).ogg', 'sound/combat/parry/wood/parrywood (3).ogg')
+	swingsound = BLADEWOOSH_MED
+	associated_skill = /datum/skill/combat/axesmaces
+	wdefense = 3
+	minstr = 6
+
+/obj/item/rogueweapon/woodcut/steel/war/getonmobprop(tag)
+	. = ..()
 	if(tag)
 		switch(tag)
 			if("gen")
-				return list("shrink" = 0.6,"sx" = -12,"sy" = -10,"nx" = 12,"ny" = -10,"wx" = -8,"wy" = -7,"ex" = 3,"ey" = -9,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+				return list("shrink" = 0.6,"sx" = -7,"sy" = 2,"nx" = 7,"ny" = 3,"wx" = -2,"wy" = 1,"ex" = 1,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 30,"eturn" = -30,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 			if("wielded")
-				return list("shrink" = 0.6,"sx" = -12,"sy" = 3,"nx" = 12,"ny" = 2,"wx" = -8,"wy" = 2,"ex" = 4,"ey" = 2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = -2,"wx" = -5,"wy" = -1,"ex" = 3,"ey" = -2,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 7,"sturn" = -7,"wturn" = 16,"eturn" = -22,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
 			if("onbelt")
-				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0)
-	return ..()
-
-/obj/item/rogueweapon/thrown/ono
-	slot_flags = ITEM_SLOT_HIP
-	force = 15
-	possible_item_intents = list(/datum/intent/axe/cut, /datum/intent/axe/chop) //Added chop because the throwing Ono is still suitable for woodcutting. It's a hatchet.
-	name = "nage ono"
-	desc = "A well-balanced, short-handled Abyssariad axe designed for throwing. Traditionally used as a hunting weapon as an alternative to archery, as bow wood is scarce on the Fog Isles."
-	icon = 'icons/roguetown/weapons/32.dmi'
-	icon_state = "throwing_ono"
-	max_blade_int = 500
-	smeltresult = /obj/item/ash
-	parrysound = list('sound/combat/parry/wood/parrywood (1).ogg', 'sound/combat/parry/wood/parrywood (2).ogg', 'sound/combat/parry/wood/parrywood (3).ogg')
-	swingsound = BLADEWOOSH_MED
-	wlength = WLENGTH_SHORT
-	associated_skill = /datum/skill/combat/axesmaces
-	minstr = 6
-	max_blade_int = 200
-	max_integrity = 300
-	wdefense = 3
-	throwforce = 40
-	axe_cut = 5 //You'd be surprised to know that the axe head design for throwing is the same one for cutting wood, but lighter.
-	embedding = list("embedded_pain_multiplier" = 3, "embed_chance" = 20, "embedded_fall_chance" = 60)
-
-/obj/item/rogueweapon/woodcut/changfu
-	name = "iron changfu"
-	desc = "The tool of justice, hardwork and destruction, all in one."
-	icon_state = "changfu"
-	icon = 'icons/roguetown/weapons/32.dmi'
-	wdefense = 4 //Battle designed.
-	axe_cut = 3 //Not as viable for cutting as the other one, less than a hatchet in fact.
-
-/datum/intent/axe/battleaxe/chop/ono //because actual battle axes don't have stupid large blades.
-	name = "chop"
-	icon_state = "inchop"
-	blade_class = BCLASS_CHOP
-	attack_verb = list("chops", "hacks")
-	animname = "chop"
-	hitsound = list('sound/combat/hits/bladed/genchop (1).ogg', 'sound/combat/hits/bladed/genchop (2).ogg', 'sound/combat/hits/bladed/genchop (3).ogg')
-	swingdelay = 1
-	misscost = 10
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)

@@ -88,7 +88,10 @@
 
 #define AMB_TOWNDAY list('sound/ambience/townday.ogg')
 
-#define AMB_WARFARE list('sound/music/dreadfulstench.ogg')
+#define MUSIC_COMBAT list('sound/music/root.ogg',\
+						'sound/music/drunkandlovingit.ogg',\
+						'sound/music/prayformoreammo.ogg',\
+						'sound/music/soberandhatingit.ogg')
 
 #define AMB_MOUNTAIN list('sound/ambience/MOUNTAIN (1).ogg',\
 						'sound/ambience/MOUNTAIN (2).ogg')
@@ -183,6 +186,18 @@
 						'sound/ambience/noises/birds (6).ogg',\
 						'sound/ambience/noises/birds (7).ogg')
 
+#define SPOOKY_WAR list('sound/ambience/distantshot1.ogg',\
+						'sound/ambience/distantshot2.ogg',\
+						'sound/ambience/distantshot3.ogg',\
+						'sound/ambience/rocketfire.ogg',\
+						'sound/ambience/rocketfire2.ogg',\
+						'sound/ambience/marksman.ogg',\
+						'sound/ambience/distantcannon1.ogg',\
+						'sound/ambience/distantcannon2.ogg')
+
+#define SPOOKY_WARINDOORS list('sound/ambience/distantshot1.ogg',\
+								'sound/ambience/distantshot2.ogg',\
+								'sound/ambience/distantshot3.ogg')
 
 #define INTERACTION_SOUND_RANGE_MODIFIER 0
 #define EQUIP_SOUND_VOLUME 100

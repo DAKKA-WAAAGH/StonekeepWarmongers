@@ -143,7 +143,9 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			GLOB.roundstart_races += S.name
 			qdel(S)
 	if(!GLOB.roundstart_races.len)
-		GLOB.roundstart_races += "Humen"
+		GLOB.roundstart_races += "Standard"
+		GLOB.roundstart_races += "Bulky"
+		GLOB.roundstart_races += "Fat"
 	sortList(GLOB.roundstart_races, GLOBAL_PROC_REF(cmp_text_dsc))
 
 /datum/species/proc/check_roundstart_eligible()
@@ -198,13 +200,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 						if(X.roundstart)
 							spec_undies += X
 			return spec_undies
-
-/datum/species/proc/random_underwear(gender)
-	var/list/spec_undies = get_spec_undies_list(gender)
-	var/datum/sprite_accessory/X
-	if(spec_undies.len)
-		X = pick(spec_undies)
-		return X.name
 
 /datum/species/proc/get_spec_hair_list(gender)
 	if(!GLOB.hairstyles_list.len)
@@ -495,7 +490,6 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 /datum/species/proc/random_character(mob/living/carbon/human/H)
 	H.real_name = random_name(H.gender,1)
 //	H.age = pick(possible_ages)
-	H.underwear = random_underwear(H.gender)
 	H.hairstyle = random_hairstyle(H.gender)
 	H.facial_hairstyle = random_facial_hairstyle(H.gender)
 	var/list/hairs
@@ -865,29 +859,37 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		//detail
 		if(H.detail)
 			var/datum/sprite_accessory/detail/detail = GLOB.detail_list[H.detail]
-			var/mutable_appearance/accessory_overlay
 			if(detail)
-				accessory_overlay = mutable_appearance(detail.icon, "[detail.icon_state]_BODY", -BODY_LAYER)
+				// Create both BODY and FRONT overlays and add both so details render correctly in all cases
+				var/mutable_appearance/detail_overlay_body = mutable_appearance(detail.icon, "[detail.icon_state]_BODY", -BODY_LAYER)
+				var/mutable_appearance/detail_overlay_front = mutable_appearance(detail.icon, "[detail.icon_state]_FRONT", -BODY_FRONT_LAYER+1)
 				if(!detail.use_static)
 					if(detail.color_src == HAIR)
-						accessory_overlay.color = "#[H.hair_color]"
+						detail_overlay_body.color = "#[H.hair_color]"
+						detail_overlay_front.color = "#[H.hair_color]"
 					else
-						accessory_overlay.color = "#" + H.detail_color
+						detail_overlay_body.color = "#" + H.detail_color
+						detail_overlay_front.color = "#" + H.detail_color
 				if(H.gender == FEMALE)
 					if(OFFSET_FACE_F in H.dna.species.offset_features)
-						accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE_F][1]
-						accessory_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE_F][2]
+						detail_overlay_body.pixel_x += H.dna.species.offset_features[OFFSET_FACE_F][1]
+						detail_overlay_body.pixel_y += H.dna.species.offset_features[OFFSET_FACE_F][2]
+						detail_overlay_front.pixel_x += H.dna.species.offset_features[OFFSET_FACE_F][1]
+						detail_overlay_front.pixel_y += H.dna.species.offset_features[OFFSET_FACE_F][2]
 				else
 					if(OFFSET_FACE in H.dna.species.offset_features)
-						accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
-						accessory_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
-				standing += accessory_overlay
+						detail_overlay_body.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+						detail_overlay_body.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
+						detail_overlay_front.pixel_x += H.dna.species.offset_features[OFFSET_FACE][1]
+						detail_overlay_front.pixel_y += H.dna.species.offset_features[OFFSET_FACE][2]
+				standing += detail_overlay_body
+				standing += detail_overlay_front
 
 		if(H.accessory)
 			var/datum/sprite_accessory/accessories/accessory = GLOB.accessories_list[H.accessory]
 			var/mutable_appearance/accessory_overlay
 			if(accessory)
-				accessory_overlay = mutable_appearance(accessory.icon, "[accessory.icon_state]_BODY", -BODY_LAYER)
+				accessory_overlay = mutable_appearance(accessory.icon, "[accessory.icon_state]_BODY", -BODY_FRONT_LAYER+1) //it just works
 				if(H.gender == FEMALE)
 					if(OFFSET_FACE_F in H.dna.species.offset_features)
 						accessory_overlay.pixel_x += H.dna.species.offset_features[OFFSET_FACE_F][1]
@@ -1903,10 +1905,10 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 			to_chat(user, "<span class='danger'>I knock [target] down!</span>")
 			var/knockdown_duration = 40 + (target.getStaminaLoss() + (target.getBruteLoss()*0.5))*0.8 //50 total damage = 40 base stun + 40 stun modifier = 80 stun duration, which is the old base duration
 			target.apply_effect(knockdown_duration, EFFECT_KNOCKDOWN, armor_block)
-			target.forcesay(GLOB.hit_appends)
+			target.say(pick(GLOB.hit_appends))
 			log_combat(user, target, "got a stun punch with their previous punch")
 		if(!(target.mobility_flags & MOBILITY_STAND))
-			target.forcesay(GLOB.hit_appends)
+			target.say(pick(GLOB.hit_appends))
 		if(!nodmg)
 			playsound(target.loc, user.used_intent.hitsound, 100, FALSE)
 
@@ -2160,7 +2162,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(target.mind)
 			target.mind.attackedme[user.real_name] = world.time
 		user.rogfat_add(15)
-		target.forcesay(GLOB.hit_appends)
+		target.say(pick(GLOB.hit_appends))
 
 /datum/species/proc/spec_hitby(atom/movable/AM, mob/living/carbon/human/H)
 	return
@@ -2304,13 +2306,13 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					//to_chat(world, "[BPH.knock_out_teeth(get_dir(H, user), rand(1,5))]")
 					if(BPH.knock_out_teeth(get_dir(H, user), rand(1,5)))
 						H.visible_message("<span class='danger'>[H]'s teeth sail off in an arc!</span>", "<span class='userdanger'>[H]'s teeth sail off in an arc!</span>")
-						H.forcesay(GLOB.hit_appends)
+						H.say(pick(GLOB.hit_appends))
 				if((user.a_intent.blade_class in GLOB.fracture_bclasses) && (prob(I.force/2 * user.STASTR/4)))
 					H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
 					if(H.stat == CONSCIOUS)
 						H.visible_message("<span class='danger'>[H] is knocked senseless!</span>", "<span class='danger'>You're knocked senseless!</span>")
 						H.confused = max(H.confused, 20)
-						H.forcesay(GLOB.hit_appends)
+						H.say(pick(GLOB.hit_appends))
 						H.adjust_blurriness(10)
 					if(prob(10))
 						H.gain_trauma(/datum/brain_trauma/mild/concussion)

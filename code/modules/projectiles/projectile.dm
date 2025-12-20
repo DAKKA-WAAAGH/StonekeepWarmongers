@@ -194,6 +194,11 @@
 			new /obj/effect/temp_visual/dir_setting/bloodsplatter(target_loca, splatter_dir)
 		L.add_splatter_floor(target_loca)
 
+		var/list/walls = get_adjacent_closed_turfs_diag(L)
+		for(var/turf/closed/T in walls)
+			if(istype(T) && prob(50))
+				L.add_splatter_floor(T)
+
 	if(impact_effect_type && !hitscan)
 		new impact_effect_type(target_loca, hitx, hity)
 
@@ -256,7 +261,7 @@
 				if(!CHECK_BITFIELD(movement_type, UNSTOPPABLE))
 					temporary_unstoppable_movement = TRUE
 					ENABLE_BITFIELD(movement_type, UNSTOPPABLE)
-				M.playsound_local(T, "whiz", 100, FALSE, pressure_affected = FALSE)
+				playsound(M, "whiz", 100, FALSE, -2, pressure_affected = FALSE)
 				return process_hit(T, qdel_self=2, hit_something=TRUE)
 		return process_hit(T, select_target(T, A))
 	else
@@ -406,10 +411,11 @@
 		M.Turn(Angle)
 		transform = M
 	if(muzzle_type)
-		var/atom/movable/thing = new muzzle_type
+		var/atom/movable/thing = new muzzle_type(get_turf(firer))
 		var/matrix/M = new
 		M.Turn(original_angle)
-		thing.forceMove(get_step(firer, firer.dir))
+		M.Scale(1.5,1.5)
+		//thing.forceMove(get_step(firer, firer.dir))
 		thing.transform = M
 		thing.color = color
 		thing.set_light(muzzle_flash_range, muzzle_flash_intensity, muzzle_flash_color_override? muzzle_flash_color_override : color)

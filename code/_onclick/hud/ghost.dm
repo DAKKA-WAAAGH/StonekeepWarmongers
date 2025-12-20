@@ -83,7 +83,7 @@
 	scannies = new /atom/movable/screen/scannies
 	scannies.hud = src
 	static_inventory += scannies
-	scannies.alpha = 130
+	scannies.alpha = 0
 
 	using = new /atom/movable/screen/ghost/orbit/rogue()
 	using.hud = src
@@ -120,7 +120,7 @@
 	scannies = new /atom/movable/screen/scannies
 	scannies.hud = src
 	static_inventory += scannies
-	scannies.alpha = 130
+	scannies.alpha = 0
 
 /datum/hud/eye/show_hud(version = 0, mob/viewmob)
 	// don't show this HUD if observing; show the HUD of the observee
@@ -153,4 +153,4 @@
 	scannies = new /atom/movable/screen/scannies
 	scannies.hud = src
 	static_inventory += scannies
-	scannies.alpha = 130
+	scannies.alpha = 0

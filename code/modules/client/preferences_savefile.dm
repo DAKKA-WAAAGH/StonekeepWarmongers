@@ -170,7 +170,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	S["triumphs"]			>> triumphs
 	S["musicvol"]			>> musicvol
 	S["anonymize"]			>> anonymize
-	S["visibility_accessibility"] >> visibility_accessibility
 	S["mastervol"]			>> mastervol
 	S["lastclass"]			>> lastclass
 
@@ -258,7 +257,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["triumphs"], triumphs)
 	WRITE_FILE(S["musicvol"], musicvol)
 	WRITE_FILE(S["anonymize"], anonymize)
-	WRITE_FILE(S["visibility_accessibility"], visibility_accessibility)
 	WRITE_FILE(S["lastclass"], lastclass)
 	WRITE_FILE(S["mastervol"], mastervol)
 	WRITE_FILE(S["ooccolor"], ooccolor)
@@ -306,16 +304,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 		var/newtype = GLOB.species_list[species_name]
 		if(newtype)
 			pref_species = new newtype
-
-/datum/preferences/proc/_load_flaw(S)
-	var/charflaw_type
-	S["charflaw"]			>> charflaw_type
-	if(charflaw_type)
-		charflaw = new charflaw_type()
-	else
-		charflaw = pick(GLOB.character_flaws)
-		charflaw = GLOB.character_flaws[charflaw]
-		charflaw = new charflaw()
 
 /datum/preferences/proc/_load_appearence(S)
 	S["real_name"]			>> real_name
@@ -377,8 +365,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 
 	//Species
 	_load_species(S)
-
-	_load_flaw(S)
 
 	if(!S["features["mcolor"]"] || S["features["mcolor"]"] == "#000")
 		WRITE_FILE(S["features["mcolor"]"]	, "#FFF")
@@ -528,7 +514,6 @@ SAVEFILE UPDATING/VERSIONING - 'Simplified', or rather, more coder-friendly ~Car
 	WRITE_FILE(S["uplink_loc"]			, uplink_spawn_loc)
 	WRITE_FILE(S["randomise"]		, randomise)
 	WRITE_FILE(S["species"]			, pref_species.name)
-	WRITE_FILE(S["charflaw"]			, charflaw.type)
 	WRITE_FILE(S["feature_mcolor"]					, features["mcolor"])
 	WRITE_FILE(S["feature_ethcolor"]					, features["ethcolor"])
 	WRITE_FILE(S["feature_lizard_tail"]			, features["tail_lizard"])

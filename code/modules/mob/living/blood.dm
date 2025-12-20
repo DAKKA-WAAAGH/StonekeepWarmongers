@@ -162,6 +162,7 @@
 
 /mob/living/carbon/get_bleed_rate()
 	var/bleed_rate = 0
+	if(!blood_volume) return 0
 	for(var/obj/item/bodypart/bodypart as anything in bodyparts)
 		bleed_rate += bodypart.get_bleed_rate()
 	return bleed_rate
@@ -387,11 +388,13 @@
 	var/obj/effect/decal/cleanable/blood/puddle/P = locate() in T
 	if(P)
 		P.blood_vol += amt
+		P.bloodiness += amt
 		P.update_icon()
 	else
 		var/obj/effect/decal/cleanable/blood/drip/D = locate() in T
 		if(D)
 			D.blood_vol += amt
+			D.bloodiness += amt
 			D.drips++
 			D.update_icon()
 		else

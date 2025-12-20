@@ -113,6 +113,11 @@
 	layer = 20.512
 	plane = FULLSCREEN_PLANE
 
+/atom/movable/screen/fullscreen/kill
+	icon_state = "kill"
+	layer = 20.512
+	plane = FULLSCREEN_PLANE
+
 /atom/movable/screen/fullscreen/oxy
 	icon_state = "oxydamageoverlay"
 	layer = UI_DAMAGE_LAYER
@@ -157,16 +162,11 @@
 					var/ttime =  round(((L.succumb_timer + 20 SECONDS) - world.time) / 10)
 					to_chat(L, "<span class='redtext'>I'm not dead enough yet. [ttime]</span>")
 				else
-					L.succumb(reaper = TRUE)
+					L.succumb()
 
 /atom/movable/screen/fullscreen/crit/death
 	icon_state = "DD"
 	layer = 20.511
-	plane = FULLSCREEN_PLANE
-
-/atom/movable/screen/fullscreen/crit/cmode
-	icon_state = "cmode"
-	layer = 20.09
 	plane = FULLSCREEN_PLANE
 
 /atom/movable/screen/fullscreen/crit/vision

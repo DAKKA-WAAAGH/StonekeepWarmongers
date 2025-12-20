@@ -56,8 +56,6 @@
 	if(name_override)
 		return name_override
 	if(face_name)
-		if(id_name && (id_name != face_name))
-			return "Unknown [(gender == FEMALE) ? "Woman" : "Man"]"
 		return face_name
 	if(id_name)
 		return id_name
@@ -163,6 +161,10 @@
 	if(HAS_TRAIT(src, TRAIT_NOGUNS))
 		to_chat(src, "<span class='warning'>I can't bring myself to use a ranged weapon!</span>")
 		return FALSE
+	if(istype(G, /obj/item/gun/ballistic/revolver/grenadelauncher)) // All rogueguns are subtypes of grenadelaunchers, this shouldn't matter.
+		if(mind.get_skill_level(/datum/skill/combat/flintlocks) <= 0)
+			to_chat(src, "<span class='warning'>I do not know how to use this.</span>")
+			return FALSE
 
 /mob/living/carbon/human/proc/get_bank_account()
 	RETURN_TYPE(/datum/bank_account)

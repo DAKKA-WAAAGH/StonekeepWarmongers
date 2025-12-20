@@ -205,8 +205,8 @@
 	get_end_reason()
 	SSvote.initiate_vote("map", "The God of War")
 
-	if(istype(SSticker.mode, /datum/game_mode/warfare))
-		var/datum/game_mode/warfare/C = SSticker.mode
+	if(istype(SSticker.mode, /datum/game_mode/warmongers))
+		var/datum/game_mode/warmongers/C = SSticker.mode
 		C.award_triumphs()
 
 	var/list/key_list = list()
@@ -216,8 +216,7 @@
 			SSvote.interface(C) // FORCE them to vote.
 			if(aspect_chosen(/datum/round_aspect/halo))
 				C.mob.playsound_local(C.mob, 'sound/vo/halo/gameover.mp3', 100, FALSE)
-				sleep(10)
-				C.mob.playsound_local(C.mob, 'sound/vo/halo/blowmeaway.mp3', 100, FALSE)
+				spawn(10) C.mob.playsound_local(C.mob, 'sound/vo/halo/blowmeaway.mp3', 100, FALSE)
 			else
 				C.mob.playsound_local(C.mob, 'sound/blank.ogg', 100, FALSE)
 		if(isliving(C.mob) && C.ckey)
@@ -308,18 +307,18 @@
 /datum/controller/subsystem/ticker/proc/get_end_reason()
 	var/end_reason
 
-	if(istype(SSticker.mode, /datum/game_mode/warfare))
-		var/datum/game_mode/warfare/C = SSticker.mode
+	if(istype(SSticker.mode, /datum/game_mode/warmongers))
+		var/datum/game_mode/warmongers/C = SSticker.mode
 		if(C.whowon)
 			end_reason = "The [C.whowon] win yet another battle."
 
 	if(end_reason)
 		to_chat(world, "<span class='big bold'>[end_reason]</span>")
 		to_chat(world, pick("This battle was futile. This world is already gone. What I fought for was lost the day I took up arms. No salvation can come through this fight.","Only the dead may know the end of war.","We are going to have peace even if we have to fight for it.","War is heck.","The supreme art of war is to subdue the enemy without fighting, we have failed."))
-		if(istype(SSticker.mode, /datum/game_mode/warfare))
-			var/datum/game_mode/warfare/C = SSticker.mode
-			if(C.warmode != GAMEMODE_STAND && C.crownbearer)
-				to_chat(world, "<span class='info'>The one whom sat on the throne was the one and only [C.crownbearer.real_name] ([C.crownbearer.ckey])!</span>")
+		if(istype(SSticker.mode, /datum/game_mode/warmongers))
+			var/datum/game_mode/warmongers/C = SSticker.mode
+			if(C.warmode.winner_name && C.warmode.winner)
+				to_chat(world, "<span class='info'>The [C.warmode.winner_name] of this battle was the one and only [C.warmode.winner.real_name] ([C.warmode.winner.ckey])!</span>")
 	else
 		to_chat(world, "<span class='big bold'>STALEMATE. HOW SHAMEFUL.</span>") // used only for admin shit... yet
 
@@ -383,8 +382,8 @@
 	var/list/shit = list()
 	shit += "<br><span class='bold'>Δ--------------------Δ</span><br>"
 	shit += "<br><font color='#d4ff00'><span class='bold'>Weapons Shot:</span></font> [muskshots]"
-	shit += "<br><font color='#680000'><span class='bold'>Heartfelt Deaths:</span></font> [heartfelt_deaths]"
-	shit += "<br><font color='#001a68'><span class='bold'>Grenzelhoft Deaths:</span></font> [grenzelhoft_deaths]"
+	shit += "<br><font color='#680000'><span class='bold'>Unionist Deaths:</span></font> [unionist_deaths]"
+	shit += "<br><font color='#001a68'><span class='bold'>Regimian Deaths:</span></font> [regime_deaths]"
 	shit += "<br><font color='#000000'><span class='bold'>Total Deaths:</span></font> [deaths]"
 	shit += "<br><font color='#af2323'><span class='bold'>Blood spilt:</span></font> [round(blood_lost / 100, 1)]L"
 	shit += "<br><font color='#af2323'><span class='bold'>Teeth lost:</span></font> [lostteeth]"

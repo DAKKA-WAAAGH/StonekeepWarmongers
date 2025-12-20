@@ -301,7 +301,7 @@
 	passcrawl = FALSE
 
 /obj/structure/fluff/explodabarrel
-	name = "barkpowder barrel"
+	name = "barkenpowder barrel"
 	desc = "Uh oh."
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "explodabarrel"
@@ -312,11 +312,22 @@
 	w_class = WEIGHT_CLASS_BULKY
 	drag_slowdown = 2
 
+/obj/structure/fluff/explodabarrel/Initialize()
+	. = ..()
+	if(prob(1))
+		icon = 'icons/shamelessly_stolen.dmi'
+		icon_state = "one_b"
+
 /obj/structure/fluff/explodabarrel/onkick(mob/user)
 	. = ..()
 	var/turf/target = get_ranged_target_turf(src, get_dir(user, src), 5)
 	throw_at(target, 5, 2, user, FALSE)
 	visible_message("<span class='notice'>[src] rolls towards \the [target]!</span>")
+	playsound(src, 'sound/combat/hits/kick/stomp.ogg', 100, TRUE, -1)
+
+	var/matrix/M = matrix(transform) // So you can turn it back around, I think. Idk.
+	M.Turn(90)
+	transform = M
 
 /obj/structure/fluff/explodabarrel/bullet_act(obj/projectile/P)
 	boom()
@@ -333,7 +344,7 @@
 
 /obj/structure/fluff/standingflag
 	name = "standing flag"
-	desc = "A stand showing the heraldry coat of arms of the Grenzelhoft royal family. A shame you can't see it, it's really detailed and cool looking. A real shame the only thing you see is a mess, truly!"
+	desc = "A stand showing the heraldry of the Regimist Imperial Family. The crest is that of a barker barrel facing the viewer, with three lines below it representing each social class. Its motto, 'Measure, pour, ram, prime, aim, fire' is written just below the crest."
 	icon = 'icons/shamelessly_stolen.dmi'
 	icon_state = "blueflag"
 	anchored = TRUE
@@ -342,8 +353,18 @@
 	opacity = FALSE
 
 /obj/structure/fluff/standingflag/red
-	desc = "A stand showing the heraldry coat of arms of the Heartfelt royal family. Probably for the better you can't see it well, it's fucking awful. Like, completely an insult to everything you stand for."
+	desc = "A flag of the People's Peasant Union. A full mug of Bier is on it, and it is topped with a fork. The motto 'Shake the ground with every step' is etched onto its design."
 	icon_state = "redflag"
+
+/obj/structure/fluff/wheel
+	name = "helm"
+	desc = "Steers the boat."
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "wheel"
+	anchored = TRUE
+	climbable = FALSE
+	density = TRUE
+	opacity = FALSE
 
 /obj/structure/fluff/railing/fence
 	name = "palisade"
@@ -784,6 +805,18 @@
 					icon_state = "signwrote"
 	..()
 
+/obj/structure/fluff/signgood
+	icon_state = "signgood"
+	name = "sign"
+	desc = "Safety."
+	icon = 'icons/roguetown/misc/signs.dmi'
+
+/obj/structure/fluff/signbad
+	icon_state = "signbad"
+	name = "sign"
+	desc = "Danger."
+	icon = 'icons/roguetown/misc/signs.dmi'
+
 /obj/structure/fluff/dryingrack
 	name = "drying rack"
 	desc = ""
@@ -852,7 +885,7 @@
 
 /obj/structure/fluff/statue/astrata
 	name = "Astrata Statue"
-	desc = "A stone statue of the sun Goddess Astrata. Bless."
+	desc = "Some kind of ancient statue once worshipped."
 	icon_state = "astrata"
 	icon = 'icons/roguetown/misc/tallandwide.dmi'
 
@@ -871,6 +904,20 @@
 /obj/structure/fluff/statue/knightalt/r
 	icon_state = "knightstatue2_r"
 
+/obj/structure/fluff/gallows
+	name = "gallows"
+	icon_state = "hanged"
+	icon = 'icons/roguetown/misc/tallandwide.dmi'
+	bound_width = 64
+	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
+
+/obj/structure/fluff/hangman
+	name = "hangman"
+	icon_state = "hangedsingle"
+	icon = 'icons/roguetown/misc/tallstructure.dmi'
+	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
 
 /obj/structure/fluff/statue/myth
 	icon_state = "myth"
@@ -971,7 +1018,7 @@
 
 /obj/structure/fluff/statue/evil
 	name = "idol"
-	desc = "A statue built to the robber-god, Matthios, who stole the gift of fire from the underworld. It is said that he grants the wishes of those pagan bandits (free folk) who feed him money."
+	desc = "A statue for some ancient, evil god. From the looks of it, people probably fed their children to this thing."
 	icon_state = "evilidol"
 	icon = 'icons/roguetown/misc/structure.dmi'
 
@@ -1064,6 +1111,11 @@
 	name = "wooden pantheon cross"
 	icon_state = "psycrosscrafted"
 	chance2hear = 10
+
+/obj/structure/fluff/psycross/regime
+	name = "KAITZARKROSS"
+	desc = "A KAITZARKROSS, a symbol of religious worship within the Regime. Represents the body of the KAITZAR and how integral he is to holding the Regime together. Praise be."
+	icon_state = "regimecross"
 
 /obj/structure/fluff/psycross/attackby(obj/item/W, mob/user, params)
 	if(user.mind)
@@ -1294,7 +1346,7 @@
 
 /obj/structure/fluff/statue/shisha
 	name = "shisha pipe"
-	desc = "A traditional shisha pipe, this one is broken."
+	desc = "No doubt an item of worship for ancient peoples."
 	icon = 'icons/roguetown/misc/64x64.dmi'
 	icon_state = "zbuski"
 	density = FALSE

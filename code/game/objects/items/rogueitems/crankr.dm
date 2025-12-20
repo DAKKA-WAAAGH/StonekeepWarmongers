@@ -1,19 +1,23 @@
-/obj/item/cranker
+/obj/item/rogue/cranker
 	name = "CRANKeR"
-	desc = "A strange skull-shaped medical device used to grind up bodyparts to make all sorts of things."
+	desc = "A strange skull-shaped medical device used to grind up bodyparts and teeth to make all sorts of things."
 	icon = 'icons/roguetown/items/cooking.dmi'
 	icon_state = "cranker"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_HIP
-	var/obj/item/bodypart/bp // bodypart to grind
+	var/obj/item/bp // bodypart/teeth to grind
 	var/datum/reagent/chosen_potion = /datum/reagent/medicine/healthpot
 	var/obj/item/reagent_containers/glass/bottle/rogue/pot // where to put the health potion
 
-/obj/item/cranker/ShiftMiddleClick(mob/user, params)
+/obj/item/rogue/cranker/examine(mob/user)
 	. = ..()
-	// todo: tutorial for this bitch. doo the same thing with muskets to replace the HELP verb
+	if(pot)
+		. += "<span class='tutorial'>Use middleclick to unscrew the bottle.</span>"
+	if(bp)
+		. += "<span class='tutorial'>Use it in-hand to begin grinding.</span>"
+	. += "<span class='tutorial'>Use rightclick to change what you'll be cooking.</span>"
 
-/obj/item/cranker/MiddleClick(mob/user, params)
+/obj/item/rogue/cranker/MiddleClick(mob/user, params)
 	. = ..()
 	if(user.mind.get_skill_level(/datum/skill/misc/medicine) <= 1)
 		to_chat(user, "<span class='warning'>I don't know how to use this.</span>")
@@ -28,7 +32,7 @@
 		pot = null
 		return
 
-/obj/item/cranker/attack_right(mob/user)
+/obj/item/rogue/cranker/attack_right(mob/user)
 	. = ..()
 	var/chosen = input(user, "What are we cooking today?", "WARMONGERS") as null|anything in list("HEALTH","DUST OF MOON","OZ","LOVE")
 	if(!chosen)
@@ -47,9 +51,9 @@
 			chosen_potion = /datum/reagent/druqks
 			to_chat(user, "<span class='info'>Love defeats all hardship.</span>")
 
-/obj/item/cranker/attack_self(mob/living/carbon/human/user)
+/obj/item/rogue/cranker/attack_self(mob/living/carbon/human/user)
 	. = ..()
-	var/datum/game_mode/warfare/C = SSticker.mode
+	var/datum/game_mode/warmongers/C = SSticker.mode
 	if(user.mind.get_skill_level(/datum/skill/misc/medicine) <= 1)
 		to_chat(user, "<span class='warning'>I don't know how to use this.</span>")
 		return
@@ -66,17 +70,18 @@
 	playsound(get_turf(user), "wetbreak", 100, TRUE, -5)
 	pot.reagents.add_reagent(chosen_potion, 25)
 	to_chat(user, "<span class='info'>The product is ready.</span>")
+	user.adjust_triumphs(1)
 	switch(user.warfare_faction)
 		if(RED_WARTEAM)
 			C.red_bonus++
 		if(BLUE_WARTEAM)
 			C.blu_bonus++
 	
-/obj/item/cranker/attackby(obj/item/I, mob/user, params)
+/obj/item/rogue/cranker/attackby(obj/item/I, mob/user, params)
 	if(user.mind.get_skill_level(/datum/skill/misc/medicine) <= 1)
 		to_chat(user, "<span class='warning'>I don't know how to use this.</span>")
 		return ..()
-	if(istype(I, /obj/item/bodypart))
+	if(istype(I, /obj/item/bodypart) || istype(I, /obj/item/stack/teeth)) // I don't fucking care. You can waste an entire stack of teeth for all I care.
 		var/obj/item/bodypart/BI = I
 		to_chat(user, "<span class='info'>I put \the [BI] into the [src].</span>")
 		playsound(get_turf(user), 'sound/foley/struggle.ogg', 100, FALSE, -2)

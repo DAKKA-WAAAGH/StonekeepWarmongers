@@ -112,6 +112,8 @@ SUBSYSTEM_DEF(vote)
 					winners = list("End Round")
 				if(mode == "stalemate")
 					winners = list("NO")
+				if(mode == "forcestart")
+					winners = list("YES")
 			. = pick(winners)
 			text += "\n<b>Vote Result: [.]</b>"
 		else
@@ -163,11 +165,23 @@ SUBSYSTEM_DEF(vote)
 				if(. == "YES")
 					to_chat(world, "\n<font color='purple'>I knew you were all cowards. Five minutes remain.</font>")
 					for(var/mob/living/L in GLOB.player_list)
-						L.playsound_local(L, 'sound/misc/coward.ogg', 75, FALSE)
-					var/datum/game_mode/warfare/W = SSticker.mode
+						var/sound = 'sound/misc/coward.ogg'
+						if(aspect_chosen(/datum/round_aspect/halo))
+							sound = 'sound/vo/halo/stalemate.ogg'
+						L.playsound_local(L, sound, 75, FALSE)
+					var/datum/game_mode/warmongers/W = SSticker.mode
 					if(istype(W))
 						spawn(5 MINUTES)
-							W.do_war_end()
+							if(!SSticker.force_ending)
+								W.do_war_end()
+			if("forcestart")
+				if(. == "NO")
+					to_chat(world, "\n<font color='purple'>The wait shall continue, then.</font>")
+				if(. == "YES")
+					to_chat(world, "\n<font color='purple'>Understood. The wait shall end.</font>")
+					var/datum/game_mode/warmongers/W = SSticker.mode
+					if(istype(W))
+						SSwarmongers.ReadyToDie()
 	if(restart)
 		var/active_admins = 0
 		for(var/client/C in GLOB.admins)
@@ -238,6 +252,9 @@ SUBSYSTEM_DEF(vote)
 				initiator_key = pick("Zlod", "Sun King", "Gaia", "Aeon", "Gemini", "Aries")
 				choices.Add("Continue Playing","End Round")
 			if("stalemate")
+				initiator_key = "The God of War"
+				choices.Add("YES","NO")
+			if("forcestart")
 				initiator_key = "The God of War"
 				choices.Add("YES","NO")
 			else
@@ -326,8 +343,10 @@ SUBSYSTEM_DEF(vote)
 			. += "<li><a href='?src=[REF(src)];vote=custom'>Custom</a></li>"
 		. += "</ul><hr>"
 	. += "<a href='?src=[REF(src)];vote=close' style='position:absolute;right:50px'>Close</a>"
-	return .
 
+	var/html = "<div id='c' style='overflow:auto;height:100%;'>" + . + "</div>"
+	html += "<script>var e=document.getElementById('c'),s=sessionStorage.getItem('vote_scroll');if(s)e.scrollTop=s;window.onbeforeunload=function(){sessionStorage.setItem('vote_scroll',e.scrollTop);};</script>"
+	return html
 
 /datum/controller/subsystem/vote/Topic(href,href_list[],hsrc)
 	if(!usr || !usr.client)

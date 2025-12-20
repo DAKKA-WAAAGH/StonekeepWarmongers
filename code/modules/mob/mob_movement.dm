@@ -623,6 +623,7 @@
 				if(ishuman(L))
 					var/mob/living/carbon/human/H = L
 					if(!H.check_armor_skill())
+						to_chat(H, "<span class='warning'>GAH! Too heavy!</span>")
 						return
 			m_intent = MOVE_INTENT_RUN
 	if(hud_used && hud_used.static_inventory)
@@ -707,20 +708,24 @@
 /client/proc/ghost_up()
 	set category = "GameMaster"
 	set name = "GhostUp"
-	if(!holder)
-		return
 	. = TRUE
 	if(isobserver(mob))
 		mob.ghost_up()
 
+/client/verb/ghost_up_macro()
+	set name = ".ghostup"
+	ghost_up()
+
 /client/proc/ghost_down()
 	set category = "GameMaster"
 	set name = "GhostDown"
-	if(!holder)
-		return
 	. = TRUE
 	if(isobserver(mob))
 		mob.ghost_down()
+
+/client/verb/ghost_down_macro()
+	set name = ".ghostdown"
+	ghost_down()
 
 ///Moves a mob upwards in z level
 /mob/proc/ghost_up()

@@ -78,16 +78,10 @@ GLOBAL_LIST_INIT(ghost_forms_with_directions_list, list(
 	"ghost_camo",
 	"catghost")) //stores the ghost forms that support directional sprites
 
-GLOBAL_LIST_INIT(unarmed_swingmiss, list(
-	'sound/blank.ogg',
-	'sound/blank.ogg',
-	'sound/blank.ogg'))
-
 GLOBAL_LIST_INIT(unarmed_parrysound, list(
 	'sound/blank.ogg',
 	'sound/blank.ogg',
 	'sound/blank.ogg'))
-
 
 GLOBAL_LIST_INIT(ghost_forms_with_accessories_list, list("ghost")) //stores the ghost forms that support hair and other such things
 
@@ -168,7 +162,7 @@ GLOBAL_LIST_EMPTY(female_clothing_icons)
 GLOBAL_LIST_EMPTY(dismembered_clothing_icons)
 
 	//radical shit
-GLOBAL_LIST_INIT(hit_appends, list("-FUCK", "-ACK", "-SHIT", "-MOTHERFUCKER", "-DICKHEAD", "-WHUH?"))
+GLOBAL_LIST_INIT(hit_appends, list("-FARK", "-ACK", "-SHIT", "-MOTHERFARKER", "-DICKHEAD", "-WHUH?"))
 
 GLOBAL_LIST_INIT(scarySounds, list())
 

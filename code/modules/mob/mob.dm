@@ -80,7 +80,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 			continue
 		var/datum/atom_hud/alternate_appearance/AA = v
 		AA.onNewMob(src)
-	if(!(SSticker.warfare_ready_to_die) && aspect_chosen(/datum/round_aspect/starvingmarvins))
+	if(!(SSwarmongers.warfare_ready_to_die) && aspect_chosen(/datum/round_aspect/starvingmarvins))
 		set_nutrition(450)
 		set_hydration(500)
 	if(aspect_chosen(/datum/round_aspect/rationsurplus))
@@ -163,6 +163,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 			if(!alt_msg)
 				return
 			else
+				SEND_SOUND(src, sound('sound/misc/muffled.ogg', volume = 95))
 				msg = alt_msg
 				type = alt_type
 				if(type & MSG_VISUAL && eye_blind)
@@ -708,6 +709,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 	..()
 	// && check_rights(R_ADMIN,0)
 	if(client)
+		var/datum/game_mode/warmongers/W = SSticker.mode
 		if(statpanel("RoundInfo"))
 			stat("BATTLE ID: [GLOB.rogue_round_id]")
 			stat(null, "MAP: [SSmapping.config?.map_name || "Loading..."]")
@@ -719,6 +721,17 @@ GLOBAL_VAR_INIT(mobids, 1)
 			if(SSticker.round_aspect)
 				stat("BATTLE TIME: [DisplayTimeText(world.time - SSticker.round_start_time, 1)]")
 				stat("ASPECT: [SSticker.round_aspect.name]")
+			if(istype(W) && istype(W.warmode, /datum/warmode/tdm))
+				stat("REGIMIAN DEATHS: [SSticker.regime_deaths]")
+				stat("UNIONIST DEATHS: [SSticker.unionist_deaths]")
+				stat("TOTALITY: [SSticker.deaths]")
+			if(istype(W) && istype(W.warmode, /datum/warmode/assault))
+				var/datum/warmode/assault/ASS = W.warmode
+				stat("REGIMIAN REINFORCEMENTS: [ASS.blu_spawns - SSticker.regime_deaths]")
+			if(istype(loc.loc, /area/rogue/indoors/airship))
+				var/timeto = SSwarmongers.next_respawn - round_duration_in_ticks
+				var/next_respawn = SSwarmongers.respawning ? "Now" : "[round(timeto/10)] seconds"
+				stat("TIME UNTIL ARRIVAL: [next_respawn]")
 
 	if(client && client.holder && check_rights(R_ADMIN,0))
 		if(statpanel("MC"))

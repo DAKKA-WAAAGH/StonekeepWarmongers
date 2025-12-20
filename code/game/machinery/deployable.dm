@@ -74,12 +74,16 @@
 
 /obj/item/rogue/sandbagkit
 	name = "kit of sand bags"
-	desc = "Bags of sand meant to be built to cover your sorry face."
+	desc = "Bags of sand meant to be built to cover your sorry face. Put on ground and use it RIGHT while looking the way you want to deploy it!"
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "sandbag"
 	dropshrink = 0.8
 	drop_sound = 'sound/foley/dropsound/cloth_drop.ogg'
 	w_class = WEIGHT_CLASS_NORMAL
+
+/obj/item/rogue/sandbagkit/examine(mob/user)
+	. = ..()
+	. += "<span class='tutorial'>Use middleclick or rightclick to deploy the sandbags in the direction you're facing on the tile they're placed on.</span>"
 
 /obj/item/rogue/sandbagkit/attack_right(mob/user)
 	. = ..()
@@ -99,6 +103,10 @@
 		var/obj/structure/barricade/sandbags/rogue/sb = new(T)
 		sb.dir = user.dir
 		qdel(src)
+
+/obj/item/rogue/sandbagkit/MiddleClick(mob/user, params) // for the oldies
+	. = ..()
+	attack_right(user)
 
 /obj/structure/barricade/sandbags/rogue
 	name = "sand bags"

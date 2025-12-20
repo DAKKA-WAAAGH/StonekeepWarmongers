@@ -6,6 +6,19 @@
 	throwforce = 0
 	w_class = WEIGHT_CLASS_TINY
 
+/obj/item/natural/dirtclod/attack(mob/living/M, mob/living/user)
+	if(M == user)
+		user.visible_message("<span class='info'>[user] takes a bite of the [src.name].</span>","<span class='notice'>I take a bite of the [src.name]. Delicious!</span>")
+		playsound(get_turf(user),'sound/misc/eat.ogg', rand(30,60), TRUE)
+		
+		var/mob/living/carbon/human/H
+		if(ishuman(user))
+			H = user
+			H.dropItemToGround(src, TRUE, TRUE)
+		qdel(src)
+	else
+		..()
+
 /obj/item/natural/dirtclod/attackby(obj/item/W, mob/user, params)
 	if(istype(W, /obj/item/rogueweapon/shovel))
 		var/obj/item/rogueweapon/shovel/S = W

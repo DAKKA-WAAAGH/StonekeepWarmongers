@@ -88,6 +88,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/admin_cancel_shuttle,	/*allows us to cancel the emergency shuttle, sending it back to centcom*/
 	/client/proc/cmd_admin_direct_narrate,	/*send text directly to a player with no padding. Useful for narratives and fluff-text*/
 	/client/proc/cmd_admin_world_narrate,	/*sends text to all players with no padding*/
+	/client/proc/cmd_admin_world_narrate_faction,
 	/client/proc/cmd_admin_local_narrate,	/*sends text to all mobs within view of atom*/
 	/client/proc/cmd_admin_create_centcom_report,
 	/client/proc/cmd_change_command_name,
@@ -95,6 +96,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_combo_hud, // toggle display of the combination pizza antag and taco sci/med/eng hud
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/join_as_martyr,
+	/client/proc/lobbyooc,
 	/client/proc/forceaspect,
 	/datum/admins/proc/open_shuttlepanel, /* Opens shuttle manipulator UI */
 	/client/proc/deadchat,
@@ -234,6 +236,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/client/proc/admin_cancel_shuttle,
 	/client/proc/cmd_admin_direct_narrate,
 	/client/proc/cmd_admin_world_narrate,
+	/client/proc/cmd_admin_world_narrate_faction,
 	/client/proc/cmd_admin_local_narrate,
 	/client/proc/play_local_sound,
 	/client/proc/play_sound,
@@ -539,7 +542,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Stealth Mode") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/drop_bomb()
-	set category = "Special Verbs"
+	set category = "Specials"
 	set name = "Drop Bomb"
 	set desc = ""
 
@@ -585,7 +588,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Drop Bomb") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 
 /client/proc/drop_dynex_bomb()
-	set category = "Special Verbs"
+	set category = "Specials"
 	set name = "Drop DynEx Bomb"
 	set desc = ""
 
@@ -684,7 +687,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	message_admins("<span class='adminnotice'>[key_name_admin(usr)] gave [key_name_admin(T)] the disease [D].</span>")
 
 /client/proc/object_say(obj/O in world)
-	set category = "Special Verbs"
+	set category = "Specials"
 	set name = "OSay"
 	set desc = ""
 	var/message = input(usr, "What do you want the message to be?", "Make Sound") as text | null
@@ -696,7 +699,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	SSblackbox.record_feedback("tally", "admin_verb", 1, "Object Say") //If you are copy-pasting this, ensure the 2nd parameter is unique to the new proc!
 /client/proc/togglebuildmodeself()
 	set name = "Toggle Build Mode Self"
-	set category = "Special Verbs"
+	set category = "Specials"
 	if (!(holder.rank.rights & R_BUILD))
 		return
 	if(src.mob)
@@ -848,11 +851,16 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 	H.STACON = 20
 	H.STAEND = 20
 
+	H.status_flags |= GODMODE
+	H.dna.species.species_traits |= NOBLOOD
+	H.speech_sound = list('sound/vo/alien_speech.ogg','sound/vo/alien_speech2.ogg')
+
 	to_chat(H, "<span class='info'>This is a role for scaring people IC and kidnapping griefers and shit.</span>")
 
 	ADD_TRAIT(H, TRAIT_ABDUCTOR_TRAINING, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_ABDUCTOR_SCIENTIST_TRAINING, TRAIT_GENERIC)
 	ADD_TRAIT(H, TRAIT_NOMOOD, TRAIT_GENERIC)
+	ADD_TRAIT(H, TRAIT_BLOODLOSS_IMMUNE, TRAIT_GENERIC)
 	var/obj/item/implant/abductor/beamplant = new /obj/item/implant/abductor(H)
 	beamplant.implant(H)
 	for(var/obj/effect/landmark/abductor/LM in GLOB.landmarks_list)

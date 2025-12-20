@@ -50,7 +50,10 @@
 /atom/movable/screen/text
 	icon = null
 	icon_state = null
+	layer = FLOAT_LAYER
+	plane = HUD_PLANE
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	appearance_flags = APPEARANCE_UI_IGNORE_ALPHA
 	screen_loc = "CENTER-7,CENTER-7"
 	maptext_height = 480
 	maptext_width = 480
@@ -86,22 +89,12 @@
 		to_chat(L, "*----*")
 		if(ishuman(usr))
 			var/mob/living/carbon/human/M = usr
-			to_chat(M, "<span class='info'>ᛉ [M.client.equippedPerk.name]</span>")
-			to_chat(M, "<span class='info'>ᛣ [M.client.equippedPerk.desc]</span>")
+			to_chat(M, "<span class='info'>⏀ [M.client.equippedPerk.name]</span>")
+			to_chat(M, "<span class='info'>⏃ [M.client.equippedPerk.desc]</span>")
 			to_chat(M, "*----*")
-			if(M.mind)
-				if(M.mind.language_holder)
-					var/finn
-					for(var/X in M.mind.language_holder.languages)
-						var/datum/language/LA = new X()
-						finn = TRUE
-						to_chat(M, "<span class='info'>[LA.name] - ,[LA.key]</span>")
-					if(!finn)
-						to_chat(M, "<span class='warning'>I don't know any languages.</span>")
-					to_chat(M, "*----*")
 		for(var/X in GLOB.roguetraits)
 			if(HAS_TRAIT(L, X))
-				to_chat(L, "[X] - <span class='info'>[GLOB.roguetraits[X]]</span>")
+				to_chat(L, "• [X] - <span class='info'>[GLOB.roguetraits[X]]</span>")
 				ht = TRUE
 		if(!ht)
 			to_chat(L, "<span class='warning'>I have no special traits.</span>")
@@ -588,12 +581,12 @@
 
 /atom/movable/screen/def_intent
 	name = "defense intent"
-	icon_state = "def1n"
+	icon_state = "def2"
 	icon = 'icons/mob/roguehud.dmi'
 	screen_loc = rogueui_def
 
 /atom/movable/screen/def_intent/update_icon()
-	icon_state = "def[hud.mymob.d_intent]n"
+	icon_state = "def[hud.mymob.d_intent]"
 
 /atom/movable/screen/def_intent/Click(location, control, params)
 	var/_y = text2num(params2list(params)["icon-y"])
@@ -802,6 +795,14 @@
 		return
 	else
 		SSrole_class_handler.setup_class_handler(H)
+
+/atom/movable/screen/advsetup/MouseEntered(location, control, params)
+	. = ..()
+	add_overlay(image('icons/mob/roguehud.dmi', icon_state="lclick"))
+
+/atom/movable/screen/advsetup/MouseExited(params)
+	. = ..()
+	cut_overlays()
 
 /atom/movable/screen/eye_intent
 	name = "eye intent"
@@ -1351,6 +1352,8 @@
 			limby.color = "#2f002f"
 			. += limby
 
+	. += mutable_appearance('icons/mob/roguehud64.dmi', "m-r_inhand") // testing: might remove later
+	. += mutable_appearance('icons/mob/roguehud64.dmi', "m-l_inhand")
 	. += mutable_appearance(overlay_icon, "m_[hud.mymob.zone_selected]")
 
 /atom/movable/screen/zone_sel/alien
@@ -1676,42 +1679,17 @@
 			to_chat(M, "*----*")
 			to_chat(M, "<span class='info'>I'm indifferent. I hate myself, here's all that's bugging me right now. Life sucks.</span>")
 			to_chat(M, "*--------*")
-			var/list/already_printed = list()
-			for(var/datum/stressevent/S in M.positive_stressors)
-				if(S in already_printed)
+			if(!length(M.stressors))
+				to_chat(M, "<span class='info'>I'm not feeling much of anything right now.</span>")
+			for(var/datum/stressevent/stressevent in M.stressors)
+				if(!stressevent.can_show())
 					continue
-				var/cnt = 1
-				for(var/datum/stressevent/CS in M.positive_stressors)
-					if(CS == S)
-						continue
-					if(CS.type == S.type)
-						cnt++
-						already_printed += CS
-				var/ddesc = S.desc
-				if(islist(S.desc))
-					ddesc = pick(S.desc)
-				if(cnt > 1)
-					to_chat(M, "[ddesc] (x[cnt])")
+				var/count = stressevent.stacks
+				var/ddesc = islist(stressevent.desc) ? pick(stressevent.desc) : stressevent.desc
+				if(count > 1)
+					to_chat(M, "[ddesc] (x[count])")
 				else
 					to_chat(M, "[ddesc]")
-			for(var/datum/stressevent/S in M.negative_stressors)
-				if(S in already_printed)
-					continue
-				var/cnt = 1
-				for(var/datum/stressevent/CS in M.negative_stressors)
-					if(CS == S)
-						continue
-					if(CS.type == S.type)
-						cnt++
-						already_printed += CS
-				var/ddesc = S.desc
-				if(islist(S.desc))
-					ddesc = pick(S.desc)
-				if(cnt > 1)
-					to_chat(M, "[ddesc] (x[cnt])")
-				else
-					to_chat(M, "[ddesc]")
-			already_printed = list()
 			to_chat(M, "*--------*")
 		if(modifiers["right"])
 			if(M.get_triumphs() < 2)
@@ -1783,8 +1761,8 @@
 			continue
 		var/atom/movable/screen/rintent_selection/R = new(M.client)
 		var/datum/rmb_intent/RI = new X
+		R.add_overlay("[RI.icon_state]_x")
 		R.stored_intent = X
-		R.icon_state = RI.icon_state
 		R.name = RI.name
 		R.desc = RI.desc
 		shown_intents += R
@@ -1803,7 +1781,7 @@
 /atom/movable/screen/rintent_selection
 	name = "rmb intent"
 	icon = 'icons/mob/roguehud.dmi'
-	icon_state = "rmbaimed"
+	icon_state = "rmmbb"
 	var/stored_intent
 	var/stored_name
 	var/client/holder
@@ -1905,7 +1883,7 @@
 	name = ""
 	screen_loc = "1,1"
 	mouse_opacity = 0
-	alpha = 75
+	alpha = 0
 //	layer = 20.5
 //	plane = 20
 	layer = 13
@@ -1918,7 +1896,7 @@
 	name = ""
 	screen_loc = ui_backhudl
 	mouse_opacity = 0
-	alpha = 80
+	alpha = 0
 	layer = 13
 	plane = 0
 	blend_mode = 3

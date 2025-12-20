@@ -142,6 +142,12 @@
 /obj/structure/fluff/walldeco/bigpainting/lake
 	icon_state = "lake"
 
+/obj/structure/fluff/walldeco/bigpainting/beasts
+	icon_state = "massivebeasts"
+
+/obj/structure/fluff/walldeco/bigpainting/beast
+	icon_state = "massivebeast"
+
 /obj/structure/fluff/walldeco/mona
 	name = "painting"
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
@@ -164,13 +170,13 @@
 	..()
 
 /obj/structure/fluff/walldeco/customflag
-	name = "flag of Heartfelt"
+	name = "flag of the Union"
 	desc = ""
 	icon_state = "wallflag"
 
 /obj/structure/fluff/walldeco/customflag/Initialize()
 	..()
-	lordcolor(CLOTHING_RED,CLOTHING_YELLOW)
+	lordcolor(CLOTHING_RED,CLOTHING_BLUE)
 
 /obj/structure/fluff/walldeco/customflag/Destroy()
 	GLOB.lordcolor -= src
@@ -186,6 +192,16 @@
 	M.color = secondary
 	add_overlay(M)
 	GLOB.lordcolor -= src
+
+/obj/structure/fluff/walldeco/beerflag
+	name = "flag of the Union"
+	desc = ""
+	icon_state = "beerflag"
+
+/obj/structure/fluff/walldeco/regimeflag
+	name = "flag of the Regime"
+	desc = ""
+	icon_state = "regimeflag"
 
 /obj/structure/fluff/walldeco/moon
 	name = "banner"

@@ -1,21 +1,23 @@
 /obj/structure/warobjective
 	name = "objective"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
-	var/blurb = "Fuck the opposing team to win!"
-	var/alertsound = 'sound/misc/alert.ogg'
-	var/haloalertsound = 'sound/misc/alert.ogg'
+	var/gametype = /datum/warmode
+	var/qdel_on_init = FALSE
 
-/obj/structure/warobjective/proc/beginround()
-	if(istype(SSticker.mode, /datum/game_mode/warfare))
-		to_chat(world, "<span class='danger'>[blurb]</span>")
-		if(aspect_chosen(/datum/round_aspect/halo))
-			SEND_SOUND(world, haloalertsound)
-		else
-			for(var/mob/living/carbon/human/M in GLOB.player_list)
-				if(hasvar(M, "warfare_faction") && M.warfare_faction == BLUE_WARTEAM)
-					SEND_SOUND(M, 'sound/vo/wc/gren/grenzroundstart.ogg')
-				if(hasvar(M, "warfare_faction") && M.warfare_faction == RED_WARTEAM)
-					SEND_SOUND(M, 'sound/vo/wc/felt/heartroundstart.ogg')
+/obj/structure/warobjective/Initialize()
+	. = ..()
+	SSwarmongers.fuckthisshit = src
+
+/obj/structure/warobjective/proc/setup()
+	var/datum/game_mode/warmongers/C = SSticker.mode
+	var/datum/warmode/WM = new gametype
+	
+	C.warmode = WM
+	WM.objective = src
+
+	if(qdel_on_init)
+		WM.objective = null
+		qdel(src)
 
 // TDM
 
@@ -28,191 +30,140 @@
 	resistance_flags = INDESTRUCTIBLE
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
-	haloalertsound = 'sound/vo/halo/exterminatus.mp3'
-	var/stalemate_kills = 98
-	var/win_kills = 50
-	var/base_player_count = 16
-
-	var/min_win_kills = 10
-	var/max_win_kills = 200
-	var/min_stalemate_kills = 20
-	var/max_stalemate_kills = 400
-
-/obj/structure/warobjective/bloodstatue/Initialize()
-	. = ..()
-	var/player_count = get_active_player_count()
-	win_kills = clamp(round(50 * (player_count / base_player_count)), min_win_kills, max_win_kills)
-	stalemate_kills = clamp(round(98 * (player_count / base_player_count)), min_stalemate_kills, max_stalemate_kills)
-
-	START_PROCESSING(SSprocessing, src)
-	blurb = "Secure [win_kills] kills for your team to win!"
-
-/obj/structure/warobjective/bloodstatue/process()
-	if(istype(SSticker.mode, /datum/game_mode/warfare))
-		var/datum/game_mode/warfare/C = SSticker.mode
-		if(SSticker.grenzelhoft_deaths >= win_kills)
-			C.do_war_end(null, RED_WARTEAM)
-			STOP_PROCESSING(SSprocessing, src)
-		if(SSticker.heartfelt_deaths >= win_kills)
-			C.do_war_end(null, BLUE_WARTEAM)
-			STOP_PROCESSING(SSprocessing, src)
-		if(SSticker.deaths >= stalemate_kills)
-			C.do_war_end()
-			STOP_PROCESSING(SSprocessing, src)
-
-/*
-/obj/structure/laststandstatue // relic of old LAST STAND
-	name = "Sanctified Statue"
-	desc = "A massive, holy statue. Heartfeltians feel compelled to protect it, and Grenzelhoftians to destroy it."
-	icon = 'icons/roguetown/misc/96x96.dmi'
-	icon_state = "psy" //ironic...
-	max_integrity = 800
-	pixel_x = -32
-	layer = ABOVE_MOB_LAYER
-	plane = GAME_PLANE_UPPER
-	attacked_sound = list('sound/combat/hits/onstone/wallhit.ogg', 'sound/combat/hits/onstone/wallhit2.ogg', 'sound/combat/hits/onstone/wallhit3.ogg')
-	var/active = FALSE
-	var/progress_in_seconds = 0
-	var/purpose_fulfilled = FALSE
-	var/last_scream = 0
-	var/ascend_time = 10 MINUTES
-	var/half_way = FALSE
-
-/obj/structure/laststandstatue/Initialize(mapload)
-	. = ..()
-	START_PROCESSING(SSprocessing, src)
-
-/obj/structure/laststandstatue/proc/begincountdown()
-	if(istype(SSticker.mode, /datum/game_mode/warfare))
-		var/datum/game_mode/warfare/C = SSticker.mode
-		C.warmode = GAMEMODE_STAND
-		active = TRUE
-		for(var/X in C.heartfelts)
-			var/mob/living/carbon/human/H = X
-			to_chat(H, "<span class='danger'>Protect the [src] at any cost!</span>")
-			to_chat(H, "You must protect the [src] for [ascend_time] seconds.")
-			SEND_SOUND(H, 'sound/misc/alert.ogg')
-		for(var/X in C.grenzels)
-			var/mob/living/carbon/human/H = X
-			to_chat(H, "<span class='danger'>Destroy the [src] at any cost!</span>")
-			to_chat(H, "You have [ascend_time] seconds to destroy the [src].")
-			SEND_SOUND(H, 'sound/misc/notice.ogg')
-
-/obj/structure/laststandstatue/process()
-	if(active == FALSE)
-		return
-	for(var/turf/closed/wall/W in RANGE_TURFS(2, src)) //no cheating by just boxing in the statue, that is super lame.
-		W.dismantle_wall()
-	progress_in_seconds += 1
-	if(progress_in_seconds > ascend_time/2 && half_way == FALSE)
-		to_chat(world, "<span class='danger'>The [src] is halfway to ascension!</span>")
-		half_way = TRUE
-		for(var/mob/M in GLOB.player_list)
-			SEND_SOUND(M, 'sound/misc/alert.ogg')
-	if(progress_in_seconds > ascend_time && purpose_fulfilled == FALSE)
-		to_chat(world, "<span class='danger'>The [src] has ascended!</span>")
-		if(istype(SSticker.mode, /datum/game_mode/warfare))
-			var/datum/game_mode/warfare/C = SSticker.mode
-			purpose_fulfilled = TRUE
-			C.do_war_end(team=RED_WARTEAM)
-
-/obj/structure/laststandstatue/Destroy()
-	STOP_PROCESSING(SSprocessing, src)
-	if(!purpose_fulfilled)
-		to_chat(world, "<span class='danger'>The [src] was destroyed!</span>")
-		if(istype(SSticker.mode, /datum/game_mode/warfare))
-			var/datum/game_mode/warfare/C = SSticker.mode
-			C.do_war_end(team=BLUE_WARTEAM)
-	. = ..()
-
-/obj/structure/laststandstatue/examine(mob/user)
-	..()
-	if(!active)
-		to_chat(user,"The [src] is not ready yet.")
-	else
-		to_chat(user, "<b>The [src] must be protected for another [(ascend_time - progress_in_seconds)] seconds.</b>!")
-		to_chat(user, "<b>The [src] has [obj_integrity] health</b>!")
-
-/obj/structure/laststandstatue/take_damage(damage_amount, damage_type = BRUTE, damage_flag = 0, sound_effect = TRUE, attack_dir, armour_penetration = 0)
-	. = ..()
-	if(istype(SSticker.mode, /datum/game_mode/warfare))
-		var/datum/game_mode/warfare/C = SSticker.mode
-		if(last_scream < world.time)
-			for(var/X in C.heartfelts)
-				var/mob/living/carbon/human/H = X
-				SEND_SOUND(H, 'sound/misc/astratascream.ogg')
-				to_chat(H, "<span class='danger'>The [src] is taking damage!</span>")
-			last_scream = world.time + 600
-*/
+	gametype = /datum/warmode/tdm
 
 // CTF
 
 /obj/structure/warobjective/ponr
-	name = "Grenzelhofts Point of No Return"
-	desc = "You feel like this was shamelessly stolen from some sort of different place. Oh well, DON'T LET THE HEARTFELTS TOUCH THIS! But if you're a Heartfelt... Eh, sure. Why not."
+	name = "Regimer Point of No Return"
+	desc = "A very important flag."
 	icon = 'icons/shamelessly_stolen.dmi'
-	icon_state = "destruct"
+	icon_state = "ponrblue"
 	anchored = TRUE
 	climbable = FALSE
 	density = TRUE
 	opacity = FALSE
-	haloalertsound = 'sound/vo/halo/ctf.mp3'
-	blurb = "Capture the enemy flag and take it to your PONR!"
-	var/team = BLUE_WARTEAM
-	var/wealreadywon = FALSE
-
-/obj/structure/warobjective/ponr/Initialize()
-	. = ..()
-	START_PROCESSING(SSobj, src)
-
-/obj/structure/warobjective/ponr/process()
-	for(var/turf/closed/wall/W in RANGE_TURFS(2, src)) //no cheating by just boxing in the statue, that is super lame.
-		W.dismantle_wall()
+	gametype = /datum/warmode/noreturn
 
 /obj/structure/warobjective/ponr/attack_hand(mob/user)
 	. = ..()
 	var/mob/living/carbon/human/H
-	var/datum/game_mode/warfare/C = SSticker.mode
+	var/datum/game_mode/warmongers/C = SSticker.mode
+	var/datum/warmode/noreturn/NR = C.warmode
 	if(ishuman(user))
 		H = user
-	if(H.warfare_faction == team)
-		if(C.crownbearer == H && !wealreadywon)
-			C.do_war_end(H, team)
-			wealreadywon = TRUE
-			if(aspect_chosen(/datum/round_aspect/halo))
-				SEND_SOUND(world, 'sound/vo/halo/flag_cap.mp3')
-		else if(C.crownbearer != H)
-			to_chat(H, "<span class='info'>Someone else is carrying the flag.</span>")
-			return
-		else
-			to_chat(H, "<span class='info'>This belongs to us.</span>")
+
+	if(NR.wealreadywon)
 		return
-	if(C.crownbearer == H)
+	if(NR.blu_flag)
+		to_chat(H, "<span class='info'>Someone else is carrying the flag.</span>")
 		return
 
-	C.crownbearer = H
-	to_chat(world, "<span class='userdanger'>[uppertext(team)] FLAG TAKEN.</span>")
+	if(NR.red_flag == H)
+		NR.wealreadywon = TRUE
+		C.do_war_end(H, BLUE_WARTEAM)
+		if(aspect_chosen(/datum/round_aspect/halo))
+			SEND_SOUND(world, 'sound/vo/halo/flag_cap.mp3')
+		return
+	
+	if(H.warfare_faction == BLUE_WARTEAM)
+		to_chat(H, "<span class='info'>This belongs to us.</span>")
+		return
+
+	NR.blu_flag = H
+	to_chat(world, "<span class='userdanger'>REGIME FLAG TAKEN.</span>")
 	if(aspect_chosen(/datum/round_aspect/halo))
 		SEND_SOUND(world, 'sound/vo/halo/flag_take.mp3')
 
 /obj/structure/warobjective/ponr/red
-	name = "Heartfelts Point of No Return"
-	desc = "You feel like this was shamelessly stolen from some sort of different place. Oh well, DON'T LET THE GRENZELHOFTS TOUCH THIS! But if you're a Grenzelhoft... Eh, sure. Why not."
-	team = RED_WARTEAM
+	name = "Union's Point of No Return"
+	desc = "A very important flag."
+	icon_state = "ponrred"
+
+/obj/structure/warobjective/ponr/red/attack_hand(mob/user)
+	. = ..()
+	var/mob/living/carbon/human/H
+	var/datum/game_mode/warmongers/C = SSticker.mode
+	var/datum/warmode/noreturn/NR = C.warmode
+	if(ishuman(user))
+		H = user
+
+	if(NR.wealreadywon)
+		return
+	if(NR.red_flag)
+		to_chat(H, "<span class='info'>Someone else is carrying the flag.</span>")
+		return
+
+	if(NR.blu_flag == H)
+		NR.wealreadywon = TRUE
+		C.do_war_end(H, RED_WARTEAM)
+		if(aspect_chosen(/datum/round_aspect/halo))
+			SEND_SOUND(world, 'sound/vo/halo/flag_cap.mp3')
+		return
+	
+	if(H.warfare_faction == RED_WARTEAM)
+		to_chat(H, "<span class='info'>This belongs to us.</span>")
+		return
+
+	NR.red_flag = H
+	to_chat(world, "<span class='userdanger'>UNION FLAG TAKEN.</span>")
+	if(aspect_chosen(/datum/round_aspect/halo))
+		SEND_SOUND(world, 'sound/vo/halo/flag_take.mp3')
 
 // LD
 
-/obj/structure/warobjective/warthrone
-	name = "throne of Heartfelt"
+/obj/structure/warobjective/assaultthrone
+	name = "throne"
 	desc = "Do not let the enemy sit on this with your crown."
 	icon = 'icons/roguetown/misc/96x96.dmi'
-	icon_state = "throne"
+	icon_state = "throne2"
 	density = FALSE
 	can_buckle = 1
 	pixel_x = -32
 	buckle_lying = FALSE
-	blurb = "Take the enemy Lord's crown and sit on the Throne of Heartfelt!"
-	haloalertsound = 'sound/vo/halo/hail2theking.mp3'
+	gametype = /datum/warmode/assault
+
+/obj/structure/warobjective/assaultthrone/post_buckle_mob(mob/living/M)
+	..()
+	density = TRUE
+	M.set_mob_offsets("bed_buckle", _x = 0, _y = 8)
+
+/obj/structure/warobjective/assaultthrone/post_unbuckle_mob(mob/living/M)
+	..()
+	density = FALSE
+	M.reset_offsets("bed_buckle")
+
+/obj/structure/warobjective/warthrone/Initialize()
+	..()
+	lordcolor(CLOTHING_RED,CLOTHING_YELLOW)
+
+/obj/structure/warobjective/warthrone/Destroy()
+	GLOB.lordcolor -= src
+	return ..()
+
+/obj/structure/warobjective/warthrone/lordcolor(primary,secondary)
+	if(!primary || !secondary)
+		return
+	var/mutable_appearance/M = mutable_appearance(icon, "throne_primary", -(layer+0.1))
+	M.color = primary
+	add_overlay(M)
+	M = mutable_appearance(icon, "throne_secondary", -(layer+0.1))
+	M.color = secondary
+	add_overlay(M)
+	GLOB.lordcolor -= src
+
+// LD
+
+/obj/structure/warobjective/warthrone
+	name = "throne of the Union"
+	desc = "Do not let the enemy sit on this with your crown."
+	icon = 'icons/roguetown/misc/96x96.dmi'
+	icon_state = "throne2"
+	density = FALSE
+	can_buckle = 1
+	pixel_x = -32
+	buckle_lying = FALSE
+	gametype = /datum/warmode/lords
 
 /obj/structure/warobjective/warthrone/post_buckle_mob(mob/living/M)
 	..()
@@ -221,16 +172,17 @@
 	if(!ishuman(M))
 		return
 	var/mob/living/carbon/human/H = M
-	if(istype(SSticker.mode, /datum/game_mode/warfare))
-		var/datum/game_mode/warfare/C = SSticker.mode
-		if(C.crownbearer == H)
+	if(istype(SSticker.mode, /datum/game_mode/warmongers))
+		var/datum/game_mode/warmongers/C = SSticker.mode
+		var/datum/warmode/lords/L = C.warmode
+		if(L.winner == H)
 			return // Gets rid of people farming triumphs
 		switch(H.warfare_faction)
 			if(RED_WARTEAM)
-				if(istype(H.head, /obj/item/clothing/head/roguetown/crownblu))
+				if(istype(H.head, /obj/item/clothing/head/roguetown/warmongers/crownblu))
 					C.do_war_end(H, RED_WARTEAM)
 			if(BLUE_WARTEAM)
-				if(istype(H.head, /obj/item/clothing/head/roguetown/crownred))
+				if(istype(H.head, /obj/item/clothing/head/roguetown/warmongers/crownred))
 					C.do_war_end(H, BLUE_WARTEAM)
 
 /obj/structure/warobjective/warthrone/post_unbuckle_mob(mob/living/M)
@@ -257,11 +209,11 @@
 	add_overlay(M)
 	GLOB.lordcolor -= src
 
-// Shopkeepers
+// Shopkeepers, back now with improvements!
 
 /obj/structure/shopkeep
-	name = "\improper Shopkeeper"
-	desc = "A merchant from the isle of Enigma, he has some things to sell. He is hanging from an airship by chain... he won't stick around for long."
+	name = "\improper KAITZAR-Sponzored Shopkeeper"
+	desc = "A merchant, he has some things to sell. He is hanging from an airship by chain... he won't stick around for long."
 	icon = 'icons/roguetown/misc/tallstructure.dmi'
 	icon_state = "shop"
 	layer = 4.26
@@ -271,7 +223,12 @@
 	anchored = TRUE
 	density = FALSE
 	var/leaving = FALSE
+	var/faction = BLUE_WARTEAM
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
+
+/obj/structure/shopkeep/red
+	name = "\improper Beezer's Favorite Chef Shopkeeper"
+	faction = RED_WARTEAM
 
 /obj/structure/shopkeep/proc/leave()
 	if(leaving)
@@ -281,10 +238,6 @@
 	playsound(src, 'sound/misc/gate.ogg', 50, FALSE)
 	QDEL_IN(src, 35)
 
-/obj/structure/shopkeep/Initialize()
-	. = ..()
-	SSticker.warfare_barriers += src
-
 /obj/structure/shopkeep/examine(mob/user)
 	. = ..()
 	if(istype(get_area(src), /area/rogue/indoors))
@@ -292,39 +245,89 @@
 
 /obj/structure/shopkeep/attack_hand(mob/user)
 	. = ..()
-	if(!ishuman(user))
-		say("FUCK YOU! YOU'RE JUST AN ANIMAL, FIEND!")
-		playsound(src, 'sound/misc/machineno.ogg', 50, FALSE)
-		return
+	var/datum/game_mode/warmongers/C = SSticker.mode
+	var/mob/living/carbon/human/H
+	if(ishuman(user))
+		H = user
+		if(H.warfare_faction != faction)
+			say("OK! LETS GET TO BUSINE- wait a second... HEY YOU'RE NOT MEANT TO BE HERE!!!")
+			playsound(loc, 'sound/misc/machinetalk.ogg', 100, FALSE, -1)
+			return
 	if(leaving)
 		to_chat(user, "<span class='warning'>NO! NO! I FORGOT TO GET MY CHANGE! NOOOOOOOOO!</span>")
 		user.playsound_local(src, 'sound/misc/zizo.ogg', 50, FALSE)
 		return
-	if(user.client.equippedPerk.type != /datum/warperk)
-		say("SORRY! YOU ARE ALREADY EMPOWERED!")
-		playsound(src, 'sound/misc/machinetalk.ogg', 50, FALSE)
-		return
 	playsound(src, 'sound/misc/keyboard_enter.ogg', 100, FALSE, -1)
 
-	var/list/buyables = list()
-	for(var/thing in subtypesof(/datum/warperk))//Populate possible aspects list.
-		var/datum/warperk/A = new thing
-		buyables[A.name] = A
-	var/chosen = input(user, "ENIGMATIC EXPENSIVITIES TO PROTECT YOUR EXTREMITIES! BUY NOW!", "WARMONGERS") as null|anything in buyables
-	var/datum/warperk/WP = buyables[chosen]
-	if(WP)
-		var/full_desc = "[WP.desc] ([WP.cost] TRI)"
-		var/alerto = alert(user, full_desc, WP.name, "Confirm", "Cancel")
-		if(alerto == "Confirm")
-			if(user.get_triumphs() < WP.cost)
-				to_chat(user, "<span class='warning'>I haven't TRIUMPHED enough.</span>")
-				return
-			user.adjust_triumphs(-WP.cost)
-			user.client.equippedPerk = WP
-			user.client.equippedPerk.apply(user)
-			say("THANK YOU FOR SHOPPING WITH US TODAE!")
-			playsound(src, 'sound/misc/machinetalk.ogg', 50, FALSE)
+	var/list/shippables = list()
+	for(var/s in subtypesof(/datum/warshippable))
+		var/datum/warshippable/WS = new s()
+		var/faction_check = TRUE
+		if(WS.faction && WS.faction != H.warfare_faction)
+			faction_check = FALSE
+		if(C.reinforcementwave >= WS.reinforcement && faction_check)
+			shippables[WS.name] = WS
 
-/obj/structure/warobjective/cfour
+	var/choice = browser_input_list(user, "AIRSHIPPED GOODS!", "BUY NOW!!!", shippables)
+	var/datum/warshippable/shoppin = shippables[choice]
+	if(!shoppin)
+		return
+	if(!do_after(user, 5 SECONDS, TRUE, loc))
+		playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
+		return
+
+	switch(faction)
+		if(RED_WARTEAM)
+			if(C.red_bonus >= 1)
+				C.red_bonus--
+				playsound(loc, 'sound/misc/machinevomit.ogg', 100, FALSE, -1)
+			else
+				playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
+				say("INSUFFICIENT POINTS!!!")
+				return
+		if(BLUE_WARTEAM)
+			if(C.blu_bonus >= 1)
+				C.blu_bonus--
+				playsound(loc, 'sound/misc/machinevomit.ogg', 100, FALSE, -1)
+			else
+				playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
+				say("INSUFFICIENT POINTS!!!")
+				return
+	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
+
+	for(var/i in shoppin.items)
+		if(shoppin.items.len > 1)
+			sleep(rand(1,3))
+		var/fuck = new i(get_turf(src))
+		if(istype(fuck, /obj))
+			var/obj/O = fuck
+			O.pixel_y = 200
+			animate(O, 1 SECONDS, easing = BOUNCE_EASING, pixel_y = 0)
+			spawn(0.35 SECONDS)
+				playsound(loc, 'sound/misc/fall.ogg', 100, FALSE, -1)
+
+/obj/structure/capturepoint_shower
 	name = "\improper grand orb"
-	desc = "A relic of a former age. It hums with unstable magick."
+	desc = "A relic of a former age. It hums with the power of ancient quackery."
+	icon = 'icons/roguetown/misc/machines.dmi'
+	icon_state = "ballooner"
+	var/area/rogue/assault/assault
+
+/obj/structure/capturepoint_shower/Initialize()
+	. = ..()
+	var/area/A = get_area(src)
+	if(istype(A, /area/rogue/assault))
+		var/area/rogue/assault/ASS = A
+		assault = ASS
+	name = "[uppertext(assault.name)] ASSAULT POINT"
+
+/obj/structure/capturepoint_shower/examine(mob/user)
+	. = ..()
+	var/datum/game_mode/warmongers/C = SSticker.mode
+	if(!istype(C.warmode, /datum/warmode/assault))
+		return
+	var/datum/warmode/assault/ASS = C.warmode // hehe
+
+	if(assault)
+		. += "<span class='tutorial'>It is controlled by the [assault.holder].</span>"
+		. += "<span class='tutorial'>Progress: [ASS.attack_progress]/[assault.tocapture_points]</span>"

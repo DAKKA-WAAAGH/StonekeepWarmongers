@@ -77,3 +77,7 @@
 
 /obj/effect/projectile/tracer/wormhole
 	icon_state = "wormhole_g"
+
+/obj/effect/projectile/tracer/bullet
+	name = "bullet"
+	icon_state = "bullet"

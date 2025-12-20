@@ -62,7 +62,7 @@
 	var/next_move = null
 	var/next_rmove = null
 	var/next_lmove = null
-	var/used_hand = 1
+	var/used_hand = 2
 
 	/**
 	  * Magic var that stops you moving and interacting with anything
@@ -275,7 +275,7 @@
 	var/mobid = 0 //incremented on spawn
 
 	var/cmode = 0
-	var/d_intent = INTENT_DODGE
+	var/d_intent = INTENT_PARRY
 	var/islatejoin = FALSE
 	var/obj/effect/proc_holder/ranged_ability //Any ranged ability the mob has, as a click override
 

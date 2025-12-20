@@ -20,13 +20,13 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	name = "indoors rt"
 	icon_state = "indoors"
 	ambientrain = RAIN_IN
-	ambientsounds = AMB_WARFARE
-	ambientnight = AMB_WARFARE
-	spookysounds = SPOOKY_GEN
-	spookynight = SPOOKY_GEN
-	droning_sound = 'sound/music/dreadfulstench.ogg'
-	droning_sound_dusk = 'sound/music/dreadfulstench.ogg'
-	droning_sound_night = 'sound/music/dreadfulstench.ogg'
+	ambientsounds = null
+	ambientnight = null
+	spookysounds = SPOOKY_WARINDOORS
+	spookynight = SPOOKY_WARINDOORS
+	droning_sound = 'sound/music/powderdry.ogg'
+	droning_sound_dusk = 'sound/music/powderdry.ogg'
+	droning_sound_night = 'sound/music/powderdry.ogg'
 	plane = INDOOR_PLANE
 	converted_type = /area/rogue/outdoors
 
@@ -49,14 +49,33 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	outdoors = TRUE
 	ambientrain = RAIN_OUT
 //	ambientsounds = list('sound/ambience/wamb.ogg')
-	ambientsounds = AMB_WARFARE
-	ambientnight = AMB_WARFARE
-	spookysounds = SPOOKY_CROWS
-	spookynight = SPOOKY_GEN
-	droning_sound = 'sound/music/dreadfulstench.ogg'
-	droning_sound_dusk = 'sound/music/dreadfulstench.ogg'
-	droning_sound_night = 'sound/music/dreadfulstench.ogg'
+	ambientsounds = null
+	ambientnight = null
+	spookysounds = SPOOKY_WAR
+	spookynight = SPOOKY_WAR
+	droning_sound = 'sound/music/beforedeath.ogg'
+	droning_sound_dusk = 'sound/music/ghostlycalls.ogg'
+	droning_sound_night = 'sound/music/yourconditionisntservicerelated.ogg'
 	converted_type = /area/rogue/indoors/shelter
+	var/sandy = FALSE // ???
+
+/area/rogue/outdoors/desert
+	sandy = TRUE
+
+/area/rogue/outdoors/Entered(mob/living/L, area/A)
+	. = ..()
+	if(istype(L) && !istype(A, /area/rogue/outdoors))//Doesn't work but this does stop the lag.
+		if(sandy)
+			L.overlay_fullscreen("ash", /atom/movable/screen/fullscreen/storm/sand)
+		else
+			L.overlay_fullscreen("ash", /atom/movable/screen/fullscreen/storm)
+		L.overlay_fullscreen("ashparticle", /atom/movable/screen/fullscreen/ashparticles)
+	
+/area/rogue/outdoors/Exited(mob/living/L, area/A)
+	. = ..()
+	if(istype(L) && !istype(A, /area/rogue/outdoors))
+		L.clear_fullscreen("ash")
+		L.clear_fullscreen("ashparticle")
 
 /area/rogue/indoors/shelter
 	icon_state = "shelter"
@@ -122,14 +141,14 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 				/mob/living/carbon/human/species/goblin/npc/ambush/sea = 50,
 				/mob/living/carbon/human/species/goblin/npc/ambush = 50)
 	first_time_text = "ROCKHILL BASIN"
-	droning_sound = 'sound/music/area/field.ogg'
+	droning_sound = 'sound/blank.ogg'
 	droning_sound_dusk = 'sound/music/area/septimus.ogg'
 	droning_sound_night = 'sound/music/area/sleeping.ogg'
 	converted_type = /area/rogue/indoors/shelter/rtfield
 
 /area/rogue/indoors/shelter/rtfield
 	icon_state = "rtfield"
-	droning_sound = 'sound/music/area/field.ogg'
+	droning_sound = 'sound/blank.ogg'
 	droning_sound_dusk = 'sound/music/area/septimus.ogg'
 	droning_sound_night = 'sound/music/area/sleeping.ogg'
 
@@ -212,13 +231,13 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_night = null
 
 /area/rogue/outdoors/beach
-	name = "sophia's cry"
+	name = "Isle of Durt"
 	icon_state = "beach"
 	ambientsounds = AMB_BEACH
 	ambientnight = AMB_BEACH
-	droning_sound = 'sound/music/area/townstreets.ogg'
-	droning_sound_dusk = 'sound/music/area/septimus.ogg'
-	droning_sound_night = 'sound/music/area/sleeping.ogg'
+	droning_sound = 'sound/music/stew.ogg'
+	droning_sound_dusk = 'sound/music/stew.ogg'
+	droning_sound_night = 'sound/music/stew.ogg'
 
 
 //// UNDER AREAS (no indoor rain sound usually)
@@ -357,14 +376,14 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 /area/rogue/indoors/town
 	name = "indoors"
 	icon_state = "blueold"
-	droning_sound = 'sound/music/dreadfulstench.ogg'
-	droning_sound_dusk = 'sound/music/dreadfulstench.ogg'
-	droning_sound_night = 'sound/music/dreadfulstench.ogg'
+	droning_sound = 'sound/music/powderdry.ogg'
+	droning_sound_dusk = 'sound/music/powderdry.ogg'
+	droning_sound_night = 'sound/music/powderdry.ogg'
 	converted_type = /area/rogue/outdoors/exposed/town
 
 /area/rogue/outdoors/exposed/town
 	icon_state = "town"
-	droning_sound = 'sound/music/dreadfulstench.ogg'
+	droning_sound = 'sound/music/powderdry.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
 
@@ -516,6 +535,34 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound_dusk = null
 	droning_sound_night = null
 
+/area/rogue/indoors/town/industry
+	name = "industry"
+	icon_state = "industry"
+	droning_sound = 'sound/music/thefactory.ogg'
+	droning_sound_dusk = 'sound/music/thefactory.ogg'
+	droning_sound_night = 'sound/music/thefactory.ogg'
+
+/area/rogue/indoors/town/arena
+	name = "arena"
+	icon_state = "arena"
+	droning_sound = 'sound/music/root.ogg'
+	droning_sound_dusk = 'sound/music/root.ogg'
+	droning_sound_night = 'sound/music/root.ogg'
+
+/area/rogue/indoors/town/boat
+	name = "boat"
+	icon_state = "boat"
+	droning_sound = 'sound/music/peopledie.ogg'
+	droning_sound_dusk = 'sound/music/peopledie.ogg'
+	droning_sound_night = 'sound/music/peopledie.ogg'
+
+/area/rogue/indoors/town/dungeon
+	name = "dungeon"
+	icon_state = "dungeon"
+	droning_sound = 'sound/music/bottomless.ogg'
+	droning_sound_dusk = 'sound/music/bottomless.ogg'
+	droning_sound_night = 'sound/music/bottomless.ogg'
+
 ///// OUTDOORS AREAS (again, for some reason)
 
 /area/rogue/outdoors/town
@@ -553,14 +600,14 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	ambientnight = AMB_MOUNTAIN
 	spookysounds = SPOOKY_GEN
 	spookynight = SPOOKY_GEN
-	droning_sound = 'sound/music/area/field.ogg'
-	droning_sound_dusk = 'sound/music/area/septimus.ogg'
-	droning_sound_night = 'sound/music/area/sleeping.ogg'
+	droning_sound = 'sound/music/march.ogg'
+	droning_sound_dusk = 'sound/music/march.ogg'
+	droning_sound_night = 'sound/music/march.ogg'
 	converted_type = /area/rogue/indoors/shelter/town/roofs
 
 /area/rogue/indoors/shelter/town/roofs
 	icon_state = "roofs"
-	droning_sound = 'sound/music/area/field.ogg'
+	droning_sound = 'sound/blank.ogg'
 	droning_sound_dusk = 'sound/music/area/septimus.ogg'
 	droning_sound_night = 'sound/music/area/sleeping.ogg'
 
@@ -660,28 +707,28 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	droning_sound = 'sound/music/area/underworlddrone.ogg'
 	droning_sound_dusk = null
 	droning_sound_night = null
-	first_time_text = "The Forest of Repentence"
+	dynamic_lighting = FALSE
 
 
 ///// DAKKATOWN AREAS //////
 
 // Players should be fined for any damage they do to the Guild's property
 /area/rogue/outdoors/beach/boat
-	name = "sophia's cry"
+	name = "boat"
 	ambientsounds = AMB_BEACH
 	ambientnight = AMB_BEACH
-	droning_sound = 'sound/music/area/townstreets.ogg'
-	droning_sound_dusk = 'sound/music/area/septimus.ogg'
-	droning_sound_night = 'sound/music/area/sleeping.ogg'
+	droning_sound = 'sound/music/stew.ogg'
+	droning_sound_dusk = 'sound/music/stew.ogg'
+	droning_sound_night = 'sound/music/stew.ogg'
 
 // Players are penalized for entering the Guild Gaptain's quarters (FAFO)
 /area/rogue/outdoors/beach/boat/captain
-	name = "guild captain"
+	name = "captain"
 	ambientsounds = AMB_BEACH
 	ambientnight = AMB_BEACH
-	droning_sound = 'sound/music/area/townstreets.ogg'
-	droning_sound_dusk = 'sound/music/area/septimus.ogg'
-	droning_sound_night = 'sound/music/area/sleeping.ogg'
+	droning_sound = 'sound/music/stew.ogg'
+	droning_sound_dusk = 'sound/music/stew.ogg'
+	droning_sound_night = 'sound/music/stew.ogg'
 
 /area/rogue/indoors/town/theatre
 	name = "theatre"

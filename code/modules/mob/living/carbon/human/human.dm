@@ -1,4 +1,3 @@
-#ifdef MATURESERVER
 /mob/living/carbon/human/MiddleClick(mob/user, params)
 	..()
 	if(!user)
@@ -33,25 +32,6 @@
 				else
 					held_item.melee_attack_chain(user, src, params)
 		return
-	if(user == src)
-		if(get_num_arms(FALSE) < 1)
-			return
-		if(user.zone_selected == BODY_ZONE_PRECISE_GROIN)
-			if(get_location_accessible(src, BODY_ZONE_PRECISE_GROIN, skipundies = TRUE))
-				if(underwear == "Nude")
-					return
-				if(do_after(user, 30, needhand = 1, target = src))
-					cached_underwear = underwear
-					underwear = "Nude"
-					update_body()
-					var/obj/item/undies/U
-					if(gender == MALE)
-						U = new/obj/item/undies(get_turf(src))
-					else
-						U = new/obj/item/undies/f(get_turf(src))
-					U.color = underwear_color
-					user.put_in_hands(U)
-#endif
 
 /mob/living/carbon/human/Initialize()
 	verbs += /mob/living/proc/mob_sleep
@@ -84,6 +64,23 @@
 	var/dam = levels * rand(10,50)
 	V.add_stress(/datum/stressevent/felldown)
 	var/chat_message
+	var/cushioned = FALSE
+	for(var/mob/living/M in T.contents)
+		if(M == src)
+			continue
+		cushioned = TRUE
+		visible_message("<span class='danger'>\The [src] hits \the [M.name]!</span>")
+		if(levels >= 2)
+			if(!M.has_status_effect(/datum/status_effect/buff/spawn_protection))
+				adjust_triumphs(1)
+				M.gib(TRUE)
+		else
+			M.AdjustKnockdown(levels * 20)
+			M.take_overall_damage(dam * levels * 1.25)
+
+	if(cushioned)
+		return
+
 	switch(rand(1,4))
 		if(1)
 			affecting = get_bodypart(pick(BODY_ZONE_R_LEG, BODY_ZONE_L_LEG))
@@ -104,13 +101,6 @@
 		if(levels >= 1)
 			//absurd damage to guarantee a crit
 			affecting.try_crit(BCLASS_TWIST, 300)
-
-	for(var/mob/living/M in T.contents)
-		if(M == src)
-			continue
-		visible_message("\The [src] hits \the [M.name]!")
-		M.AdjustKnockdown(levels * 20)
-		M.take_overall_damage(dam * levels * 1.25)
 
 	if(chat_message)
 		to_chat(src, chat_message)
@@ -747,7 +737,7 @@
 		override = dna.species.override_float
 	..()
 
-/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 1, distance = 0, message = 1, toxic = 0)
+/mob/living/carbon/human/vomit(lost_nutrition = 10, blood = 0, stun = 0, distance = 0, message = 1, toxic = 0)
 	if(blood && (NOBLOOD in dna.species.species_traits) && !HAS_TRAIT(src, TRAIT_TOXINLOVER))
 		if(message)
 			visible_message("<span class='warning'>[src] dry heaves!</span>", \
@@ -896,16 +886,36 @@
 
 /mob/living/carbon/human/proc/setclientwarfaction(w_faction)
 	if(client)
-		if(istype(SSticker.mode, /datum/game_mode/warfare))
-			var/datum/game_mode/warfare/C = SSticker.mode
+		if(istype(SSticker.mode, /datum/game_mode/warmongers))
+			var/datum/game_mode/warmongers/C = SSticker.mode
 			if(!check_bypasslist(client.ckey))
 				client.warfare_faction = w_faction
 			switch(w_faction)
 				if(RED_WARTEAM)
-					C.heartfelts |= client
+					C.unionists |= client
 				if(BLUE_WARTEAM)
-					C.grenzels |= client
+					C.regimians |= client
 	testing(w_faction)
+
+/mob/living/carbon/human/proc/formation_check()
+	var/formation_check = FALSE
+	for(var/mob/living/carbon/human/H in get_step(src, NORTH))
+		if(H.warfare_faction == warfare_faction && H.stat == CONSCIOUS)
+			formation_check = TRUE
+			break
+	for(var/mob/living/carbon/human/H in get_step(src, SOUTH))
+		if(H.warfare_faction == warfare_faction && H.stat == CONSCIOUS)
+			formation_check = TRUE
+			break
+	for(var/mob/living/carbon/human/H in get_step(src, EAST))
+		if(H.warfare_faction == warfare_faction && H.stat == CONSCIOUS)
+			formation_check = TRUE
+			break
+	for(var/mob/living/carbon/human/H in get_step(src, WEST))
+		if(H.warfare_faction == warfare_faction && H.stat == CONSCIOUS)
+			formation_check = TRUE
+			break
+	return formation_check
 
 /mob/living/carbon/human/proc/fireman_carry(mob/living/carbon/target)
 	var/carrydelay = 50 //if you have latex you are faster at grabbing

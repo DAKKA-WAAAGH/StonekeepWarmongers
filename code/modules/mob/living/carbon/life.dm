@@ -132,13 +132,12 @@
 					if(prob(probby))
 						if(aspect_chosen(/datum/round_aspect/halo))
 							playsound(src, 'sound/vo/halo/wound.mp3', 100, FALSE, -1)
-							shoutbubble()
 						else
 							emote("painscream")
 							if(client?.hasPerk(/datum/warperk/madness))
 								reagents.add_reagent(/datum/reagent/medicine/healthpot, 15)
 								playsound_local(get_turf(src), 'sound/misc/notice.ogg')
-								to_chat(src, "<span class='info'>ᛉ PERK ACTIVATED.</span>")
+								to_chat(src, "<span class='info'>⏀ PERK ACTIVATED.</span>")
 						Jitter(10)
 						stuttering += 5
 					else
@@ -255,6 +254,8 @@
 		return
 	if(istype(loc, /obj/machinery/atmospherics/components/unary/cryo_cell))
 		return
+	if(has_wound(/datum/wound/artery/neck))
+		return
 
 	var/datum/gas_mixture/environment
 	if(loc)
@@ -273,7 +274,7 @@
 	if(losebreath >= 1) //You've missed a breath, take oxy damage
 		losebreath--
 		if(prob(10))
-			emote("gasp")
+			emote(pick("gasp","choke","breathgasp"))
 		if(istype(loc, /obj/))
 			var/obj/loc_as_obj = loc
 			loc_as_obj.handle_internal_lifeform(src,0)
@@ -668,7 +669,7 @@ GLOBAL_LIST_INIT(ballmer_windows_me_msg, list("Yo man, what if, we like, uh, put
 			AdjustSleeping(100)
 
 	//Jitteriness
-	if(jitteriness)
+	if(jitteriness && !stat)
 		do_jitter_animation(jitteriness)
 		jitteriness = max(jitteriness - restingpwr, 0)
 		SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "jittery", /datum/mood_event/jittery)

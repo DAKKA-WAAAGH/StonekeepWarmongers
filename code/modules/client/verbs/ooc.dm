@@ -132,8 +132,8 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 //					to_chat(C, "<span class='ooc'><EM>[keyname]:</EM> <span class='message linkify'>[msg]</span></span>")
 
 /client/proc/lobbyooc(msg as text) // broadcasts ONLY to people in lobby (but everyone if the game has finished)
-	set category = "OOC"
-	set name = "OOC"
+	set category = "GameMaster"
+	set name = "LobbyOOC"
 	set desc = "Talk with the other players."
 
 	if(GLOB.say_disabled)	//This is here to try to identify lag problems
@@ -329,25 +329,12 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	set category = "Options"
 	stop_sound_channel(CHANNEL_LOBBYMUSIC)
 
-/client/verb/reloading()
-	set name = "RELOADING"
-	set category = "HELP"
-	var/contents
-
-	usr.playsound_local(usr, 'sound/misc/keyboard_enter.ogg', 65, FALSE)
-	contents += "<center>Reloading a flintlock is easy!<BR>"
-	contents += "--------------</center><BR>"
-	contents += "Take a bullet from your ball pouch, if you have one (rclick), put in bullet (lclick), cock musket (rclick with hand not holding musket), middleclick musket to get ramrod, ram musket, middleclick to put back, click musket to wield, hold to aim and release to shoot, done you just killed a man! Good job! Oh, and for those new levershots? Just use the right click twice on 'em, load a bullet in the chamber. Really easy, really. The same for that small one."
-	var/datum/browser/popup = new(usr, "HELP", "", 420, 420)
-	popup.set_content(contents)
-	popup.open()
-
 /client/verb/medicating()
 	set name = "MEDICINE"
 	set category = "HELP"
 	var/contents
 
-	usr.playsound_local(usr, 'sound/misc/keyboard_enter.ogg', 65, FALSE)
+	usr.playsound_local(usr, 'sound/misc/type3.ogg', 65, FALSE)
 	contents += "<center>Dr. Urist's Discount Medical School<BR>"
 	contents += "--------------</center><BR>"
 	contents += "While playing a medic it is good to know how to heal people. First, you spawn with a health potion and surgery tools. When you see an injured person feed them the potion and in the rare instance you don't have it prepared, use your surgery tools. A CRANKeR is a tool used to get you more drugs. Put in a limb and a bottle. Crank it by clicking it in your hand and then grab the potion you attached to it with MMB; which is now filled with cool new drugs! You can choose which drug to manufacture by using RMB. Oh yeah, it also gives the Lord a support point to redeem for new toys. Pretty cool."
@@ -365,7 +352,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		return
 	var/list/json = json_decode(file2text(json_file))
 	
-	usr.playsound_local(usr, 'sound/misc/keyboard_enter.ogg', 65, FALSE)
+	usr.playsound_local(usr, 'sound/misc/type1.ogg', 65, FALSE)
 	contents += "<center>"
 	contents += "<b>BATTLE-WIDE STATISTICS</b><BR>"
 	contents += "A.K.A, ARE WE WINNING?<BR>"
@@ -373,22 +360,31 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	contents += "</center>"
 	contents += "<b>TOTAL DEATHS:</b> [json["deaths"]]<BR>"
 	contents += "<b>TOTAL SHOTS FIRED:</b> [json["muskshots"]]<BR>"
-	contents += "<b>GRENZELHOFT VICTORIES:</b> [json["grenz_wins"]]<BR>"
-	contents += "<b>HEARTFELT VICTORIES:</b> [json["heart_wins"]]<BR>"
+	contents += "<b>REGIME VICTORIES:</b> [json["grenz_wins"]]<BR>"
+	contents += "<b>UNION VICTORIES:</b> [json["heart_wins"]]<BR>"
 	contents += "<b>MOST TRIUMPHANT SOLDIER: [SStriumphs.triumph_leaderboard[1]]</b> "
 	var/datum/browser/popup = new(usr, "HELP", "", 420, 420)
 	popup.set_content(contents)
 	popup.open()
 
 /client/verb/combat()
-	set name = "ADV. COMBAT"
+	set name = "BASIC INSTRUCTIONS"
 	set category = "HELP"
 	var/contents
 
-	usr.playsound_local(usr, 'sound/misc/keyboard_enter.ogg', 65, FALSE)
-	contents += "<center>Drill Sergeant Dornan's Basic Combat Training<BR>"
+	usr.playsound_local(usr, 'sound/misc/type.ogg', 65, FALSE)
+	contents += "<center>Basic Barker Operation<BR>"
 	contents += "--------------</center><BR>"
-	contents += "Headshots most of the time do not deal lethal damage. If you hit a headshot as an untrained marksman, you will only knock the person's helmet off and cause some blunt force trauma. This rarely results in death by itself. If the target is not wearing a helmet or any other kind of headwear they will die instantly and you'll feel accoomplished. Another way to kill your opponent is to bayonet charge them. Wield your barksteel, change to STAB intent and RUN into your opponent. If you ever happen to be in the situation where you are the person being charged, switch to SNEAK intent to suplex the weapon out of their hands."
+	contents += "To operate a barkshotte, follow this order of preparation:\
+				First, add barkenpowder to the weapon, this can also be done after you insert ammunition\
+				Second, insert ammunition down the barrel\
+				Third, using a ramrod, push the shot down the barrel until it is firmly seated inside\
+				Lastly, bring the clicker back, the weapon is now ready to be fired\
+				You are now ready to fire the barker, press the stock against your shoulder and aim down the barrel,\
+				wait a good second or so to line up your shot and finally squeeze the trigger.\
+				\
+				Do note that some weapons, such as more advanced ones, do not neccessarily follow this method, but the overall\
+				operation is similar enough."
 	var/datum/browser/popup = new(usr, "HELP", "", 420, 420)
 	popup.set_content(contents)
 	popup.open()
@@ -622,7 +618,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		to_chat(usr, "<span class='warning'>The fight shall continue, then.</span>")
 		return
 
-	var/datum/game_mode/warfare/W = SSticker.mode
+	var/datum/game_mode/warmongers/W = SSticker.mode
 	if(istype(W))
 		if(W.stalematecooldown >= world.time)
 			to_chat(src, "\n<font color='red'>It is too early for that, try again later.</font>")
@@ -630,43 +626,34 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 			W.stalematecooldown = world.time + 10 MINUTES
 			SSvote.initiate_vote("stalemate", "The God of War")
 
-/client/verb/accessibility()
-	set name = "Accessibility"
+/client/verb/forcestartvote()
+	set name = "Propose FORCE START"
 	set category = "Options"
 	set desc = ""
-
-	if(!prefs)
+	if(SSwarmongers.warfare_ready_to_die)
+		to_chat(usr, "<B>FOOL</B>")
 		return
-	if(prefs.visibility_accessibility == FALSE)
-		var/alerto = alert(src, "This toggle is used for disabling the screen effects of grain and CRT lines. If you disable this, the game may look like absolute dogshit in the visual department. Do you heed my warning, traveler?", "WARMONGERS", "Disable", "Keep it On")
-		if(alerto != "Disable")
-			to_chat(src, "AUTHENTIC MODE... PREVAILS")
-			return
-		prefs.visibility_accessibility = TRUE
-		prefs.save_preferences()
-		to_chat(src, "AUTHENTIC MODE... OFF")
-		for(var/atom/movable/screen/scannies/S in screen)
-			S.alpha = 0
-		for(var/atom/movable/screen/grain/S in screen)
-			S.alpha = 0
-	else
-		prefs.visibility_accessibility = FALSE
-		prefs.save_preferences()
-		to_chat(src, "AUTHENTIC MODE... ON")
-		for(var/atom/movable/screen/scannies/S in screen)
-			S.alpha = 80
-		for(var/atom/movable/screen/grain/S in screen)
-			S.alpha = 75
+	
+	var/sure = alert(usr, "Are you sure? Any team without a lord present will be barred from having a lord in the future. (ONLY APPLICABLE FOR LORD DESTRUCTION MAPS)", "WARMONGERS", "Yes", "No")
+	if(sure == "No")
+		to_chat(usr, "<span class='warning'>The wait shall continue, then.</span>")
+		return
+
+	var/datum/game_mode/warmongers/W = SSticker.mode
+	if(istype(W))
+		if(W.forcestartcooldown >= world.time)
+			to_chat(src, "\n<font color='red'>It is too early for that, try again later.</font>")
+		else
+			W.forcestartcooldown = world.time + 10 MINUTES
+			SSvote.initiate_vote("forcestart", "The God of War")
 
 /client/verb/fit_viewport()
 	set name = "Fit Viewport"
 	set category = "Options"
 	set desc = ""
-	if(!holder)
-		return
 	// Fetch aspect ratio
 	var/view_size = getviewsize(view)
-	var/aspect_ratio = view_size[1] / view_size[2]
+	var/aspect_ratio = view_size[1] / (view_size[2] / 1.3)
 
 	// Calculate desired pixel width using window size and aspect ratio
 	var/sizes = params2list(winget(src, "mainwindow.split;mapwindow", "size"))
@@ -704,7 +691,6 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 		pct += delta
 		winset(src, "mainwindow.split", "splitter=[pct]")
-
 
 /client/verb/policy()
 	set name = "Show Policy"

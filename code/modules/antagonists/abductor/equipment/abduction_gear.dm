@@ -188,6 +188,17 @@
 			sleep(20)
 			H.forceMove(O.loc)
 
+/obj/item/abductor/cloaker/attack(mob/living/M, mob/living/user)
+	if(ishuman(M))
+		var/mob/living/carbon/human/H = M
+		playsound(H, 'sound/magic/magnet.ogg', 75, TRUE)
+		var/obj/effect/landmark/observer_start/O = locate(/obj/effect/landmark/observer_start) in GLOB.landmarks_list
+		
+		new /obj/effect/temp_visual/teleport_abductor/shorter(O.loc)
+		playsound(O.loc, 'sound/magic/vlightning.ogg', 75, TRUE)
+		sleep(20)
+		H.forceMove(O.loc)
+
 /obj/item/abductor/cloaker/attack_self(mob/user)
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
@@ -572,7 +583,7 @@ Congratulations! You are now trained for invasive xenobiology research!"}
 
 	if(ishuman(L))
 		var/mob/living/carbon/human/H = L
-		H.forcesay(GLOB.hit_appends)
+		H.say(pick(GLOB.hit_appends))
 
 	log_combat(user, L, "stunned")
 

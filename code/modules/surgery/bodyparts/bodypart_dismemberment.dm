@@ -23,7 +23,7 @@
 /obj/item/bodypart/proc/dismember(dam_type = BRUTE, bclass = BCLASS_CUT, mob/living/user, zone_precise = src.body_zone)
 	if(!owner)
 		return FALSE
-	var/mob/living/carbon/C = owner
+	var/mob/living/carbon/human/C = owner
 	if(!dismemberable)
 		if(zone_precise != BODY_ZONE_PRECISE_NECK)
 			return FALSE
@@ -36,13 +36,13 @@
 	if(affecting && dismember_wound)
 		affecting.add_wound(dismember_wound)
 	playsound(C, pick(dismemsound), 50, FALSE, -1)
-	if(body_zone == BODY_ZONE_HEAD)
+	if(istype(src, /obj/item/bodypart/head) && user.zone_selected == BODY_ZONE_PRECISE_NECK)
 		C.visible_message("<span class='danger'><B>[C] is [pick("BRUTALLY","VIOLENTLY","BLOODILY","MESSILY")] DECAPITATED!</B></span>")
 		if(user.client)
 			if(user.client?.hasPerk(/datum/warperk/brutalist))
 				user.STASPD += 1
 				user.playsound_local(get_turf(user), 'sound/misc/notice.ogg')
-				to_chat(user, "<span class='info'>ᛉ PERK ACTIVATED.</span>")
+				to_chat(user, "<span class='info'>⏀ PERK ACTIVATED.</span>")
 	else
 		C.visible_message("<span class='danger'><B>The [src.name] is [pick("torn off", "sundered", "severed", "seperated", "unsewn")]!</B></span>")
 		C.emote("painscream")
@@ -54,7 +54,7 @@
 		if(C.client?.hasPerk(/datum/warperk/masochist))
 			C.STASTR += 4
 			C.playsound_local(get_turf(C), 'sound/misc/notice.ogg')
-			to_chat(C, "<span class='info'>ᛉ PERK ACTIVATED.</span>")
+			to_chat(C, "<span class='info'>⏀ PERK ACTIVATED.</span>")
 
 	var/obj/effect/temp_visual/bloodmist/BM = new(get_turf(C))
 	animate(BM, transform = matrix()*2, alpha = 0, time = 6) // looks cool
@@ -69,7 +69,9 @@
 				if(C.real_name in GLOB.excommunicated_players)
 					stress2give = /datum/stressevent/viewsinpunish
 	if(stress2give)
-		for(var/mob/living/carbon/CA in hearers(world.view, C))
+		for(var/mob/living/carbon/human/CA in hearers(world.view, C))
+			if(CA.warfare_faction != C.warfare_faction) continue // I like seeing the enemy get turned into ash, BUDDY
+			
 			if(CA != C && !HAS_TRAIT(CA, TRAIT_BLIND))
 				if(stress2give == /datum/stressevent/viewdismember)
 					if(HAS_TRAIT(CA, TRAIT_STEELHEARTED))
@@ -104,6 +106,7 @@
 		target_turf = new_turf
 		if(new_turf.density)
 			break
+	update_transform()
 	throw_at(target_turf, throw_range, throw_speed)
 	return TRUE
 

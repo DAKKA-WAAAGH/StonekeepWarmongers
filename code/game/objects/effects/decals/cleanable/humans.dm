@@ -20,15 +20,17 @@
 	desc = ""
 	icon = 'icons/effects/blood.dmi'
 	icon_state = "floor1"
-	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6")
+	random_icon_states = list("floor1", "floor2", "floor3", "floor4", "floor5", "floor6", "floor7", "floor8", "floor9", "floor10", "floor11", "floor12", "floor13", "floor14", "floor15", "floor16", "floor18")
 	blood_state = BLOOD_STATE_HUMAN
 	bloodiness = BLOOD_AMOUNT_PER_DECAL
 	beauty = -100
-	alpha = 200
 	nomouseover = TRUE
+	plane = GAME_PLANE //makes the blood visible over a wall.
 	appearance_flags = NO_CLIENT_COLOR
-	nomouseover = TRUE
 	var/blood_timer
+
+/obj/effect/decal/cleanable/blood/NeverShouldHaveComeHere(turf/T)
+	return isgroundlessturf(T)
 
 /obj/effect/decal/cleanable/blood/attack_hand(mob/living/user)
 	. = ..()
@@ -44,12 +46,16 @@
 		return .
 	create_reagents(20)
 	reagents.add_reagent(/datum/reagent/blood, 20)
-	pixel_x = rand(-5,5)
-	pixel_y = rand(5,5)
+	pixel_x = rand(-8,8)
+	pixel_y = rand(8,8)
+	if(prob(50))
+		var/matrix/M = matrix()
+		M.Turn(rand(-20,20))
+		transform = M
 	blood_timer = addtimer(CALLBACK(src, PROC_REF(become_dry)), rand(5 MINUTES,15 MINUTES), TIMER_STOPPABLE)
 
 	alpha = 0
-	animate(src, time = 3, alpha = 200)
+	animate(src, time = 3, alpha = 255)
 
 /obj/effect/decal/cleanable/blood/proc/become_dry()
 	if(QDELETED(src))
@@ -84,8 +90,8 @@
 	icon_state = "[icon_state]-old" //change from the normal blood icon selected from random_icon_states in the parent's Initialize to the old dried up blood.
 
 /obj/effect/decal/cleanable/blood/splatter
-	icon_state = "gibbl1"
-	random_icon_states = list("gibbl1", "gibbl2", "gibbl3", "gibbl4", "gibbl5")
+	icon_state = "splatter1"
+	random_icon_states = list("splatter1", "splatter2", "splatter3", "splatter4", "splatter5", "splatter6","floor12")
 	var/drips = 1
 
 /obj/effect/decal/cleanable/blood/splatter/replace_decal(obj/effect/decal/cleanable/C) // Returns true if we should give up in favor of the pre-existing decal
@@ -112,7 +118,6 @@
 	desc = ""
 	beauty = -50
 	var/list/existing_dirs = list()
-	alpha = 200
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	appearance_flags = NO_CLIENT_COLOR
 	var/blood_timer
@@ -209,7 +214,6 @@
 	desc = ""
 	icon_state = "drip1"
 	bloodiness = 0
-	alpha = 150
 	var/drips = 1
 	var/blood_vol = 1
 	random_icon_states = null
@@ -251,8 +255,7 @@
 	name = "puddle of blood"
 	desc = ""
 	icon_state = "pool1"
-	bloodiness = 0
-	alpha = 150
+	bloodiness = 10
 	var/blood_vol = 10
 	random_icon_states = null
 
@@ -273,6 +276,7 @@
 	if(..())
 		var/obj/effect/decal/cleanable/blood/puddle/P = C
 		P.blood_vol += 10
+		P.bloodiness += 10
 		P.update_icon()
 		return TRUE
 
@@ -281,8 +285,8 @@
 /obj/effect/decal/cleanable/blood/footprints
 	name = "footprints"
 	desc = ""
-	icon = 'icons/effects/footprints.dmi'
-	icon_state = "blood1"
+	icon = 'icons/effects/blood.dmi'
+	icon_state = "tracks"
 	random_icon_states = null
 	blood_state = BLOOD_STATE_HUMAN //the icon state to load images from
 	var/entered_dirs = 0
@@ -350,13 +354,13 @@
 		if(entered_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]1", dir = Ddir)
+				GLOB.bloody_footprints_cache["entered-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, blood_state, dir = Ddir)
 			bloodstep_overlay.alpha = alpha
 			add_overlay(bloodstep_overlay)
 		if(exited_dirs & Ddir)
 			var/image/bloodstep_overlay = GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"]
 			if(!bloodstep_overlay)
-				GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, "[blood_state]2", dir = Ddir)
+				GLOB.bloody_footprints_cache["exited-[blood_state]-[Ddir]"] = bloodstep_overlay = image(icon, blood_state, dir = Ddir)
 			bloodstep_overlay.alpha = alpha
 			add_overlay(bloodstep_overlay)
 

@@ -49,7 +49,7 @@
 	var/turf/TU = get_turf(H)
 	if(TU)
 		if(horse)
-			var/mob/living/simple_animal/hostile/retaliate/rogue/saiga/S = new horse(TU)
+			var/mob/living/simple_animal/hostile/retaliate/rogue/S = new horse(TU)
 			S.user_buckle_mob(H, H)
 
 /*	for(var/trait in traits_applied)
@@ -71,7 +71,7 @@
 /datum/advclass/proc/check_requirements(mob/living/carbon/human/H)
 
 	var/list/local_allowed_sexes = list()
-	var/datum/game_mode/warfare/W = SSticker.mode
+	var/datum/game_mode/warmongers/W = SSticker.mode
 	if(length(allowed_sexes))
 		local_allowed_sexes |= allowed_sexes
 

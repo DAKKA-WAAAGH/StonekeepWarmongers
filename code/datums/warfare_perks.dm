@@ -1,6 +1,6 @@
 /datum/warperk
 	var/name = "Ordinary Person"
-	var/desc = "I'm just a regular guy. I'll gain a TRIUMPH if my team wins."
+	var/desc = "I'm just a regular guy. I'll gain an extra TRIUMPH if my team wins."
 	var/cost = 0
 
 /datum/warperk/proc/apply(var/mob/living/carbon/human/H) // for special shit ig
@@ -52,10 +52,13 @@
 	switch(choice)
 		if("STR")
 			H.STASTR += 2
+			to_chat(H, "<span class='info'>⏀ STR enpowered to [H.STASTR]!</span>")
 		if("END")
 			H.STAEND += 2
+			to_chat(H, "<span class='info'>⏀ END enpowered to [H.STAEND]!</span>")
 		if("CON")
 			H.STACON += 2
+			to_chat(H, "<span class='info'>⏀ CON enpowered to [H.STACON]!</span>")
 
 /datum/warperk/vampire
 	name = "Vladimir"
@@ -74,6 +77,14 @@
 	name = "Saint"
 	desc = "When you die, nearby allies will be struck by fury and vigor."
 	cost = 5
+
+/datum/warperk/mortalcombat
+	name = "Combat of Mortals"
+	desc = "Shouting 'Get Over Here' will make people in front of you to... get over here..? I'll be honest with you, not quite sure where we got this."
+	cost = 5
+
+/datum/warperk/mortalcombat/apply(mob/living/carbon/human/H)
+	H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/gitoverhere)
 
 /datum/warperk/lightbrigade
 	name = "Brigade of Light"

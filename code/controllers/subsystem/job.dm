@@ -43,7 +43,7 @@ SUBSYSTEM_DEF(job)
 
 /datum/controller/subsystem/job/proc/SetupOccupations(faction = "Station")
 	occupations = list()
-	var/list/all_jobs = subtypesof(/datum/job/roguetown/warfare)
+	var/list/all_jobs = subtypesof(/datum/job/roguetown/warmongers)
 	if(!all_jobs.len)
 		to_chat(world, "<span class='boldannounce'>Error setting up jobs, no job datums found</span>")
 		return 0
@@ -833,6 +833,11 @@ SUBSYSTEM_DEF(job)
 	var/atom/destination
 	if(M.mind && M.mind.assigned_role && length(GLOB.jobspawn_overrides[M.mind.assigned_role])) //We're doing something special today.
 		destination = pick(GLOB.jobspawn_overrides[M.mind.assigned_role])
+		if(SSwarmongers.warfare_ready_to_die)
+			if(M:warfare_faction == RED_WARTEAM)
+				destination = pick(SSwarmongers.red_airship_landmarks)
+			else
+				destination = pick(SSwarmongers.blue_airship_landmarks)
 		destination.JoinPlayerHere(M, FALSE)
 		return
 

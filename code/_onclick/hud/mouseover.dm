@@ -134,6 +134,7 @@
 
 /mob/handle_mouseover(location,control,params)
 	var/mob/p = usr
+	var/showtext = name
 	if(p == src)
 		return FALSE
 	if(p.client)
@@ -155,13 +156,25 @@
 		var/list/PM = list("screen-loc" = "[offset_x]:0,[offset_y]:0")
 		var/mousecolor = "#c1aaaa"
 		if(ishuman(src))
+			var/mob/living/carbon/human/user
+			if(ishuman(p))
+				user = p
 			var/mob/living/carbon/human/H = src
 			switch(H.warfare_faction)
 				if(BLUE_WARTEAM)
-					mousecolor = COLOR_BLUE
-				if(RED_WARTEAM)
 					mousecolor = COLOR_RED
-		p.client.mouseovertext.maptext = {"<span style='font-size:8pt;font-family:"Pterra";color:[mousecolor];text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '>[name]"}
+					if(user?.warfare_faction == BLUE_WARTEAM)
+						showtext = "ALLY"
+					else
+						showtext = "ENEMY"
+				if(RED_WARTEAM)
+					mousecolor = COLOR_BLUE
+					showtext = "UNIONIST"
+					if(user?.warfare_faction == RED_WARTEAM)
+						showtext = "ALLY"
+					else
+						showtext = "ENEMY"
+		p.client.mouseovertext.maptext = {"<span style='font-size:8pt;font-family:"Pterra";color:[mousecolor];text-shadow:0 0 10px #fff, 0 0 20px #fff, 0 0 30px #e60073, 0 0 40px #e60073, 0 0 50px #e60073, 0 0 60px #e60073, 0 0 70px #e60073;' class='center maptext '><b>[showtext]</b>"}
 		p.client.mouseovertext.movethis(PM)
 		p.client.screen |= p.client.mouseovertext
 	return TRUE
@@ -207,11 +220,11 @@
 	var/pix_Y = text2num(screen_loc_Y[2])
 
 	if(hudobj)
-		maptext_y = 28
+		maptext_y = 35
 		maptext_x = -48
 		pix_Y = 0
 	else
-		maptext_y = 28
+		maptext_y = 35
 		maptext_x = -32
 
 	screen_loc = "[screen_loc_X[1]]:[pix_X],[screen_loc_Y[1]]:[pix_Y]"

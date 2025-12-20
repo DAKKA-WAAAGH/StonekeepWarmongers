@@ -70,6 +70,7 @@
 
 /mob/living/carbon/human/check_projectile_wounding(obj/projectile/P, def_zone, blocked)
 	..()
+	camera_bullshit(1.25, -100, ELASTIC_EASING, 2, 2)
 	if(ishuman(P.firer))
 		var/mob/living/carbon/human/H = P.firer
 		if(warfare_faction == H.warfare_faction)
@@ -84,6 +85,8 @@
 	if(BP)
 		testing("projwound")
 		var/newdam = P.damage * (100-blocked)/100
+		playsound(src, list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg'), 100, vary = FALSE)
+		
 		if(istype(BP, /obj/item/bodypart/head) && istype(P, /obj/projectile/bullet/reusable/bullet))
 			to_chat(P.firer, "<span class='userdanger'>Headshot!</span>")
 			var/obj/effect/temp_visual/bloodmist/BM = new(get_turf(src))
@@ -93,16 +96,18 @@
 				if(ishuman(P.firer))
 					var/mob/living/carbon/human/H = P.firer
 					H.playsound_local(get_turf(H), 'sound/vo/halo/headshot.mp3', 50)
-			playsound(src, "headcrush", 100, vary = FALSE)
 			newdam = newdam * 2
 			var/obj/item/clothing/head/roguetown/hed = head
 			if(hed && !HAS_TRAIT(P.firer, TRAIT_SNIPER))
 				transferItemToLoc(hed, get_step(src, turn(dir, 180)))
 				hed.take_damage(45 + newdam / 2, BRUTE, "melee", 1)
 				head = null
+				playsound(src, 'sound/combat/helmshot.ogg', 100, vary = FALSE)
 				update_inv_head()
-				BP.bodypart_attacked_by(P.woundclass, newdam, zone_precise = def_zone, crit_message = TRUE)
 			else
+				var/obj/item/bodypart/chest = get_bodypart(BODY_ZONE_CHEST)
+				chest.add_wound(/datum/wound/dismemberment/head)
+				playsound(src, "headcrush", 100, vary = FALSE)
 				newdam = newdam * 5
 				if(aspect_chosen(/datum/round_aspect/halo))
 					playsound_local(get_turf(src), 'sound/vo/halo/skillissue.mp3', 100)
@@ -115,11 +120,15 @@
 				new /obj/effect/gibspawner/generic(get_turf(src))
 				if(ishuman(P.firer))
 					var/mob/living/carbon/human/H = P.firer
-					H.adjust_triumphs(1)
+					if(get_dist(H,src) >= 8)
+						if(HAS_TRAIT(H, TRAIT_SNIPER))
+							H.adjust_triumphs(2)
+						else
+							H.adjust_triumphs(1)
 					if(H.client?.hasPerk(/datum/warperk/headhunter))
 						gib()
 						H.playsound_local(get_turf(H), 'sound/misc/notice.ogg')
-						to_chat(H, "<span class='info'>ᛉ PERK ACTIVATED.</span>")
+						to_chat(H, "<span class='info'>⏀ PERK ACTIVATED.</span>")
 			flash_color(client, flash_color = "#af0000ff", flash_time = 3 SECONDS)
 			if(hud_used)
 				var/matrix/skew = matrix()
@@ -132,6 +141,7 @@
 						continue
 					animate(whole_screen, transform = newmatrix, time = 1, easing = QUAD_EASING)
 					animate(transform = -newmatrix, time = 10, easing = QUAD_EASING)
+		BP.bodypart_attacked_by(P.woundclass, newdam, zone_precise = def_zone, crit_message = TRUE)
 		return TRUE
 
 /mob/living/carbon/check_projectile_embed(obj/projectile/P, def_zone, blocked)

@@ -116,7 +116,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 			say("AAAAAAAGH!!!")
 			playsound(loc, 'sound/misc/machineno.ogg', 100, FALSE, -1)
 			sleep(10)
-			explosion(src, light_impact_range = 1, flame_range = 2, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
+			explosion(src, light_impact_range = 1, flame_range = 2, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg','sound/misc/explode/bottlebomb (3).ogg'))
 			return
 		linked_thing = input
 
@@ -140,7 +140,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 			for(var/i in 1 to INFINITY)
 				sleep(5)
 				if(prob(25))
-					explosion(src, light_impact_range = 1, flame_range = 2, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg'))
+					explosion(src, light_impact_range = 1, flame_range = 2, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg','sound/misc/explode/bottlebomb (3).ogg'))
 					qdel(src)
 					break
 				linked_thing.redstone_triggered()
@@ -238,7 +238,7 @@ GLOBAL_LIST_EMPTY(redstone_objs)
 
 /obj/structure/activator/attackby(obj/item/I, mob/user, params)
 	if(!user.cmode)
-		if(!containment && !istype(I, /obj/item/quiver) && !istype(I, /obj/item/roguegear))
+		if(!containment && !istype(I, /obj/item/quiver) && !istype(I, /obj/item/rogue/gear))
 			if(!user.transferItemToLoc(I, src))
 				return
 			containment = I

@@ -157,7 +157,7 @@
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	to_chat(user, "<span class='notice'>I push the wall but nothing happens!</span>")
+	//to_chat(user, "<span class='notice'>I push the wall but nothing happens!</span>")
 	playsound(src, 'sound/blank.ogg', 25, TRUE)
 	add_fingerprint(user)
 
@@ -287,6 +287,7 @@
 	switch(denttype)
 		if(WALL_DENT_SHOT)
 			decal.icon_state = "bullet_hole"
+			playsound(src, "whiz", 100, FALSE, 6, pressure_affected = FALSE)
 		if(WALL_DENT_HIT)
 			decal.icon_state = "impact[rand(1, 3)]"
 

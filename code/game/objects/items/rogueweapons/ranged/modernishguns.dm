@@ -3,18 +3,13 @@
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/repeater
 	name = "levershot"
-	desc = "A type of gun invented by a dwarven engineer to stop wood elves stealing his plants for alcohol brewing off of his garden, the authenticity of this story is being challenged due to the fact that dwarves generally don't live above ground. The part about wood elf murder is true due to the fact the engineer which has chosen to stay anonymous has written many books with the same basis of elves being inferior in every aspect."
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	desc = "A gun designed to be fired rapidly in quick succession using a lever-action design to spin a cylinder, automatically cycling a new bullet into the barrel."
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "repeatergun"
-	item_state = "musket"
 	possible_item_intents = list(INTENT_GENERIC)
 	gripped_intents = list(/datum/intent/shoot/musket/peter, /datum/intent/shoot/musket/arc)
-	experimental_inhand = FALSE
-	experimental_onback = FALSE
 	wieldsound = 'sound/combat/musket_wield.ogg'
-	dry_fire_sound = 'sound/combat/Ranged/muskclick.ogg'
+	dry_fire_sound = 'sound/foley/muskclick.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/peter
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
@@ -23,6 +18,7 @@
 	casing_ejector = FALSE
 	internal_magazine = TRUE
 	tac_reloads = FALSE
+	experimental_onback = TRUE
 	max_integrity = 600
 	randomspread = 1
 	spread = 0
@@ -31,8 +27,9 @@
 	pin = /obj/item/firing_pin
 	force = 10
 	cartridge_wording = "ball"
+	droprot = TRUE
 	recoil = 4
-	load_sound = 'sound/foley/nockarrow.ogg'
+	load_sound = 'sound/foley/revolvaload.ogg'
 	fire_sound = list('sound/combat/Ranged/muskshot1.ogg','sound/combat/Ranged/muskshot2.ogg','sound/combat/Ranged/muskshot3.ogg')
 	fire_sound_volume = 500
 	equip_sound = 'sound/foley/gun_equip.ogg'
@@ -42,6 +39,17 @@
 	associated_skill = /datum/skill/combat/flintlocks
 	var/flunked = FALSE
 
+/obj/item/gun/ballistic/revolver/grenadelauncher/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.5,"sx" = -7,"sy" = 0,"nx" = 8,"ny" = 0,"wx" = -5,"wy" = 1,"ex" = 0,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -90,"sturn" = 90,"wturn" = 90,"eturn" = -90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.5,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = 0,"wx" = -7,"wy" = -3,"ex" = 7,"ey" = -3,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 3,"sturn" = -3,"wturn" = 3,"eturn" = -3,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+			if("onback")
+				return list("shrink" = 0.5,"sx" = -5,"sy" = 2,"nx" = 5,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = -3,"ey" = 3,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 90,"eturn" = -90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+
 /obj/item/gun/ballistic/revolver/grenadelauncher/repeater/empty
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/peter/startempty
 
@@ -49,6 +57,7 @@
 	. = ..()
 	if(chambered)
 		. += "<span class='info'>It is loaded.</span>"
+	. += "<span class='tutorial'>Use rightclick to cycle the lever. You need to do it twice for it to load a bullet.</span>"
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/repeater/chamber_round(spin_cylinder)
 	return
@@ -56,7 +65,7 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/repeater/proc/reloadact(mob/user)
 	if(chambered)
 		return
-	if(!do_after(user, 0.5 SECONDS, TRUE, src))
+	if(!move_after(user, 0.5 SECONDS, TRUE, src))
 		return
 	var/obj/item/ammo_casing/caseless/rogue/bullet/B = magazine.get_round(TRUE)
 	if(B)
@@ -64,11 +73,11 @@
 			chambered = B
 			flunked = FALSE
 			to_chat(user, "<span class='info'>I pull the lever back up, chambering \the [src].</span>")
-			playsound(user, 'sound/foley/trap_arm.ogg', 75)
+			playsound(user, 'sound/foley/cock.ogg', 75)
 		else
 			flunked = TRUE
 			to_chat(user, "<span class='info'>I pull the lever down, preparing to chamber \the [src].</span>")
-			playsound(user, 'sound/foley/trap.ogg', 75)
+			playsound(user, 'sound/foley/uncock.ogg', 75)
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/repeater/attack_right(mob/user)
 	. = ..()
@@ -107,13 +116,38 @@
 	..()
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/repeater/shoot_live_shot(mob/living/user, pointblank, mob/pbtarget, message)
-	if(user.mind.get_skill_level(/datum/skill/combat/flintlocks) <= 0)
-		to_chat(user, "<span class='danger'>I do not know how to use this.</span>")
-		return
 	..()
 	QDEL_NULL(chambered)
-	//new /obj/effect/particle_effect/smoke(get_turf(user))
+	var/angle
+	switch(user.dir)
+		if(NORTH) angle = 90
+		if(SOUTH) angle = 270
+		if(EAST)  angle = 0
+		if(WEST)  angle = 180
+	angle += rand(-15, 15)
+
+	var/px = round(128 * cos(angle))
+	var/py = round(128 * sin(angle))
+
+	var/obj/effect/temp_visual/small_smoke/S = new(get_turf(user))
+	var/matrix/ARE = matrix()
+	ARE.Scale(2, 2)
+	ARE.Turn(rand(-350,350))
+	animate(S, time = 20, alpha = 0, pixel_x = px, pixel_y = py, transform = ARE, easing = SINE_EASING)
+	QDEL_IN(S, 20)
+
 	SSticker.muskshots++
+
+	for(var/mob/M in GLOB.player_list)
+		if(!is_in_zweb(M.z,user.z))
+			continue
+		var/turf/M_turf = get_turf(M)
+		var/far_smith_sound = sound(pick('sound/ambience/distantshot1.ogg','sound/ambience/distantshot2.ogg','sound/ambience/distantshot3.ogg'))
+		if(M_turf)
+			var/dist = get_dist(M_turf, loc)
+			if(dist < 7)
+				continue
+			M.playsound_local(M_turf, null, 60, 1, get_rand_frequency(), falloff = 5, S = far_smith_sound)
 
 /obj/item/ammo_box/magazine/internal/shot/peter // petah.. the saiga is here.
 	ammo_type = /obj/item/ammo_casing/caseless/rogue/bullet
@@ -128,17 +162,12 @@
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/revolvashot
 	name = "revolleyer"
-	desc = "This gun iterates on the hypothetical design of the same dwarven gunsmith that created the levershot. The design, found inside his basement after his suicide (by his own invention, a levershot) was then stolen and passed off as someone elses a week after his death. He was called out by the wife of the dwarven engineer and murdered by said wife. The wife was not jailed under the dwarven lawcode as this exact scenario was covered by the writers of the Ardcnoc League Constitution. It deviates from the previous naming convention as the creator found it to be 'barbaric'."
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	desc = "Similar to a barkpistol, in both size and overall design. This barker uses a revolving cylinder to ensure the rapid firing of shots one after the other."
 	icon = 'icons/roguetown/weapons/32.dmi'
 	icon_state = "shitvolver"
-	item_state = "pistol"
 	possible_item_intents = list(/datum/intent/shoot/musket/peter, /datum/intent/shoot/musket/arc, INTENT_GENERIC)
-	experimental_inhand = FALSE
-	experimental_onback = FALSE
 	wieldsound = 'sound/combat/musket_wield.ogg'
-	dry_fire_sound = 'sound/combat/Ranged/muskclick.ogg'
+	dry_fire_sound = 'sound/foley/drypis.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/peter
 	slot_flags = ITEM_SLOT_HIP
 	w_class = WEIGHT_CLASS_NORMAL
@@ -147,6 +176,7 @@
 	casing_ejector = FALSE
 	internal_magazine = TRUE
 	tac_reloads = FALSE
+	experimental_onback = TRUE
 	max_integrity = 600
 	randomspread = 1
 	spread = 0
@@ -154,9 +184,10 @@
 	can_parry = TRUE
 	pin = /obj/item/firing_pin
 	force = 10
+	droprot = TRUE
 	cartridge_wording = "ball"
 	recoil = 4
-	load_sound = 'sound/foley/nockarrow.ogg'
+	load_sound = 'sound/foley/revolvaload.ogg'
 	fire_sound = list('sound/combat/Ranged/muskshot1.ogg','sound/combat/Ranged/muskshot2.ogg','sound/combat/Ranged/muskshot3.ogg')
 	fire_sound_volume = 500
 	equip_sound = 'sound/foley/gun_equip.ogg'
@@ -171,6 +202,7 @@
 	. = ..()
 	if(chambered)
 		. += "<span class='info'>It is loaded.</span>"
+	. += "<span class='tutorial'>Use rightclick to pull the clicker down.</span>"
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/revolvashot/attack_self(mob/living/user)
 	return
@@ -181,13 +213,13 @@
 /obj/item/gun/ballistic/revolver/grenadelauncher/revolvashot/proc/reloadact(mob/user)
 	if(chambered)
 		return
-	if(!do_after(user, 1.5 SECONDS, TRUE, src))
+	if(!move_after(user, 1.5 SECONDS, TRUE, src))
 		return
 	var/obj/item/ammo_casing/caseless/rogue/bullet/B = magazine.get_round(TRUE)
 	if(B)
 		chambered = B
 		to_chat(user, "<span class='info'>I pull the clicker down, chambering \the [src].</span>")
-		playsound(user, 'sound/combat/Ranged/muskclick.ogg', 100)
+		playsound(user, 'sound/foley/piscock.ogg', 100)
 		flick("shitvolver_anim", src)
 		update_icon()
 
@@ -216,36 +248,66 @@
 	..()
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/revolvashot/shoot_live_shot(mob/living/user, pointblank, mob/pbtarget, message)
-	if(user.mind.get_skill_level(/datum/skill/combat/flintlocks) <= 0)
-		to_chat(user, "<span class='danger'>I do not know how to use this.</span>")
-		return
 	..()
 	QDEL_NULL(chambered)
+	
+	var/angle
+	switch(user.dir)
+		if(NORTH) angle = 90
+		if(SOUTH) angle = 270
+		if(EAST)  angle = 0
+		if(WEST)  angle = 180
+	angle += rand(-15, 15)
+
+	var/px = round(64 * cos(angle))
+	var/py = round(64 * sin(angle))
+
+	var/obj/effect/temp_visual/small_smoke/S = new(get_turf(user))
+	var/matrix/ARE = matrix()
+	ARE.Turn(rand(-350,350))
+	animate(S, time = 10, alpha = 0, pixel_x = px, pixel_y = py, transform = ARE, easing = SINE_EASING)
+	QDEL_IN(S, 10)
+
 	//new /obj/effect/particle_effect/smoke(get_turf(user))
 	SSticker.muskshots++
 	update_icon()
 
+	for(var/mob/M in GLOB.player_list)
+		if(!is_in_zweb(M.z,user.z))
+			continue
+		var/turf/M_turf = get_turf(M)
+		var/far_smith_sound = sound(pick('sound/ambience/distantshot1.ogg','sound/ambience/distantshot2.ogg','sound/ambience/distantshot3.ogg'))
+		if(M_turf)
+			var/dist = get_dist(M_turf, loc)
+			if(dist < 7)
+				continue
+			M.playsound_local(M_turf, null, 60, 1, get_rand_frequency(), falloff = 5, S = far_smith_sound)
+
 // STUPID
+/obj/item/gun/ballistic/revolver/grenadelauncher/revolvashot/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.3,"sx" = -7,"sy" = -6,"nx" = 7,"ny" = -6,"wx" = -3,"wy" = -6,"ex" = 3,"ey" = -6,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 90,"sturn" = -90,"wturn" = -90,"eturn" = 90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("onbelt")
+				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/supermachine // fucking unbalanced bullshit that shouldnt exist.
-	name = "\improper Machine"
-	desc = "Something unholy."
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	name = "double-barkerbuss"
+	desc = "Two barkerbuss's haphazardly combined to produce this unholy weapon."
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "doubleblunder"
-	item_state = "musket"
 	possible_item_intents = list(INTENT_GENERIC)
 	gripped_intents = list(/datum/intent/shoot/musket/peter, /datum/intent/shoot/musket/arc)
-	experimental_inhand = FALSE
-	experimental_onback = FALSE
 	wieldsound = 'sound/combat/musket_wield.ogg'
-	dry_fire_sound = 'sound/combat/Ranged/muskclick.ogg'
+	dry_fire_sound = 'sound/foley/muskclick.ogg'
 	mag_type = /obj/item/ammo_box/magazine/internal/shot/peter
 	slot_flags = ITEM_SLOT_BACK
 	w_class = WEIGHT_CLASS_BULKY
 	bolt_type = BOLT_TYPE_STANDARD
 	semi_auto = TRUE
+	experimental_onback = TRUE
 	casing_ejector = FALSE
 	burst_size = 2
 	fire_delay = 2
@@ -314,33 +376,57 @@
 	..()
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/supermachine/shoot_live_shot(mob/living/user, pointblank, mob/pbtarget, message)
-	if(user.mind.get_skill_level(/datum/skill/combat/flintlocks) <= 0)
-		to_chat(user, "<span class='danger'>I do not know how to use this.</span>")
-		return
 	..()
 	QDEL_NULL(chambered)
 	//new /obj/effect/particle_effect/smoke(get_turf(user))
 	SSticker.muskshots++
 
+	for(var/mob/M in GLOB.player_list)
+		if(!is_in_zweb(M.z,user.z))
+			continue
+		var/turf/M_turf = get_turf(M)
+		var/far_smith_sound = sound(pick('sound/ambience/distantshot1.ogg','sound/ambience/distantshot2.ogg','sound/ambience/distantshot3.ogg'))
+		if(M_turf)
+			var/dist = get_dist(M_turf, loc)
+			if(dist < 7)
+				continue
+			M.playsound_local(M_turf, null, 60, 1, get_rand_frequency(), falloff = 5, S = far_smith_sound)
+
 /obj/item/gun/grenadelauncher/granata
-	name = "blunderelauncher"
-	desc = "To fire and back. Load with bombs."
-	lefthand_file = 'icons/mob/inhands/weapons/guns_lefthand.dmi'
-	righthand_file = 'icons/mob/inhands/weapons/guns_righthand.dmi'
+	name = "barklauncher"
+	desc = "To fire and back. Load with grenades."
 	icon = 'icons/roguetown/weapons/64.dmi'
 	icon_state = "granata"
-	item_state = "musket"
+	bigboy = TRUE
+	experimental_onback = TRUE
+	can_parry = TRUE
+	possible_item_intents = list(INTENT_GENERIC)
+	gripped_intents = list(/datum/intent/shoot/musket/rifle, /datum/intent/shoot/musket/arc, /datum/intent/mace/smash/wood)
+	w_class = WEIGHT_CLASS_BULKY
 	slot_flags = ITEM_SLOT_HIP|ITEM_SLOT_BACK
-	max_grenades = 1
+	droprot = TRUE
+	max_grenades = 3
+
+/obj/item/gun/grenadelauncher/granata/getonmobprop(tag)
+	. = ..()
+	if(tag)
+		switch(tag)
+			if("gen")
+				return list("shrink" = 0.6,"sx" = -7,"sy" = 0,"nx" = 8,"ny" = 0,"wx" = -5,"wy" = 1,"ex" = 0,"ey" = 1,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = -90,"sturn" = 90,"wturn" = 90,"eturn" = -90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
+			if("wielded")
+				return list("shrink" = 0.6,"sx" = 5,"sy" = -3,"nx" = -5,"ny" = 0,"wx" = -7,"wy" = -3,"ex" = 7,"ey" = -3,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0,"nturn" = 3,"sturn" = -3,"wturn" = 3,"eturn" = -3,"nflip" = 8,"sflip" = 0,"wflip" = 8,"eflip" = 0)
+			if("onback")
+				return list("shrink" = 0.5,"sx" = -5,"sy" = 2,"nx" = 5,"ny" = 2,"wx" = 3,"wy" = 3,"ex" = -3,"ey" = 3,"northabove" = 1,"southabove" = 0,"eastabove" = 0,"westabove" = 0,"nturn" = -38,"sturn" = 37,"wturn" = 90,"eturn" = -90,"nflip" = 0,"sflip" = 8,"wflip" = 8,"eflip" = 0)
 
 /obj/item/gun/grenadelauncher/granata/examine(mob/user)
 	. = ..()
 	if(grenades.len)
 		. = "It is loaded."
+	. += "<span class='tutorial'>It can hold three grenades, note the indicators on the weapon to see how many grenades are left.</span>"
 
 /obj/item/gun/grenadelauncher/granata/update_icon()
 	if(grenades.len)
-		icon_state = "granata_loaded"
+		icon_state = "granata_[grenades.len]"
 	else
 		icon_state = "granata"
 
@@ -355,13 +441,18 @@
 			update_icon()
 
 /obj/item/gun/grenadelauncher/granata/process_fire(atom/target, mob/living/user, message = TRUE, params = null, zone_override = "", bonus_spread = 0)
-	user.visible_message("<span class='danger'>[user] launches a bomb!</span>", \
-						"<span class='danger'>I launch a bomb!</span>")
+	user.visible_message("<span class='danger'>[user] launches a grenade!</span>", \
+						"<span class='danger'>I launch a grenade!</span>")
 	var/obj/item/bomb/F = grenades[1] //Now with less copypasta!
 	grenades -= F
 	F.forceMove(user.loc)
 	F.throw_at(target, 30, 4, user, spin = TRUE)
 	F.lit = TRUE
-	playsound(user.loc, 'sound/combat/Ranged/muskshoot.ogg', 75, TRUE, -3)
+	playsound(user.loc, 'sound/foley/shoot_granata.ogg', 75, TRUE, -3)
+	firearm_recoil_camera(user, 1, 3, user.dir)
 	update_icon()
+
+	var/turf/turfa = get_ranged_target_turf(user, turn(user.dir, 180), 1)
+	user.throw_at(turfa, 1, 1, null, FALSE)
+	
 	new /obj/effect/particle_effect/smoke(get_turf(user))
