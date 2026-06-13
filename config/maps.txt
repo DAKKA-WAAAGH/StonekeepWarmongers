@@ -79,3 +79,8 @@ map hellpit
 	#voteweight 1.5
 	votable
 endmap
+
+map shitport
+	#voteweight 1.5
+	votable
+endmap
