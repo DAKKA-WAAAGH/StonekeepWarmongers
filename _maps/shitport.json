@@ -1,0 +1,10 @@
+{
+    "map_name": "LS-Shitport",
+    "map_path": "map_files/shitport",
+    "map_file": "shitport.dmm",
+	"traits": [{"Up": 1}, {"Down": -1}],
+	"minetype": null,
+	"space_empty_levels": 0,
+	"space_ruin_levels": 0,
+	"shuttles": {}
+}
