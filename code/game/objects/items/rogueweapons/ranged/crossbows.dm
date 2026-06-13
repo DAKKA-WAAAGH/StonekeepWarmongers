@@ -51,19 +51,30 @@
 	chargedrain = 0 //no drain to aim a gun
 	charging_slowdown = 4
 	warnoffset = 20
-	chargetime = 7
+	chargetime = 4
+
+/datum/intent/shoot/musket/shotgun
+	chargedrain = 3 // heavy piece of shit
+	charging_slowdown = 1
+	chargetime = 2 // :)
+	severity = "mobwarning_hi"
+
+/datum/intent/shoot/musket/pistol
+	chargedrain = 1 // ???
+	charging_slowdown = 2 // dodge more easily
+	severity = "mobwarning_lo"
 
 /datum/intent/shoot/musket/rifle
 	chargedrain = 0 //no drain to aim a gun
 	charging_slowdown = 9
 	warnoffset = 20
-	chargetime = 4
+	chargetime = 2
 
 /datum/intent/shoot/musket/peter
 	chargedrain = 0 //no drain to aim a gun
 	charging_slowdown = 4
 	warnoffset = 20
-	chargetime = 4
+	chargetime = 2
 
 /datum/intent/shoot/musket/arc
 	name = "arc"
@@ -90,9 +101,6 @@
 		else
 			return 0.1
 	return chargetime
-
-/datum/intent/shoot/musket/pistol/get_chargetime()
-	return 4
 
 /datum/intent/arc/crossbow
 	chargetime = 1
@@ -226,7 +234,7 @@
 			if("onbelt")
 				return list("shrink" = 0.3,"sx" = -2,"sy" = -5,"nx" = 4,"ny" = -5,"wx" = 0,"wy" = -5,"ex" = 2,"ey" = -5,"nturn" = 0,"sturn" = 0,"wturn" = 0,"eturn" = 0,"nflip" = 0,"sflip" = 0,"wflip" = 0,"eflip" = 0,"northabove" = 0,"southabove" = 1,"eastabove" = 1,"westabove" = 0)
 
-/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/handbow
+/obj/item/gun/ballistic/revolver/grenadelauncher/crossbow/handbow // hand crossbow
 	name = "handbow"
 	desc = "A lightweight version of the crossbow of old, easily stored."
 	slot_flags = ITEM_SLOT_HIP
@@ -241,7 +249,7 @@
 	else
 		if(!cocked)
 			to_chat(user, "<span class='info'>I grip the bowstring and pull it back with all my might...</span>")
-			if(do_after(user, 40 - user.STASTR, target = user))
+			if(do_after(user, 40 - (user.STASTR * 1.5), target = user))
 				playsound(user, 'sound/combat/Ranged/crossbow_medium_reload-01.ogg', 100, FALSE)
 				cocked = TRUE
 		else

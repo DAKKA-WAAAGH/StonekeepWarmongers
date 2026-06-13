@@ -112,7 +112,7 @@
 	slot_flags = ITEM_SLOT_ARMOR
 	name = "steel cuirass"
 	desc = "A cuirass of steel. Lightweight and highly durable."
-	body_parts_covered = CHEST|VITALS
+	//body_parts_covered = CHEST|VITALS // commented out for balancing as you can bypass armor and still damage organs by aiming for groin
 	icon_state = "cuirass"
 	item_state = "cuirass"
 	armor = list("melee" = 100, "bullet" = 100, "laser" = 0,"energy" = 0, "bomb" = 0, "bio" = 0, "rad" = 0, "fire" = 0, "acid" = 0)

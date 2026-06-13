@@ -5,7 +5,7 @@ body
 	margin: 0;
 	background-color: #000000;
 	font-size: 14px;
-	color: #897472;
+	color: #855854;
 	line-height: 170%;
 }
 
@@ -18,20 +18,16 @@ hr
 a, button, a:link, a:visited, a:active, .linkOn, .linkOff
 {
 	font-family: Pterra, TrueType;
-	color: #7b5353;
+	color: #6d2c2c;
 	text-decoration: none;
-	background: #000000;
-	border: 1px solid #000000;
+	border: 1px solid #220000;
 	padding: 1px 4px 1px 4px;
 	margin: 0 2px 0 0;
-	cursor:pointer;
 }
 
 a:hover
 {
-	color: #eac0b9;
-	background: #000000;
-	border-color: #000000;
+	color: #ff2600;
 	text-decoration-line: underline; 
 }
 

@@ -1355,3 +1355,88 @@
 	plane = GAME_PLANE_UPPER
 	blade_dulling = DULLING_BASH
 	max_integrity = 300
+
+// I have zero fucking clue where to put this.
+
+/obj/structure/healther
+	name = "healther"
+	desc = "Man, who even NEEDS a 'real' doctor?"
+	icon = 'icons/roguetown/misc/structure.dmi'
+	icon_state = "healther"
+	density = TRUE
+	anchored = FALSE
+	mouse_drag_pointer = MOUSE_ACTIVE_POINTER
+	var/mob/living/carbon/attached
+	var/datum/beam/bmo
+
+/obj/structure/healther/examine(mob/user)
+	. = ..()
+	if(attached)
+		. += "<span class='tutorial'>Left-click to detach person.</span>"
+	. += "<span class='tutorial'>Drag HEALTHER to person you'd like to attach.</span>"
+
+/obj/structure/healther/Destroy()
+	attached = null
+	return ..()
+
+/obj/structure/healther/update_icon()
+	. = ..()
+	icon_state = "healther"
+	if(attached)
+		icon_state = "healther-attached"
+
+/obj/structure/healther/attack_hand(mob/user)
+	. = ..()
+	if(.)
+		return
+	if(!ishuman(user))
+		return
+	if(attached)
+		visible_message("<span class='notice'>[attached] is detached from [src].</span>")
+		attached = null
+		update_icon()
+		return
+
+/obj/structure/healther/MouseDrop(mob/living/target)
+	. = ..()
+	if(!ishuman(usr) || !usr.canUseTopic(src, BE_CLOSE) || !isliving(target))
+		return
+
+	if(attached)
+		visible_message("<span class='warning'>[attached] is detached from [src].</span>")
+		attached = null
+		qdel(bmo)
+		update_icon()
+		return
+
+	if(Adjacent(target) && usr.Adjacent(target))
+		usr.visible_message("<span class='warning'>[usr] attaches [src] to [target].</span>", "<span class='notice'>I attach [src] to [target].</span>")
+		attached = target
+		if(bmo)
+			qdel(bmo)
+		bmo = Beam(attached, "g_beam", time=INFINITY)
+		START_PROCESSING(SSmachines, src)
+		update_icon()
+
+/obj/structure/healther/process()
+	if(!attached)
+		STOP_PROCESSING(SSmachines, src)
+		return
+
+	if(!(get_dist(src, attached) <= 1 && isturf(attached.loc)))
+		to_chat(attached, "<span class='danger'>The healther's needle is ripped out of you!</span>")
+		playsound(get_turf(attached), 'sound/combat/hits/bladed/genthrust (1).ogg', 100, FALSE, -1)
+		var/obj/item/bodypart/main_arm = (attached.domhand == 1 ? \
+										attached.get_bodypart(BODY_ZONE_L_ARM) : \
+										attached.get_bodypart(BODY_ZONE_R_ARM))
+		main_arm.add_wound(/datum/wound/puncture, FALSE)
+		attached = null
+		qdel(bmo)
+		update_icon()
+
+		STOP_PROCESSING(SSmachines, src)
+		return
+
+	if(prob(80))
+		playsound(get_turf(src), 'sound/misc/inject.ogg', 50, TRUE, -1)
+	attached.reagents.add_reagent(/datum/reagent/medicine/healthpot, 1)

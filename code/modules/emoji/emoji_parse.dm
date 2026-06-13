@@ -1,48 +1,62 @@
-/proc/emoji_parse(text) //turns :ai: into an emoji in text.
-	. = text
-	var/static/list/emojis = icon_states(icon('icons/emoji.dmi'))
-	var/parsed = ""
-	var/pos = 1
-	var/search = 0
-	var/emoji = ""
-	while(1)
-		search = findtext(text, ":", pos)
-		parsed += copytext(text, pos, search)
-		if(search)
-			pos = search
-			search = findtext(text, ":", pos+1)
-			if(search)
-				emoji = lowertext(copytext(text, pos+1, search))
-				var/tag = "\icon[icon('icons/emoji.dmi', emoji)]"
-				if(tag)
-					parsed += tag
-					pos = search + 1
-				else
-					parsed += copytext(text, pos, search)
-					pos = search
-				emoji = ""
-				continue
-			else
-				parsed += copytext(text, pos, search)
-		break
-	return parsed
+// Shared statics to avoid re-evaluating on every call
+var/static/emoji_icon_file = icon('icons/emoji.dmi')
+var/static/list/emoji_states = icon_states(emoji_icon_file)
 
-/proc/emoji_sanitize(text) //cuts any text that would not be parsed as an emoji
-	. = text
-	var/static/list/emojis = icon_states(icon('icons/emoji.dmi'))
-	var/final = "" //only tags are added to this
-	var/pos = 1
-	var/search = 0
-	while(1)
-		search = findtext(text, ":", pos)
-		if(search)
-			pos = search
-			search = findtext(text, ":", pos+1)
-			if(search)
-				var/word = lowertext(copytext(text, pos+1, search))
-				if(word in emojis)
-					final += lowertext(copytext(text, pos, search+1))
-				pos = search + 1
-				continue
-		break
-	return final
+/// Replaces :emoji_name: tokens in [text] with their inline icon tags.
+/proc/emoji_parse(text)
+    if(!text)
+        return ""
+
+    var/parsed = ""
+    var/pos = 1
+
+    while(TRUE)
+        var/colon1 = findtext(text, ":", pos)
+        if(!colon1)
+            // No more colons — append remainder and stop
+            parsed += copytext(text, pos)
+            break
+
+        // Append everything before this colon
+        parsed += copytext(text, pos, colon1)
+
+        var/colon2 = findtext(text, ":", colon1 + 1)
+        if(!colon2)
+            // Lone colon at end of string — append it and stop
+            parsed += copytext(text, colon1)
+            break
+
+        var/name = lowertext(copytext(text, colon1 + 1, colon2))
+        if(name in emoji_states)
+            parsed += "\icon[icon(emoji_icon_file, name)]"
+            pos = colon2 + 1
+        else
+            // Not a valid emoji — treat opening colon as literal text
+            parsed += ":"
+            pos = colon1 + 1
+
+    return parsed
+
+/// Returns only the valid :emoji_name: tokens from [text], stripping all other content.
+/proc/emoji_sanitize(text)
+    if(!text)
+        return ""
+
+    var/final = ""
+    var/pos = 1
+
+    while(TRUE)
+        var/colon1 = findtext(text, ":", pos)
+        if(!colon1)
+            break
+
+        var/colon2 = findtext(text, ":", colon1 + 1)
+        if(!colon2)
+            break
+
+        var/name = lowertext(copytext(text, colon1 + 1, colon2))
+        if(name in emoji_states)
+            final += ":[name]:"
+        pos = colon2 + 1
+
+    return final

@@ -55,11 +55,14 @@
 	for(var/i in 2 to levels)
 		i++
 		points += "!"
-	visible_message("<span class='danger'>[src] falls down[points]</span>", \
-					"<span class='danger'>I fall down[points]</span>")
 	playsound(src.loc, 'sound/foley/zfall.ogg', 100, FALSE)
 	if(!isgroundlessturf(T))
 		ZImpactDamage(T, levels)
+		visible_message("<span class='danger'>[src] falls down[points]</span>", \
+				"<span class='danger'>I fall down[points]</span>")
+	else
+		visible_message("<span class='info'>[src] falls down.</span>", \
+				"<span class='info'>I fall down.</span>")
 	return ..()
 
 /mob/living/proc/ZImpactDamage(turf/T, levels)
@@ -197,10 +200,13 @@
 				if(istype(a_intent, /datum/intent/dagger/thrust) && G.wielded == TRUE)
 					var/mob/living/carbon/human/H = L
 					var/obj/item/bodypart/chest = H.get_bodypart(BODY_ZONE_CHEST)
-					if(H.rogue_sneaking)
+					if(H.m_intent == MOVE_INTENT_SNEAK)
 						dropItemToGround(G)
 						visible_message("<span class='warning'>[L] suplexes [src]'s bayonet charge and makes them drop their gun!")
 						Immobilize(20)
+
+						L.unlock_achievement(new /datum/achievement/stealthed())
+						unlock_achievement(new /datum/achievement/skillissue())
 						
 						flash_fullscreen("whiteflash")
 						L.flash_fullscreen("whiteflash")
@@ -215,6 +221,7 @@
 					H.Immobilize(20)
 					playsound(H, 'sound/combat/hits/bladed/genstab (3).ogg', 100, FALSE, -1)
 					chest.add_wound(/datum/wound/puncture, FALSE, FALSE)
+					unlock_achievement(new /datum/achievement/stunlock())
 					bayoneted = TRUE
 			visible_message("<span class='warning'>[src] charges into [L][bayoneted ? " WITH A BAYONET" : ""]!</span>", "<span class='warning'>I charge into [L][bayoneted ? " WITH A BAYONET" : ""]!</span>")
 			return TRUE

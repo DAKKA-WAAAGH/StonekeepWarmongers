@@ -19,7 +19,7 @@
 		. += "<span class='info'>It is loaded.</span>"
 	if(shootingdown)
 		. += "<span class='info'>It will shoot the things below.</span>"
-	. += "<span class='tutorial'>Load with big lead balls, then use a torch, lamptern or flint to fire.</span>"
+	. += "<span class='tutorial'>Load with big lead balls, then use a torch, lantern or flint to fire.</span>"
 	. += "<span class='tutorial'>Use rightclick to make it shoot at the tile below if infront of an open space.</span>"
 
 /obj/structure/cannon/attackby(obj/item/I, mob/user, params)
@@ -42,7 +42,7 @@
 		if(LR.on)
 			playsound(src.loc, 'sound/items/firelight.ogg', 100)
 			user.visible_message("<span class='danger'>\The [user] lights \the [src]!</span>")
-			fire()
+			fire(user)
 	if(istype(I, /obj/item/flint))
 		var/obj/item/flint/F = I
 		if(!loaded || !SSwarmongers.warfare_ready_to_die)
@@ -51,7 +51,7 @@
 		F.afterattack(src, user, TRUE)
 		playsound(src.loc, 'sound/items/firelight.ogg', 100)
 		user.visible_message("<span class='danger'>\The [user] lights \the [src]!</span>")
-		fire()
+		fire(user)
 	else
 		return ..()
 
@@ -68,7 +68,7 @@
 		shootingdown = !shootingdown
 		playsound(src.loc, 'sound/foley/winch.ogg', 100, extrarange = 3)
 
-/obj/structure/cannon/proc/fire()
+/obj/structure/cannon/proc/fire(var/mob/firer)
 	if(!loaded)
 		return
 	for(var/mob/living/carbon/H in hearers(7, src))
@@ -79,8 +79,9 @@
 			H.playsound_local(get_turf(H), 'sound/foley/tinnitus.ogg', 45, FALSE)
 	for(var/mob/living/carbon/human/H in get_step(src, turn(dir, 180)))
 		var/turf/turfa = get_ranged_target_turf(src, turn(dir, 180), 4)
-		H.throw_at(turfa, 4, 1, null, FALSE)
+		H.throw_at(turfa, 40, 1, null, FALSE)
 		H.take_overall_damage(45)
+		H.unlock_achievement(new /datum/achievement/backblast())
 		visible_message("<span class='danger'>\The [H] is thrown back from \the [src]'s recoil!</span>")
 	flick("cannona_firea", src)
 
@@ -92,25 +93,24 @@
 		else
 			explosion(get_turf(src), heavy_impact_range = 4, light_impact_range = 6, flame_range = 0, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg','sound/misc/explode/bottlebomb (3).ogg'))
 
-	var/obj/projectile/fired_projectile = new loaded.projectile_type(turfina)
-	fired_projectile.firer = src
-	fired_projectile.fired_from = src
-	fired_projectile.fire(dir2angle(dir))
-	QDEL_NULL(loaded)
-	playsound(src.loc, 'sound/misc/explode/explosion.ogg', 100, FALSE)
-	sleep(4)
-	new /obj/effect/particle_effect/smoke(get_turf(src))
-
 	for(var/mob/M in GLOB.player_list)
 		if(!is_in_zweb(M.z,src.z))
 			continue
 		var/turf/M_turf = get_turf(M)
-		var/far_smith_sound = sound(pick('sound/ambience/distantcannon1.ogg','sound/ambience/distantcannon2.ogg'))
+		var/far_smith_sound = sound(pick('sound/ambience/distantcannon1.ogg','sound/ambience/distantcannon2.ogg','sound/ambience/distantcannon3.ogg'))
 		if(M_turf)
 			var/dist = get_dist(M_turf, loc)
 			if(dist < 7)
 				continue
-			M.playsound_local(M_turf, null, 60, 1, get_rand_frequency(), falloff = 5, S = far_smith_sound)
+			M.playsound_local(M_turf, null, 100, 1, get_rand_frequency(), falloff = 1, S = far_smith_sound)
+	playsound(src.loc, 'sound/misc/explode/explosion.ogg', 100, FALSE, 6)
+	new /obj/effect/particle_effect/smoke(get_turf(src))
+	sleep(4)
+	var/obj/projectile/fired_projectile = new loaded.projectile_type(turfina)
+	fired_projectile.firer = firer
+	fired_projectile.fired_from = src
+	fired_projectile.fire(dir2angle(dir))
+	QDEL_NULL(loaded)
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/flintlock/handcannon // for the memes
 	name = "hand barkstone"
@@ -132,7 +132,7 @@
 
 /obj/structure/bombard
 	name = "bombardier"
-	desc = "A motar capable of launching bombs high into the sky at an angle to come crashing down on the foe, even if they cower behind cover."
+	desc = "A metal tube capable of launching bombs high into the sky at an angle to come crashing down on the foe, even if they cower behind cover."
 	icon = 'icons/roguetown/misc/structure.dmi'
 	icon_state = "bombardier"
 	anchored = FALSE
@@ -142,6 +142,11 @@
 	w_class = WEIGHT_CLASS_GIGANTIC // INSTANTLY crushed
 	var/plusy = 0 // no pussy jokes.
 	var/obj/item/bomb/loaded
+
+/obj/structure/bombard/alt // regime
+	name = "mortard"
+	desc = "A metallic-like tube capable of launching bombs high into the clouds at an angle to come crashing down on the fellows or foes depending on your mood, even if they cover behind cower."
+	icon_state = "bombardier_alt"
 	
 /obj/structure/bombard/Moved(atom/OldLoc, Dir)
 	. = ..()
@@ -156,8 +161,21 @@
 		var/oldy = y
 		var/newy = oldy + plusy
 		var/turf/epicenter = locate(x,newy,z)
+
+		if(!epicenter)
+			to_chat(user, "<span class='danger'>I can't see shit. These coordinates must be bad.</span>")
+			return
+
+		if(epicenter.density)
+			to_chat(user, "<span class='danger'>I can't see shit. I can't just shoot inside a solid object..</span>")
+			return
+
 		if(istype(epicenter, /turf/open/transparent/openspace))
 			epicenter = get_step_multiz(epicenter, DOWN)
+		var/area/rogue/A = get_area(epicenter)
+		if(A.safe_from_mortar)
+			to_chat(user, "<span class='danger'>I can't see shit. Seems like I can't shoot there.</span>")
+			return
 
 		to_chat(user, "<span class='notice'>I try to look through the magnifying glass on \the [src].</span>")
 		if(do_after(user, 2 SECONDS, TRUE, src))
@@ -178,15 +196,24 @@
 /obj/structure/bombard/attack_right(mob/user)
 	. = ..()
 	var/agka = input(user, "Insert azirath for target (pyrimuth equals location of bombardier)", "WARMONGERS") as null|num
+	if(isnull(agka))
+		return
+
 	agka = abs(agka)
-	if(agka)
-		switch(dir)
-			if(NORTH)
-				plusy = agka
-			if(SOUTH)
-				plusy = -agka
-		to_chat(user, "<span class='info'>New Target: [y + plusy] azirath</span>")
-		playsound(src, 'sound/misc/keyboard_enter.ogg', 100, FALSE, -1)
+
+	var/target_y = y
+
+	switch(dir)
+		if(NORTH)
+			target_y = y + agka
+		if(SOUTH)
+			target_y = y - agka
+
+	target_y = clamp(target_y, 1, world.maxy)
+	plusy = target_y - y
+
+	to_chat(user, "<span class='info'>New Target: [target_y] azirath</span>")
+	playsound(src, 'sound/misc/keyboard_enter.ogg', 100, FALSE, -1)
 
 /obj/structure/bombard/attackby(obj/item/I, mob/user, params)
 	if(dir == WEST || dir == EAST)
@@ -229,25 +256,37 @@
 		return ..()
 
 /obj/structure/bombard/proc/fire()
-	for(var/mob/living/carbon/H in hearers(7, src))
-		shake_camera(H, 6, 5)
-		H.blur_eyes(4)
-		if(prob(30))
-			H.playsound_local(get_turf(H), 'sound/foley/tinnitus.ogg', 45, FALSE)
-	for(var/mob/living/carbon/human/H in get_step(src, turn(dir, 180)))
-		var/turf/turfa = get_ranged_target_turf(src, turn(dir, 180), 2)
-		H.throw_at(turfa, 3, 1, null, FALSE)
-		H.take_overall_damage(45)
-		visible_message("<span class='danger'>\The [H] is thrown back from \the [src]'s recoil!</span>")
-	flick("bombardier_firea", src)
-	playsound(src.loc, 'sound/misc/explode/explosion.ogg', 100, FALSE)
-	
 	var/oldy = y
 	var/newy = oldy + plusy
 
 	var/turf/epicenter = locate(x,newy,z)
 	if(istype(epicenter, /turf/open/transparent/openspace))
 		epicenter = epicenter.below()
+	var/area/rogue/A = get_area(epicenter)
+
+	if(A.safe_from_mortar)
+		sleep(2)
+		visible_message("<span class='danger'>\The [src] stutters and sputters! Seems like there's some ancient force preventing anything being bombarded on the target coordinates...</span>")
+		return
+	
+	if(!epicenter || epicenter.density)
+		sleep(2)
+		visible_message("<span class='danger'>\The [src] stutters and sputters!</span>")
+		return
+
+	for(var/mob/living/carbon/H in hearers(7, src))
+		shake_camera(H, 1, 1)
+		H.blur_eyes(4)
+		if(prob(30))
+			H.playsound_local(get_turf(H), 'sound/foley/tinnitus.ogg', 45, FALSE)
+	for(var/mob/living/carbon/human/H in get_step(src, turn(dir, 180)))
+		var/turf/turfa = get_ranged_target_turf(src, turn(dir, 180), 2)
+		H.throw_at(turfa, 10, 1, null, FALSE)
+		H.take_overall_damage(45)
+		H.unlock_achievement(new /datum/achievement/backblast())
+		visible_message("<span class='danger'>\The [H] is thrown back from \the [src]'s recoil!</span>")
+	flick("[initial(icon_state)]_firea", src)
+	playsound(src.loc, 'sound/misc/explode/explosion.ogg', 100, FALSE)
 
 	var/obj/effect/warning/G = new(epicenter)
 
@@ -277,7 +316,7 @@
 	ARE.Turn(rand(50,350))
 	animate(S, time = 50, alpha = 0, pixel_x = px, pixel_y = py, transform = ARE, easing = SINE_EASING)
 
-	new /obj/effect/particle_effect/smoke(get_turf(src))
+	//new /obj/effect/particle_effect/smoke(get_turf(src)) // i want to show the cool animation
 
 // maxim bb gun
 

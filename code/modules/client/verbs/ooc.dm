@@ -24,9 +24,9 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 		var/mob/living/carbon/human/H = mob
 		switch(H.warfare_faction)
 			if(RED_WARTEAM)
-				img = "heartfelt"
+				img = "union"
 			if(BLUE_WARTEAM)
-				img = "skull"
+				img = "regime"
 			else
 				img = "normie"
 	return img
@@ -108,6 +108,8 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 	for(var/client/C in GLOB.clients)
 		var/real_key = C.holder ? "([key])" : ""
+		if(prefs.anonymize == FALSE)
+			real_key = ""
 		if(C.prefs.chat_toggles & CHAT_OOC)
 			msg_to_send = "\icon[icon('icons/emoji.dmi', getemojiforrank())]<font color='[color2use]'><EM>[keyname][real_key]:</EM></font> <font color='[chat_color]'><span class='message linkify'>[msg]</span></font>"
 			if(holder)
@@ -204,7 +206,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	for(var/client/C in GLOB.clients)
 		var/real_key = C.holder ? "([key])" : ""
 		if(C.prefs.chat_toggles & CHAT_OOC)
-			if(SSticker.current_state != GAME_STATE_FINISHED && !istype(C.mob, /mob/dead/new_player) && !C.holder)
+			if(SSticker.current_state != GAME_STATE_FINISHED && !istype(C.mob, /mob/dead) && !C.holder)
 				continue
 
 			msg_to_send = "\icon[icon('icons/emoji.dmi', getemojiforrank())]<font color='[color2use]'><EM>[keyname][real_key]:</EM></font> <font color='[chat_color]'><span class='message linkify'>[msg]</span></font>"
@@ -337,14 +339,14 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	usr.playsound_local(usr, 'sound/misc/type3.ogg', 65, FALSE)
 	contents += "<center>Dr. Urist's Discount Medical School<BR>"
 	contents += "--------------</center><BR>"
-	contents += "While playing a medic it is good to know how to heal people. First, you spawn with a health potion and surgery tools. When you see an injured person feed them the potion and in the rare instance you don't have it prepared, use your surgery tools. A CRANKeR is a tool used to get you more drugs. Put in a limb and a bottle. Crank it by clicking it in your hand and then grab the potion you attached to it with MMB; which is now filled with cool new drugs! You can choose which drug to manufacture by using RMB. Oh yeah, it also gives the Lord a support point to redeem for new toys. Pretty cool."
+	contents += "While playing a medic it is good to know how to heal people. First, you spawn with a health potion and surgery tools. When you see an injured person feed them the potion and in the rare instance you don't have it prepared, use your surgery tools. A SCHLaNKER is a tool used to get you more drugs. Put in a limb and a bottle. Crank it by clicking it in your hand and then grab the potion you attached to it with MMB; which is now filled with cool new drugs! You can choose which drug to manufacture by using RMB. Oh yeah, it also gives the Lord a support point to redeem for new toys. Pretty cool."
 	var/datum/browser/popup = new(usr, "HELP", "", 420, 420)
 	popup.set_content(contents)
 	popup.open()
 
 /client/verb/viewstats()
 	set name = "View Persistent Data"
-	set category = "Options"
+	set category = "Control"
 	var/contents
 	
 	var/json_file = file("data/TotalStatistics.json")
@@ -357,12 +359,15 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	contents += "<b>BATTLE-WIDE STATISTICS</b><BR>"
 	contents += "A.K.A, ARE WE WINNING?<BR>"
 	contents += "--------------<BR>"
-	contents += "</center>"
 	contents += "<b>TOTAL DEATHS:</b> [json["deaths"]]<BR>"
 	contents += "<b>TOTAL SHOTS FIRED:</b> [json["muskshots"]]<BR>"
 	contents += "<b>REGIME VICTORIES:</b> [json["grenz_wins"]]<BR>"
 	contents += "<b>UNION VICTORIES:</b> [json["heart_wins"]]<BR>"
-	contents += "<b>MOST TRIUMPHANT SOLDIER: [SStriumphs.triumph_leaderboard[1]]</b> "
+	contents += "<b>MOST TRIUMPHANT SOLDIER:</b> [SStriumphs.triumph_leaderboard[1]]<BR>"
+	if(!SStriumphs.frag_leaderboard)
+		if(SStriumphs.frag_leaderboard.len > 1)
+			contents += "<b>LORD FRAGGER THE WORTHY:</b> [SStriumphs.frag_leaderboard[1]]<BR>"
+	contents += "</center>"
 	var/datum/browser/popup = new(usr, "HELP", "", 420, 420)
 	popup.set_content(contents)
 	popup.open()
@@ -430,12 +435,24 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 //			testing("reges cant find")
 //			return "0"
 
-/client/verb/fix_chat()
-	set name = "{FIX CHAT}"
+/client/verb/html_chat()
+	set name = "{Old Chat}"
 	set category = "Options"
-	set hidden = 1
-	if(!check_rights(0))
-		return
+	set hidden = FALSE
+
+	prefs.prefer_old_chat = TRUE
+	prefs.save_preferences()
+	to_chat(src, "Going back to old chat.")
+	winset(src, "output", "is-visible=true;is-disabled=false")
+	winset(src, "browseroutput", "is-visible=false")
+
+/client/verb/fix_chat()
+	set name = "{Fix Chat}"
+	set category = "Options"
+	set hidden = FALSE
+
+	prefs.prefer_old_chat = FALSE
+	prefs.save_preferences()
 	if (!chatOutput || !istype(chatOutput))
 		var/action = alert(src, "Invalid Chat Output data found!\nRecreate data?", "Wot?", "Recreate Chat Output data", "Cancel")
 		if (action != "Recreate Chat Output data")
@@ -610,7 +627,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 /client/verb/stalemate()
 	set name = "Propose STALEMATE"
-	set category = "Options"
+	set category = "Control"
 	set desc = ""
 	
 	var/sure = alert(usr, "Are you a coward?", "WARMONGERS", "Yes", "No")
@@ -628,7 +645,7 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 
 /client/verb/forcestartvote()
 	set name = "Propose FORCE START"
-	set category = "Options"
+	set category = "Control"
 	set desc = ""
 	if(SSwarmongers.warfare_ready_to_die)
 		to_chat(usr, "<B>FOOL</B>")

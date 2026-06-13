@@ -424,7 +424,7 @@
     reach = 1
     chargetime = 1
     warnie = "mobwarning"
-    hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
+    hitsound = list('sound/combat/hits/bladed/genthrust (1).ogg','sound/combat/hits/bladed/genthrust (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
     penfactor = 20
     swingdelay = 1
     misscost = 5
@@ -624,7 +624,7 @@
 //Rapiers
 /obj/item/rogueweapon/sword/rapier
 	name = "rapier"
-	desc = "A precise rapier, favored by the small, eloquent and bloodthirsty."
+	desc = "A precise rapier, favored by the small, eloquent and bloodthirsty. Don't make fun of the name."
 	icon_state = "rapier"
 	smeltresult = /obj/item/ingot/steel
 	possible_item_intents = list(/datum/intent/sword/thrust/rapier, /datum/intent/sword/cut/rapier)

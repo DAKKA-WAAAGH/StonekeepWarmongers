@@ -294,11 +294,12 @@
 	noaa = TRUE
 	charging_slowdown = 2
 	warnoffset = 2
+	var/severity = "mobwarning"
 
 /datum/intent/shoot/prewarning()
 	if(masteritem && mastermob)
 		mastermob.visible_message("<span class='warning'>[mastermob] aims [masteritem]!</span>")
-		mastermob.do_warning()
+		mastermob.do_warning(severity)
 
 /datum/intent/arc
 	name = "arc"

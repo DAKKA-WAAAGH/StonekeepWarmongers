@@ -280,10 +280,10 @@
 		else
 			return 0
 
-/obj/structure/girder/CanAStarPass(ID, dir, caller)
+/obj/structure/girder/CanAStarPass(ID, dir, requester)
 	. = !density
-	if(ismovableatom(caller))
-		var/atom/movable/mover = caller
+	if(ismovableatom(requester))
+		var/atom/movable/mover = requester
 		. = . || (mover.pass_flags & PASSGRILLE)
 
 /obj/structure/girder/deconstruct(disassembled = TRUE)

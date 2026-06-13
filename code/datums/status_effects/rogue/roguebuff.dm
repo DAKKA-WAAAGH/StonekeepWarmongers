@@ -43,7 +43,7 @@
 /datum/status_effect/buff/druqks
 	id = "druqks"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/druqks
-	effectedstats = list("endurance" = 3,"speed" = 3)
+	effectedstats = list("endurance" = 4,"speed" = 1)
 	duration = 2 MINUTES
 
 /datum/status_effect/buff/druqks/on_apply()
@@ -101,7 +101,7 @@
 /datum/status_effect/buff/moondust
 	id = "moondust"
 	alert_type = /atom/movable/screen/alert/status_effect/buff/druqks
-	effectedstats = list("speed" = 6, "constitution" = 3, "endurance"= -3)
+	effectedstats = list("speed" = 4, "constitution" = 1)
 	duration = 2 MINUTES
 
 /datum/status_effect/buff/moondust/nextmove_modifier()

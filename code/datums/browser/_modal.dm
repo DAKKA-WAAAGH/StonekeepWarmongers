@@ -33,13 +33,14 @@
 	closed = TRUE
 
 /datum/browser/modal/open(use_onclose)
-	set waitfor = FALSE
+	set waitfor = 0
+	opentime = world.time
 
-	if(stealfocus)
-		. = ..()
+	if (stealfocus)
+		. = ..(use_onclose = 1)
 	else
 		var/focusedwindow = winget(user, null, "focus")
-		. = ..()
+		. = ..(use_onclose = 1)
 
 		//waits for the window to show up client side before attempting to un-focus it
 		//winexists sleeps until it gets a reply from the client, so we don't need to bother sleeping
@@ -50,7 +51,7 @@
 				else
 					winset(user, "mapwindow", "focus=true")
 				break
-	if(timeout)
+	if (timeout)
 		addtimer(CALLBACK(src, PROC_REF(close)), timeout)
 
 /datum/browser/modal/proc/wait()

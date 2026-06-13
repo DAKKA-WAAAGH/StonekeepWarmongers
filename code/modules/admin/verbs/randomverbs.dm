@@ -159,19 +159,37 @@
 
 	var/msg = input("Message:", text("Enter the text you wish to appear to [team]:")) as text|null
 
+	var/crashout = alert(src, "Is this a crashout message?", "WARMOGNERS", "Yes", "No")
+	if(crashout == "Yes")
+		crashout = TRUE
+	else
+		crashout = FALSE
+
 	if (!msg)
 		return
 	switch(team)
 		if(BLUE_WARTEAM)
 			for(var/client/C in W.regimians)
-				SEND_SOUND(C, 'sound/misc/highcommand.ogg')
+				SEND_SOUND(C, 'sound/vo/regime_highcom_begin.ogg')
+				to_chat(C, "<span class='info'>Higher Commanders are now sending a message...</span>")
 				spawn(5 SECONDS)
+					if(crashout)
+						SEND_SOUND(C, 'sound/vo/highcommand_crashout.ogg')
+						C.unlock_achievement(new /datum/achievement/highcom_crashout())
+					else
+						SEND_SOUND(C, sound("sound/vo/highcommand_[rand(1,3)].ogg"))
 					to_chat(C, "<span class='userdanger'>THE KAITZAR'S RIGHT HAND MAN [pick("HAS THE PODIUM", "IS NOW SPEAKING", "SPEAKS TO YOU")]!</span><br>")
 					to_chat(C, "<span class='danger'>[msg]</span><br>")
 		if(RED_WARTEAM)
 			for(var/client/C in W.unionists)
-				SEND_SOUND(C, 'sound/misc/highcommand.ogg')
+				SEND_SOUND(C, 'sound/vo/union_highcom_begin.ogg')
+				to_chat(C, "<span class='info'>Higher Commanders are now sending a message...</span>")
 				spawn(5 SECONDS)
+					if(crashout)
+						SEND_SOUND(C, 'sound/vo/highcommand_crashout.ogg')
+						C.unlock_achievement(new /datum/achievement/highcom_crashout())
+					else
+						SEND_SOUND(C, sound("sound/vo/highcommand_[rand(1,3)].ogg"))
 					to_chat(C, "<span class='userdanger'>THE BEEZER'S LEFT HAND MAN [pick("HAS THE PODIUM", "IS NOW SPEAKING", "SPEAKS TO YOU")]!</span><br>")
 					to_chat(C, "<span class='danger'>[msg]</span><br>")
 	log_admin("TeamNarrate: [key_name(usr)] : [msg]")

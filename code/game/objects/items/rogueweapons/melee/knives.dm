@@ -60,7 +60,7 @@
 /datum/intent/dagger/thrust/pick
 	name = "thrust"
 	attack_verb = list("stabs", "impales")
-	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
+	hitsound = list('sound/combat/hits/bladed/genthrust (1).ogg','sound/combat/hits/bladed/genthrust (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
 	penfactor = 50
 	clickcd = CLICK_CD_MELEE
 	swingdelay = 1

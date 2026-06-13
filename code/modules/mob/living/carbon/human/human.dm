@@ -73,6 +73,7 @@
 		if(levels >= 2)
 			if(!M.has_status_effect(/datum/status_effect/buff/spawn_protection))
 				adjust_triumphs(1)
+				unlock_achievement(new /datum/achievement/goombastomp())
 				M.gib(TRUE)
 		else
 			M.AdjustKnockdown(levels * 20)
@@ -888,8 +889,11 @@
 	if(client)
 		if(istype(SSticker.mode, /datum/game_mode/warmongers))
 			var/datum/game_mode/warmongers/C = SSticker.mode
+			/*
 			if(!check_bypasslist(client.ckey))
 				client.warfare_faction = w_faction
+			*/
+			client.warfare_faction = w_faction
 			switch(w_faction)
 				if(RED_WARTEAM)
 					C.unionists |= client

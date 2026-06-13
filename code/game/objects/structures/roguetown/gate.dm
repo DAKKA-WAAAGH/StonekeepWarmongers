@@ -8,7 +8,7 @@ GLOBAL_LIST_EMPTY(biggates)
 	density = TRUE
 	anchored = TRUE
 	blade_dulling = DULLING_BASHCHOP
-	max_integrity = 5000
+	max_integrity = 1000
 	bound_width = 96
 	appearance_flags = NONE
 	opacity = TRUE

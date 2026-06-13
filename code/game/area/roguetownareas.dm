@@ -14,6 +14,7 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	power_light = TRUE
 	dynamic_lighting = DYNAMIC_LIGHTING_FORCED
 	requires_power = FALSE
+	var/safe_from_mortar = FALSE // whether or not mortars can target this area
 //	var/previous_ambient = ""
 
 /area/rogue/indoors
@@ -25,8 +26,8 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 	spookysounds = SPOOKY_WARINDOORS
 	spookynight = SPOOKY_WARINDOORS
 	droning_sound = 'sound/music/powderdry.ogg'
-	droning_sound_dusk = 'sound/music/powderdry.ogg'
-	droning_sound_night = 'sound/music/powderdry.ogg'
+	droning_sound_dusk = 'sound/music/daybreakoverbloodyfields.ogg'
+	droning_sound_night = 'sound/music/death.ogg'
 	plane = INDOOR_PLANE
 	converted_type = /area/rogue/outdoors
 
@@ -375,11 +376,15 @@ GLOBAL_LIST_INIT(roguetown_areas_typecache, typecacheof(/area/rogue/indoors/town
 
 /area/rogue/indoors/town
 	name = "indoors"
-	icon_state = "blueold"
+	icon_state = "town"
 	droning_sound = 'sound/music/powderdry.ogg'
 	droning_sound_dusk = 'sound/music/powderdry.ogg'
 	droning_sound_night = 'sound/music/powderdry.ogg'
 	converted_type = /area/rogue/outdoors/exposed/town
+
+/area/rogue/indoors/town/safe
+	safe_from_mortar = TRUE
+	dynamic_lighting = FALSE
 
 /area/rogue/outdoors/exposed/town
 	icon_state = "town"

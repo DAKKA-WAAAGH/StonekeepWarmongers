@@ -273,7 +273,7 @@
 	reach = 2
 	chargetime = 1
 	warnie = "mobwarning"
-	hitsound = list('sound/combat/hits/bladed/genstab (1).ogg', 'sound/combat/hits/bladed/genstab (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
+	hitsound = list('sound/combat/hits/bladed/genthrust (1).ogg','sound/combat/hits/bladed/genthrust (2).ogg', 'sound/combat/hits/bladed/genstab (3).ogg')
 	penfactor = 40
 	swingdelay = 1
 	misscost = 15
@@ -393,7 +393,7 @@
 
 /obj/item/rogueweapon/mace/cudgel/war
 	force = 15
-	force_wielded = 20
+	force_wielded = 35
 	name = "masher"
 	icon_state = "masher"
 	desc = "A stick with a leather grip and a spiked head, good for mashing up brains."

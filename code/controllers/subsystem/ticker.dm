@@ -82,10 +82,9 @@ SUBSYSTEM_DEF(ticker)
 	var/blood_lost = 0
 	var/tri_gained = 0
 	var/tri_lost = 0
-	var/list/cuckers = list()
-	var/cums = 0
 	var/muskshots = 0
 	var/lostteeth = 0
+	var/explosions = 0
 
 	var/end_party = FALSE
 	var/last_lobby = 0
@@ -150,7 +149,7 @@ SUBSYSTEM_DEF(ticker)
 	else
 		login_music = "[global.config.directory]/title_music/sounds/[pick(music)]"
 
-	login_music = pick('sound/music/warmongrels.ogg', 'sound/music/smellofblackpowder.ogg', 'sound/music/drama.ogg', 'sound/music/thomas.ogg', 'sound/music/draft.ogg', 'sound/music/parade.ogg')
+	login_music = pick('sound/music/warmongrels.ogg', 'sound/music/smellofblackpowder.ogg', 'sound/music/drama.ogg', 'sound/music/thomas.ogg', 'sound/music/draft.ogg', 'sound/music/parade.ogg', 'sound/music/pines.ogg', 'sound/music/rising.ogg', 'sound/music/chore.ogg', 'sound/music/itcametothis.ogg')
 	SSevents.getHoliday()
 
 	/*
@@ -486,13 +485,50 @@ SUBSYSTEM_DEF(ticker)
 //	SSshuttle.emergency.startTime = world.time
 //	SSshuttle.emergency.setTimer(ROUNDTIMERBOAT)
 
-	CHECK_TICK
-
 	SSdbcore.SetRoundStart()
 	pickaspect()
 
 	to_chat(world, "<span class='notice'><span class='typewrite'>⏚ Praise the Earth! ⏚</span></span>")
-	
+
+	CHECK_TICK
+
+	var/datum/game_mode/warmongers/W = SSticker.mode
+
+	var/list/players = shuffle(GLOB.clients.Copy())
+	listclearnulls(players)
+
+	var/list/reg = list()
+	var/list/uni = list()
+
+	for(var/client/C in players)
+		window_flash(C)
+		if(istype(C.mob, /mob/dead/new_player))
+			var/mob/dead/new_player/NP = C.mob
+			NP.lobby_refresh() // To allow it to change from "WAIT" to "JOIN"
+		if(reg.len <= uni.len)
+			reg += C
+		else
+			uni += C
+
+	W.regimians = reg
+	W.unionists = uni
+
+	for(var/client/C in reg)
+		C.warfare_faction = BLUE_WARTEAM
+		to_chat(C, "<span class='tutorial'>You were automatically balanced to the [BLUE_WARTEAM].</span>")
+		if(end_party)
+			C.mob.playsound_local(C.mob, 'sound/warmongers.ogg', 70, FALSE)
+		else
+			C.mob.playsound_local(C.mob, 'sound/roundstart.ogg', 100, FALSE)
+
+	for(var/client/C in uni)
+		C.warfare_faction = RED_WARTEAM
+		to_chat(C, "<span class='tutorial'>You were automatically balanced to the [RED_WARTEAM].</span>")
+		if(end_party)
+			C.mob.playsound_local(C.mob, 'sound/warmongers.ogg', 70, FALSE)
+		else
+			C.mob.playsound_local(C.mob, 'sound/roundstart.ogg', 100, FALSE)
+
 	spawn(10)
 		to_chat(world, "<span class='notice'>This battle's aspect is: [round_aspect.name]</span>")
 		to_chat(world, "<span class='info'>[round_aspect.description]</span>")
@@ -501,16 +537,6 @@ SUBSYSTEM_DEF(ticker)
 			to_chat(world, "<span class='notice'><B>THIS IS THE FINAL STRUGGLE. DON'T LET THOSE BASTARDS WIN! IT'S NOW OR NEVER!!!</B></span>")
 		if(SSwarmongers.oneteammode)
 			to_chat(world, "<span class='notice'><B>This time you can only play as the Regimians.</B></span>")
-
-	CHECK_TICK
-
-	for(var/client/C in GLOB.clients)
-		if(SSwarmongers.oneteammode)
-			C.warfare_faction = "Regimians"
-		if(end_party)
-			C.mob.playsound_local(C.mob, 'sound/warmongers.ogg', 70, FALSE)
-		else
-			C.mob.playsound_local(C.mob, 'sound/roundstart.ogg', 100, FALSE)
 
 //	SEND_SOUND(world, sound('sound/misc/roundstart.ogg'))
 	current_state = GAME_STATE_PLAYING
@@ -547,6 +573,8 @@ SUBSYSTEM_DEF(ticker)
 
 //	setup_hell()
 	SStriumphs.fire_on_PostSetup()
+	for(var/obj/structure/capturepoint_shower/CPS in world)
+		CPS.DoShit()
 	for(var/i in GLOB.start_landmarks_list)
 		var/obj/effect/landmark/start/S = i
 		if(istype(S))							//we can not runtime here. not in this important of a proc.

@@ -830,8 +830,9 @@
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
 
-/atom/movable/proc/do_warning()
+/atom/movable/proc/do_warning(var/severity = "mobwarning")
 	var/obj/effect/temp_visual/warnie/E = new(get_turf(src))
+	E.icon_state = severity
 	animate(E, 10, pixel_y = 20, alpha = 0)
 	spawn(10) qdel(E)
 

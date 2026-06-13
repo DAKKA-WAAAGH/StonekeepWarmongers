@@ -2,7 +2,7 @@
 	name = "lightsout"
 	typepath = /datum/round_event/rogue/lightsout
 	weight = 5
-	max_occurrences = 1
+	max_occurrences = 0
 	min_players = 0
 	req_omen = TRUE
 	todreq = list("dusk", "night")
@@ -14,10 +14,12 @@
 	return
 
 /datum/round_event/rogue/lightsout/start()
+	/*
 	if(LAZYLEN(GLOB.fires_list))
 		for(var/obj/i in GLOB.fires_list)
 			i.extinguish()
 	if(LAZYLEN(GLOB.streetlamp_list))
 		for(var/obj/machinery/light/roguestreet/i in GLOB.streetlamp_list)
 			i.lights_out()
+	*/
 	return

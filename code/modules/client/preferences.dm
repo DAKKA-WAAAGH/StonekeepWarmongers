@@ -19,7 +19,10 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/lastchangelog = ""				//Saved changlog filesize to detect if there was a change
 	var/ooccolor = "#c43b23"
 	var/asaycolor = "#ff4500"			//This won't change the color for current admins, only incoming ones.
+	
 	var/triumphs = 0
+	var/frags = 0
+	
 	var/enable_tips = TRUE
 	var/tip_delay = 500 //tip delay in milliseconds
 
@@ -57,6 +60,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/preferred_map = null
 	var/pda_style = MONO
 	var/pda_color = "#808000"
+	var/prefer_old_chat = FALSE
 
 	var/uses_glasses_colour = 0
 
@@ -133,6 +137,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 	var/action_buttons_screen_locs = list()
 
 	var/domhand = 2
+	var/helmetless = FALSE
 	var/alignment = ALIGNMENT_TN
 	var/datum/warperk/warperk
 
@@ -215,7 +220,7 @@ GLOBAL_LIST_EMPTY(chosen_names)
 			// FIRST ROW
 			dat += "<td style='width:33%;text-align:left'>"
 			dat += "<a href='?_src_=prefs;preference=changeslot;'>Falsify Yourself</a><br>"
-			dat += "<a href='?_src_=prefs;preference=playerquality;task=menu'><b>KARMA:</b></a> [get_playerquality(user.ckey, text = TRUE)]"
+			dat += "<a href='?_src_=prefs;preference=showoff_frags;task=menu'><b>FRAG(s):</b></a> [user.get_frags() ? "[user.get_frags()]" : "NOOB (ZERO)"]"
 			dat += "</td>"
 
 			dat += "<td style='width:33%;text-align:right'>"
@@ -398,6 +403,8 @@ GLOBAL_LIST_EMPTY(chosen_names)
 				dat += "<b>Detail:</b> <a href='?_src_=prefs;preference=detail;task=input'>[detail]</a>"
 				dat += "<br>"
 				dat += "<b>Accessory:</b> <a href='?_src_=prefs;preference=accessory;task=input'>[accessory]</a>"
+				dat += "<br>"
+				dat += "<span title='This is a cosmetic change.'><b>Helmetless:</b></span> <a href='?_src_=prefs;preference=helmetless'>[helmetless == 1 ? "YES" : "NO"]</a>"
 				if(gender == FEMALE)
 					dat += "<br>"
 				dat += "<br></td>"
@@ -1177,7 +1184,7 @@ Slots: [job.spawn_positions]</span>
 	if(user.client?.prefs)
 		if(!user.client.prefs.lastclass)
 			return
-	var/choice = tgalert(user, "Use 2 Triumphs to play as this class again?", "Reset LastPlayed", "Do It", "Cancel")
+	var/choice = browser_alert(user, "Use 2 Triumphs to play as this class again?", "Reset LastPlayed", list("Do It", "Cancel"))
 	if(choice == "Cancel")
 		return
 	if(!choice)
@@ -1489,7 +1496,20 @@ Slots: [job.spawn_positions]</span>
 					if(SSticker.current_state != GAME_STATE_FINISHED && !istype(C.mob, /mob/dead/new_player) && !C.holder)
 						continue
 
-					to_chat(C, "<span class='info'><b>[keyname]</b> shows off their [SStriumphs.get_triumphs(user.ckey)] TRIUMPHs!</span>")
+					to_chat(C, "<span class='info'><b>[keyname]</b> shows off their <b>[SStriumphs.get_triumphs(user.ckey)] TRIUMPHs!</b></span>")
+	
+	else if(href_list["preference"] == "showoff_frags")
+		var/chice = alert(usr, "Show off your FRAGS?", "WARMONGERS","YES", "NO")
+		if(chice == "YES")
+			var/keyname = user.ckey
+			if(user.ckey in GLOB.anonymize)
+				keyname = get_fake_key(user.ckey)
+			for(var/client/C in GLOB.clients)
+				if(C.prefs.chat_toggles & CHAT_OOC)
+					if(SSticker.current_state != GAME_STATE_FINISHED && !istype(C.mob, /mob/dead/new_player) && !C.holder)
+						continue
+
+					to_chat(C, "<span class='info'><b>[keyname]</b> flexes their <b>[SStriumphs.get_frags(user.ckey)] FRAGs!</b></span>")
 
 	else if(href_list["preference"] == "triumph_buy_menu")
 		SStriumphs.startup_triumphs_menu(user.client)
@@ -1571,7 +1591,7 @@ Slots: [job.spawn_positions]</span>
 				SetKeybinds(user)
 
 			if("keybindings_reset")
-				var/choice = tgalert(user, "Do you really want to reset your keybindings?", "Setup keybindings", "Do It", "Cancel")
+				var/choice = browser_alert(user, "Do you really want to reset your keybindings?", "Setup keybindings", list("Do It", "Cancel"))
 				if(choice == "Cancel")
 					ShowChoices(user,3)
 					return
@@ -1904,6 +1924,10 @@ Slots: [job.spawn_positions]</span>
 						buyables[A.name] = A
 					var/chosen = browser_input_list(user, "Choose a perk", "WARMONGERS", buyables)
 					var/datum/warperk/WP = buyables[chosen]
+					if(!chosen)
+						warperk = new /datum/warperk
+						to_chat(user, "<span class='info'>Ordinary it is, then.</span>")
+						return
 					if(WP)
 						var/full_desc = "[WP.desc] ([WP.cost] TRI)"
 						var/alerto = alert(user, full_desc, WP.name, "Confirm", "Cancel")
@@ -2118,6 +2142,8 @@ Slots: [job.spawn_positions]</span>
 						domhand = 2
 					else
 						domhand = 1
+				if("helmetless")
+					helmetless = !helmetless
 				if("alignment")
 ///					to_chat(user, "<font color='puple'>Alignment is how you communicate to the Game Masters if your character follows a certain set of behavior restrictions. This allows you to </font>")
 					var/new_alignment = input(user, "Alignment is how you communicate to the Game Masters and other players the intent of your character. Your character will be under less administrative scrutiny for evil actions if you choose evil alignments, but you will experience subtle disadvantages. Alignment is overwritten for antagonists.", "Alignment") as null|anything in ALL_ALIGNMENTS_LIST
@@ -2187,7 +2213,7 @@ Slots: [job.spawn_positions]</span>
 					save_preferences()
 
 				if("keybindings_reset")
-					var/choice = tgalert(user, "Do you really want to reset your keybindings?", "Setup keybindings", "Do It", "Cancel")
+					var/choice = browser_alert(user, "Do you really want to reset your keybindings?", "Setup keybindings", "Do It", "Cancel")
 					if(choice == "Cancel")
 						ShowChoices(user,3)
 						return

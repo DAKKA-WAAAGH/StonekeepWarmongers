@@ -124,10 +124,10 @@
 		else
 			return !density
 
-/obj/structure/grille/CanAStarPass(ID, dir, caller)
+/obj/structure/grille/CanAStarPass(ID, dir, requester)
 	. = !density
-	if(ismovableatom(caller))
-		var/atom/movable/mover = caller
+	if(ismovableatom(requester))
+		var/atom/movable/mover = requester
 		. = . || (mover.pass_flags & PASSGRILLE)
 
 /obj/structure/grille/attackby(obj/item/W, mob/user, params)

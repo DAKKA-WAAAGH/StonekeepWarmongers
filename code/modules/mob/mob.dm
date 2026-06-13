@@ -436,10 +436,11 @@ GLOBAL_VAR_INIT(mobids, 1)
 		face_atom(A)
 		visible_message("<span class='emote'>[src] looks at [A].</span>")
 	var/list/result = A.examine(src)
-	if(result)
-		to_chat(src, result.Join("\n"))
+	if(LAZYLEN(result))
+		for(var/i in 1 to (length(result) - 1))
+			result[i] += "\n"
+		to_chat(src, examine_block("<span class='info'>[result.Join()]</span>"))
 	SEND_SIGNAL(src, COMSIG_MOB_EXAMINATE, A)
-
 /**
   * Point at an atom
   *
@@ -725,7 +726,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 				stat("REGIMIAN DEATHS: [SSticker.regime_deaths]")
 				stat("UNIONIST DEATHS: [SSticker.unionist_deaths]")
 				stat("TOTALITY: [SSticker.deaths]")
-			if(istype(W) && istype(W.warmode, /datum/warmode/assault))
+			if((istype(W) && istype(W.warmode, /datum/warmode/assault)) && SSwarmongers.warfare_ready_to_die)
 				var/datum/warmode/assault/ASS = W.warmode
 				stat("REGIMIAN REINFORCEMENTS: [ASS.blu_spawns - SSticker.regime_deaths]")
 			if(istype(loc.loc, /area/rogue/indoors/airship))

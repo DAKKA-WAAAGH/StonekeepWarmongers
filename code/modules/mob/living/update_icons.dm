@@ -10,20 +10,7 @@
 	if(on_fire || islava(loc))
 		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/mob/OnFire.dmi', fire_icon, -FIRE_LAYER)
 		new_fire_overlay.appearance_flags = RESET_COLOR
+		new_fire_overlay.filters = filter(type="bloom", size=3, offset = 0.5, alpha = 220)
 		overlays_standing[FIRE_LAYER] = new_fire_overlay
 
 	apply_overlay(FIRE_LAYER)
-
-/mob/living/proc/update_turflayer(input)
-	return
-
-/mob/living/update_turflayer(input)
-	return
-	remove_overlay(TURF_LAYER)
-
-	if(input)
-		var/mutable_appearance/new_fire_overlay = mutable_appearance('icons/turf/mob_overlay.dmi', input, -TURF_LAYER)
-		new_fire_overlay.appearance_flags = RESET_COLOR
-		overlays_standing[TURF_LAYER] = new_fire_overlay
-
-	apply_overlay(TURF_LAYER)

@@ -199,6 +199,7 @@
 	name = "light fixture"
 	icon = 'icons/obj/lighting.dmi'
 	var/overlayicon = 'icons/obj/lighting_overlay.dmi'
+	var/overlaystate = "tube"
 	var/base_state = "tube"		// base description and icon_state
 	icon_state = "tube"
 	desc = ""
@@ -339,8 +340,9 @@
 				icon_state = "[base_state]"
 				icon_state = null
 				if(on)
-					var/mutable_appearance/glowybit = mutable_appearance(overlayicon, base_state, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE)
+					var/mutable_appearance/glowybit = mutable_appearance(overlayicon, overlaystate, ABOVE_LIGHTING_LAYER, ABOVE_LIGHTING_PLANE)
 					glowybit.alpha = CLAMP(light_power*250, 30, 200)
+					glowybit.filters = filter(type="bloom", size=3, offset = 0.5, alpha = 220)
 					add_overlay(glowybit)
 		if(LIGHT_EMPTY)
 			icon_state = "[base_state]-empty"

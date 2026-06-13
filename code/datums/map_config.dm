@@ -19,17 +19,13 @@
 	var/map_file = "bloodfort.dmm"
 
 	var/traits = null
-	var/space_ruin_levels = 7
-	var/space_empty_levels = 1
+	var/space_ruin_levels = 0
+	var/space_empty_levels = 0
 
-	var/minetype = "lavaland"
+	var/minetype = null
 
 	var/allow_custom_shuttles = TRUE
-	var/shuttles = list(
-		"cargo" = "cargo_box",
-		"ferry" = "ferry_fancy",
-		"whiteship" = "whiteship_box",
-		"emergency" = "emergency_box")
+	var/shuttles = list()
 
 /proc/load_default_map_config()
 	return new /datum/map_config

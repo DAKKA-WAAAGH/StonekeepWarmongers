@@ -74,10 +74,18 @@
 			var/datum/warmode/noreturn/NR = C.warmode
 			if(NR.blu_flag == src)
 				NR.blu_flag = null
-				to_chat(world, "<span class='userdanger'>REGIMIAN FLAG DROPPED.</span>")
+				filters = list()
+				for(var/client/unio in C.unionists)
+					to_chat(unio, "<span class='warning'>The enemy flag has returned to their base.</span>")
+				for(var/client/reg in C.regimians)
+					to_chat(reg, "<span class='info'>Our flag has returned to our base.</span>")
 			if(NR.red_flag == src)
 				NR.red_flag = null
-				to_chat(world, "<span class='userdanger'>UNIONIST FLAG DROPPED.</span>")
+				filters = list()
+				for(var/client/reg in C.regimians)
+					to_chat(reg, "<span class='warning'>The enemy flag has returned to their base.</span>")
+				for(var/client/unio in C.unionists)
+					to_chat(unio, "<span class='info'>Our flag has returned to our base.</span>")
 			if(aspect_chosen(/datum/round_aspect/halo))
 				SEND_SOUND(world, 'sound/vo/halo/flag_drop.mp3')
 
@@ -85,7 +93,7 @@
 			testing("Red lord is dead!")
 			for(var/client/X in C.unionists)
 				var/mob/living/carbon/human/V = X.mob
-				to_chat(V, "<span class='red'>OUR LORD IS DEAD! WE ARE DOOMED! DOOMED!</span>")
+				to_chat(V, "<span class='red'>OUR OFFICIAL IS DEAD! WE ARE DOOMED! DOOMED!</span>")
 				if(aspect_chosen(/datum/round_aspect/halo))
 					V.playsound_local(get_turf(V), 'sound/vo/halo/blowmeaway.mp3', 20, FALSE, pressure_affected = FALSE)
 				else
@@ -119,6 +127,9 @@
 
 	. = ..()
 
+	var/lastattackerckey_g = lastattackerckey
+	var/lastattacker_g = lastattacker
+
 	dizziness = 0
 	jitteriness = 0
 
@@ -128,7 +139,7 @@
 			M.go_out()
 
 	dna.species.spec_death(gibbed, src)
-	
+
 	if(aspect_chosen(/datum/round_aspect/exploding))
 		gib(TRUE)
 	
@@ -154,8 +165,24 @@
 			G.playsound_local(src, 'sound/misc/deth.ogg', 75)
 			if(aspect_chosen(/datum/round_aspect/halo) && prob(45))
 				G.playsound_local(src, 'sound/vo/halo/copedie.mp3', 100)
-			else
-				G.playsound_local(src, 'sound/misc/deth.ogg', 100)
+
+			if(lastattackerckey_g && G.client)
+				var/mob/living/carbon/human/ATK = get_mob_by_ckey(lastattackerckey_g)
+				if(ATK.real_name == lastattacker_g)
+					if(ATK.warfare_faction != warfare_faction)
+						spawn(5)// sometimes it shows up before the injury text
+							to_chat(ATK, "\n<font color='pink'>1 FRAG(s) gained.</font>")
+						SStriumphs.frag_adjust(1, lastattackerckey_g)
+					else
+						spawn()
+							var/message = "\n<font color='pink'>Friendly fire will not be tolerated!</font>"
+							var/forgive = browser_alert(G, "You were team-killed by [ATK.real_name]! Do you forgive them?", "WARMONGERS", list("FORGIVE","PUNISH"))
+							if(forgive == "FORGIVE")
+								message = "\n<font color='pink'>[pick("Your crimes were forgiven.","There is peace, and perhaps more waiting for you. You were forgiven.","It's okay. I forgive you.","I forgive you. Don't do it again though, okay?")]</font>"
+							else
+								SStriumphs.frag_adjust(-1, lastattackerckey_g)
+							spawn(5)// same here
+								to_chat(get_mob_by_ckey(lastattacker_g), message)
 
 			var/atom/movable/screen/gameover/hog/H = new()
 			var/list/iconstato = list(

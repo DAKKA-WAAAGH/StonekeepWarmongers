@@ -211,7 +211,10 @@
 			reagent_note += "[R.name] ([num2text(R.volume)])"
 
 	if(ismob(firer))
+		var/mob/F = firer
 		log_combat(firer, L, "shot", src, reagent_note)
+		L.lastattacker = F.real_name
+		L.lastattackerckey = F.ckey
 	else
 		L.log_message("has been shot by [firer] with [src]", LOG_ATTACK, color="orange")
 

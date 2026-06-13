@@ -40,6 +40,11 @@
 	desc = "Dealing a killing blow via headshot makes your target explode into giblets. Quaking, isn't it?"
 	cost = 1
 
+/datum/warperk/akimbo
+	name = "Ambidextrous"
+	desc = "You can use your non-dominant hand just fine, talk about a dom."
+	cost = 2
+
 // 5-10 tri
 
 /datum/warperk/gifted
@@ -64,6 +69,9 @@
 	name = "Vladimir"
 	desc = "Drinking blood heals you."
 	cost = 6
+
+/datum/warperk/vampire/apply(mob/living/carbon/human/H)
+	ADD_TRAIT(H, TRAIT_STRONGBITE, TRAIT_GENERIC)
 
 /datum/warperk/charge
 	name = "Underelicted Duty"

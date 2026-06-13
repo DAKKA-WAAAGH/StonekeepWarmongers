@@ -164,6 +164,23 @@
 				else
 					L.succumb()
 
+/atom/movable/screen/fullscreen/crit/zeth/nocd // no cooldown
+	icon = 'icons/mob/z.dmi'
+	icon_state = "zeth"
+	name = "DEATH"
+//	layer = 20.09
+	layer = 20.512
+	plane = FULLSCREEN_PLANE
+	mouse_opacity = 1
+	nomouseover = FALSE
+
+/atom/movable/screen/fullscreen/crit/zeth/nocd/Click()
+	if(isliving(usr))
+		var/mob/living/L = usr
+		if(L.stat != DEAD)
+			if(alert("Are you done living?", "", "Yes", "No") == "Yes")
+				L.death()
+
 /atom/movable/screen/fullscreen/crit/death
 	icon_state = "DD"
 	layer = 20.511

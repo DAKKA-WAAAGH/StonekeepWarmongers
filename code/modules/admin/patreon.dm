@@ -237,15 +237,17 @@ GLOBAL_LIST_EMPTY(anonymize)
 	if(get_playerquality(client.ckey) <= -5)
 		client.prefs.anonymize = FALSE
 		client.prefs.save_preferences()
-		to_chat(src, "<span class='warning'>Your PQ is too low!</span>")
+		to_chat(src, "<span class='warning'>Your IQ is too low!</span>")
 		return
 //	if(!check_whitelist(client.ckey))
 //		to_chat(src, "<span class='warning'>Whitelisted players only.</span>")
 //		return
 	if(client.prefs.anonymize == TRUE)
+		/*
 		if(GLOB.respawncounts[client.ckey])
 			to_chat(src, "<span class='warning'>You have already spawned.</span>")
 			return
+		*/
 		client.prefs.anonymize = FALSE
 		client.prefs.save_preferences()
 		to_chat(src, "Anonymous... DISABLED")
@@ -298,12 +300,12 @@ GLOBAL_LIST_EMPTY(temporary_donators)
 	if(!email)
 		return
 	if(!patreon_lookup(name) || !patreon_lookup(email) || !findtext(email, "@"))
-		to_chat(src, "<span class='warning'>We couldn't find that name/email combo.</span> <span class='info'>Donator status is updated weekly before every playtest. If you have waited a week, seek help in our DISCORD SERVER (https://discord.gg/KMq9VGEuXx)</span>")
+		to_chat(src, "<span class='warning'>We couldn't find that name/email combo.</span> <span class='info'>Donator status is updated weekly before every playtest. If you have waited a week, seek help in our DISCORD SERVER (https://discord.gg/Rda9Z6SMgD)</span>")
 		return
 //	var/saniemail = sanitize_simple(email,list("@"="AT","."="DOT"))
 	var/fug = patemail2ckey(email)
 	if(fug && (fug != ckey))
-		to_chat(src, "<span class='warning'>That Patreon is already registered to a different player.</span> <span class='info'>Donator status is updated weekly before every playtest. If you have waited a week, seek help in our DISCORD SERVER (https://discord.gg/KMq9VGEuXx)</span>")
+		to_chat(src, "<span class='warning'>That Patreon is already registered to a different player.</span> <span class='info'>Donator status is updated weekly before every playtest. If you have waited a week, seek help in our DISCORD SERVER (https://discord.gg/Rda9Z6SMgD)</span>")
 		return
 	add_patreon(ckey,email)
 	client.patreonlevel = -1

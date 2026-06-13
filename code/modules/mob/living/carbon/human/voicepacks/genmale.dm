@@ -30,7 +30,7 @@
 			if("fatigue")
 				used = 'sound/vo/male/gen/fatigue.ogg'
 			if("firescream")
-				if(prob(5))
+				if(prob(25))
 					used = 'sound/vo/male/gen/firescream (4).ogg' //it burns!
 				else
 					used = list('sound/vo/male/gen/firescream (2).ogg','sound/vo/male/gen/firescream (3).ogg')

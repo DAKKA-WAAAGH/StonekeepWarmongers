@@ -169,7 +169,6 @@ window "outputwindow"
 		saved-params = "max-lines"
 		enable-http-images = true
 		max-lines = 100
-		image = 'interface\\bg.png'
 	elem "input"
 		type = INPUT
 		pos = 0,447
@@ -196,7 +195,6 @@ window "statwindow"
 		background-color = #2e2a1b
 		saved-params = "pos;size"
 		is-pane = true
-		image = 'interface\\bg.png'
 		image-mode = center
 		transparent-color = #000000
 	elem "stat"
@@ -212,7 +210,7 @@ window "statwindow"
 		is-default = true
 		saved-params = ""
 		highlight-color = #f9bb00
-		tab-text-color = #662323
+		tab-text-color = #b50000
 		tab-background-color = #23221e
 		tab-font-family = "Viner Hand ITC"
 		tab-font-size = 15

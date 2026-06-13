@@ -8,6 +8,7 @@
  *			Misc
  */
 
+#define examine_block(str) ("<div class='chat_box examine_block'>" + str + "</div>")
 
 
 /proc/format_table_name(table as text)
@@ -278,7 +279,7 @@
 
 //Returns a string with the first element of the string capitalized.
 /proc/capitalize(t as text)
-	return uppertext(copytext(t, 1, 2)) + copytext(t, 2)
+	return uppertext(copytext_char(t, 1, 2)) + copytext_char(t, 2)
 
 //Centers text by adding spaces to either side of the string.
 /proc/dd_centertext(message, length)

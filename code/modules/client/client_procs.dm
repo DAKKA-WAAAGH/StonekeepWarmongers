@@ -154,10 +154,12 @@ GLOBAL_LIST_EMPTY(respawncounts)
 		return
 	if(commendedsomeone)
 		return
+	if(alert(src,"Do you want to commend someone?","WARMONGERS", "Yes", "No") == "No")
+		return
 	var/list/selections = GLOB.character_ckey_list.Copy()
 	if(!selections.len)
 		return
-	var/selection = input(src,"Which Character?") as null|anything in sortList(selections)
+	var/selection = input(src,"Which Character?","WARMONGERS") as null|anything in sortList(selections)
 	if(!selection)
 		return
 	if(commendedsomeone)
@@ -247,7 +249,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 /client/New(TopicData)
 	var/tdata = TopicData //save this for later use
-//	chatOutput = new /datum/chatOutput(src)
+	chatOutput = new /datum/chatOutput(src)
 	TopicData = null							//Prevent calls to client.Topic from connect
 
 	if(connection != "seeker" && connection != "web")//Invalid connection type.
@@ -298,6 +300,10 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	prefs.last_ip = address				//these are gonna be used for banning
 	prefs.last_id = computer_id			//these are gonna be used for banning
 	fps = prefs.clientfps
+
+	if(prefs.prefer_old_chat == FALSE)
+		spawn() // Goonchat does some non-instant checks in start()
+			chatOutput.start()
 
 	if(fexists(roundend_report_file()))
 		verbs += /client/proc/show_previous_roundend_report
@@ -369,8 +375,6 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	if(SSinput.initialized)
 		set_macros()
 		update_movement_keys()
-
-//	chatOutput.start() // Starts the chat
 
 	if(alert_mob_dupe_login)
 		spawn()
@@ -562,6 +566,7 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 	GLOB.ahelp_tickets.ClientLogout(src)
 	GLOB.directory -= ckey
 	GLOB.clients -= src
+	QDEL_NULL(chatOutput)
 	QDEL_LIST_ASSOC_VAL(char_render_holders)
 	if(movingmob != null)
 		movingmob.client_mobs_in_contents -= mob
@@ -1093,6 +1098,24 @@ GLOBAL_LIST_EMPTY(external_rsc_urls)
 
 /client/New()
 	..()
+	var/datum/game_mode/warmongers/W = SSticker.mode
+	if(SSticker.current_state == GAME_STATE_PLAYING)
+		if(SSwarmongers.oneteammode)
+			warfare_faction = "Regimians"
+		else
+			listclearnulls(W.regimians)   // clean the lists in-place first
+			listclearnulls(W.unionists)
+
+			var/reg_count = length(W.regimians)  // NOW get the counts
+			var/uni_count = length(W.unionists)
+
+			if(reg_count < uni_count || (reg_count == uni_count && prob(50)))
+				warfare_faction = BLUE_WARTEAM
+				W.regimians += src
+			else
+				warfare_faction = RED_WARTEAM
+				W.unionists += src
+			to_chat(src, "<span class='tutorial'>You were automatically balanced to the [warfare_faction] team.</span>")
 	#ifndef TESTING
 	fullscreen()
 	#endif

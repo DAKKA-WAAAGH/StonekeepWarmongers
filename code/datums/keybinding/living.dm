@@ -123,35 +123,44 @@
 	return TRUE
 
 /datum/keybinding/living/sprint
-	hotkey_keys = list()
+	hotkey_keys = list("Shift")
+	classic_keys = list("Shift")
 	name = "sprint"
-	full_name = "Sprint"
-	description = "Sprinting can be dangerous to your health if you aren't careful."
+	full_name = "Sprint (HOLD)"
+	description = "Sprinting can be dangerous to your health if you aren't careful. This is hold-to-use."
 
 /datum/keybinding/living/sprint/down(client/user)
 	var/mob/M = user.mob
 	if(!isliving(M))
 		return
-	if(M.m_intent == MOVE_INTENT_RUN)
-		M.toggle_rogmove_intent(MOVE_INTENT_WALK)
-	else
-		M.toggle_rogmove_intent(MOVE_INTENT_RUN)
+	M.toggle_rogmove_intent(MOVE_INTENT_RUN)
+	return TRUE
+
+/datum/keybinding/living/sprint/up(client/user)
+	var/mob/M = user.mob
+	if(!isliving(M))
+		return
+	M.toggle_rogmove_intent(MOVE_INTENT_WALK)
 	return TRUE
 
 /datum/keybinding/living/sneak
 	hotkey_keys = list()
 	name = "sneak"
-	full_name = "Sneak"
+	full_name = "Sneak (HOLD)"
 	description = "Press this hotkey to sneak around, which has many uses."
 
 /datum/keybinding/living/sneak/down(client/user)
 	var/mob/M = user.mob
 	if(!isliving(M))
 		return
-	if(M.m_intent == MOVE_INTENT_SNEAK)
-		M.toggle_rogmove_intent(MOVE_INTENT_WALK)
-	else
-		M.toggle_rogmove_intent(MOVE_INTENT_SNEAK)
+	M.toggle_rogmove_intent(MOVE_INTENT_SNEAK)
+	return TRUE
+
+/datum/keybinding/living/sneak/up(client/user)
+	var/mob/M = user.mob
+	if(!isliving(M))
+		return
+	M.toggle_rogmove_intent(MOVE_INTENT_WALK)
 	return TRUE
 
 /datum/keybinding/living/resist

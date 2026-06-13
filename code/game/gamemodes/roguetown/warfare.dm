@@ -22,7 +22,7 @@
 	var/list/unionists = list() // clients
 	var/list/regimians = list()
 
-	var/warfare_start_time = 15 // in minutes
+	var/warfare_start_time = 5 // in minutes
 	var/warfare_reinforcement_time = 5 // in minutes
 	
 	var/stalematecooldown // a cooldown before another stalemate can be held
@@ -78,16 +78,8 @@
 		warmode.winner = crownguy
 		warmode.winner.adjust_triumphs(5)
 
-/datum/game_mode/warmongers/proc/begin_autobalance_loop()
-	set waitfor = 0
-	while(1)
-		CHECK_TICK
-		if(SSwarmongers.oneteammode)
-			break
-		CHECK_TICK
-		for(var/mob/dead/new_player/P in GLOB.player_list)
-			CHECK_TICK
-			P.autobalance()
+		if(HAS_TRAIT(warmode.winner, TRAIT_NOBLE)) // assume this guy is a lord
+			warmode.winner.unlock_achievement(new /datum/achievement/respected_captain())
 
 /datum/game_mode/warmongers/proc/supplies()
 	set waitfor = 0

@@ -33,8 +33,8 @@
 	haloalertsound = 'sound/vo/halo/hail2theking.mp3'
 
 /datum/warmode/noreturn
-	name = "Point of No Return"
-	shorthand = "PONR"
+	name = "Capture the Flag"
+	shorthand = "CTF"
 	haloalertsound = 'sound/vo/halo/ctf.mp3'
 	blurb = "Capture the enemy flag and take it to your PONR!"
 
@@ -45,13 +45,10 @@
 	var/mob/living/carbon/human/blu_flag
 	var/mob/living/carbon/human/red_flag
 
-/datum/warmode/noreturn/beginround()
-	. = ..()
-	START_PROCESSING(SSprocessing, src)
+	var/blu_captures = 0 // how many times the blu team has captured the red teams flags
+	var/red_captures = 0
 
-/datum/warmode/noreturn/process()
-	for(var/turf/closed/wall/W in RANGE_TURFS(2, objective)) //no cheating by just boxing in the statue, that is super lame.
-		W.dismantle_wall()
+	var/captures_required = 3 // captures required to win the game. you win at 3.
 
 /datum/warmode/tdm
 	name = "Last Stand"
@@ -96,17 +93,19 @@
 
 	var/attack_progress = 0
 	var/current_capture_point = 1
-	var/base_player_count = 16
+	var/base_player_count = 8
 
-	var/blu_spawns = 100
+	var/blu_spawns = 60
 	var/min_blu_spawns = 20
 	var/max_blu_spawns = 60
 
 	var/list/capture_points = list()
+	var/list/showers = list()
 	var/total_capture_points = 0
 
 /datum/warmode/assault/beginround()
-	var/player_count = length(GLOB.clients)
+	var/datum/game_mode/warmongers/C = SSticker.mode
+	var/player_count = length(C.unionists) // It's based on enemy count because well... unionists kill regimians
 	blu_spawns = clamp(round(50 * (player_count / base_player_count)), min_blu_spawns, max_blu_spawns)
 
 	START_PROCESSING(SSprocessing, src)
@@ -116,6 +115,9 @@
 		if(istype(cp))
 			capture_points += cp
 			total_capture_points++
+	for(var/obj/effect/landmark/assaultrespawn/defender/DDD)
+		if(DDD.respawn_id == "first") // I'm going to kill myself.
+			SSwarmongers.landmark_respawn_id_defender = "first"
 	..()
 
 /datum/warmode/assault/process()
@@ -130,6 +132,7 @@
 
 /area/rogue/assault
 	name = "Capture Point"
+	safe_from_mortar = TRUE
 	var/list/grenz = list()
 	var/list/heart = list()
 	var/capture_sound = 'sound/misc/stolen.ogg'
@@ -139,25 +142,23 @@
 	var/capture_order = 0
 	var/capturable = FALSE
 
-/area/rogue/assault/throneroom
-	name = "Thronesroom"
-	droning_sound = 'sound/music/firstwhistle.ogg'
-	droning_sound_dusk = 'sound/music/firstwhistle.ogg'
-	droning_sound_night = 'sound/music/firstwhistle.ogg'
-	capture_rate = 90
-	capture_order = 2
-
-/area/rogue/assault/gates
-	name = "Gateshouse"
-	droning_sound = 'sound/music/firstwhistle.ogg'
-	droning_sound_dusk = 'sound/music/firstwhistle.ogg'
-	droning_sound_night = 'sound/music/firstwhistle.ogg'
-	capture_rate = 0.5
-	tocapture_points = 150
-	capture_order = 1
+	var/respawn_id_on_cap_attacker // Use a landmark with this ID
+	var/respawn_id_on_cap_defender
 
 /area/rogue/assault/proc/on_capture(var/team = BLUE_WARTEAM)
 	return
+
+/area/rogue/assault/on_capture(team)
+	. = ..()
+	var/datum/game_mode/warmongers/C = SSticker.mode
+	if(!C?.warmode)
+		return
+	var/datum/warmode/assault/ASR = C.warmode
+	
+	if(ASR.current_capture_point > ASR.total_capture_points)
+		for(var/mob/living/carbon/human/H in src)
+			if(HAS_TRAIT(H, TRAIT_NOBLE))
+				H.unlock_achievement(new /datum/achievement/respected_captain())
 
 /area/rogue/assault/New()
 	. = ..()
@@ -193,6 +194,13 @@
 			grenz -= H
 			heart -= H
 
+	for(var/mob/living/carbon/human/H in grenz) // my last fucking idea for this, because it just refuses to remove people from lists. if this doesnt work, im considering removing the gamemode all together
+		if(get_area(H) != src)
+			grenz -= H
+	for(var/mob/living/carbon/human/H in heart)
+		if(get_area(H) != src)
+			heart -= H
+
 	if(capturable)
 		if(grenz.len > heart.len)
 			if(ASS.attack_progress < tocapture_points)
@@ -205,9 +213,22 @@
 			to_chat(world, "<span class='userdanger'>[uppertext("[BLUE_WARTEAM] HAVE CAPTURED THE [src]")]!</span>")
 			holder = BLUE_WARTEAM
 			ASS.attack_progress = 0
+			ASS.blu_spawns += 20 // To help incentivize unionists to not just sit on their ass doing nothing
 			on_capture(holder)
 			SEND_SOUND(world, capture_sound)
 			ASS.current_capture_point++
+
+			for(var/client/regis in C.regimians)
+				var/atom/movable/screen/navigate_arrow/NVA = locate() in regis.screen
+				if(NVA)
+					for(var/obj/structure/capturepoint_shower/shower in ASS.showers)
+						if(shower.assault.capture_order == ASS.current_capture_point || shower.assault.capture_order == 0)
+							NVA.thing = get_turf(shower)
+
+			if(respawn_id_on_cap_attacker)
+				SSwarmongers.landmark_respawn_id_attacker = respawn_id_on_cap_attacker
+			if(respawn_id_on_cap_defender)
+				SSwarmongers.landmark_respawn_id_defender = respawn_id_on_cap_defender
 
 /area/rogue/assault/Entered(atom/movable/M)
 	. = ..()
@@ -255,3 +276,34 @@
 
 /area/rogue/indoors/airship/blue
 	icon_state = "blue"
+
+// BLOODFORT
+
+/area/rogue/assault/throneroom
+	name = "Thronesroom"
+	droning_sound = 'sound/music/firstwhistle.ogg'
+	droning_sound_dusk = 'sound/music/firstwhistle.ogg'
+	droning_sound_night = 'sound/music/firstwhistle.ogg'
+	capture_rate = 90 // might eb too much. 1 second to capture or something idk im not a math guy
+	capture_order = 2
+
+/area/rogue/assault/gates
+	name = "Gateshouse"
+	droning_sound = 'sound/music/firstwhistle.ogg'
+	droning_sound_dusk = 'sound/music/firstwhistle.ogg'
+	droning_sound_night = 'sound/music/firstwhistle.ogg'
+	capture_rate = 5
+	tocapture_points = 150 // 30 seconds to capture if my math is correct
+	capture_order = 1
+
+// BDAY
+
+/area/rogue/assault/waterfort
+	name = "Waterfort"
+	droning_sound = 'sound/music/firstwhistle.ogg'
+	droning_sound_dusk = 'sound/music/firstwhistle.ogg'
+	droning_sound_night = 'sound/music/firstwhistle.ogg'
+	capture_rate = 5
+	tocapture_points = 150 // 30 seconds to capture if my math is correct
+	capture_order = 1
+	respawn_id_on_cap_attacker = "Watershouse"

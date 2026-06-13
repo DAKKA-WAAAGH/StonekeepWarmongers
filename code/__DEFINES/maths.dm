@@ -91,6 +91,24 @@
 // Returns the nth root of x.
 #define ROOT(n, x) ((x) ** (1 / (n)))
 
+///Calculate the angle between two movables and the west|east coordinate
+/proc/get_angle(atom/movable/start, atom/movable/end)
+	if(!start || !end)
+		return 0
+	var/dy =(32 * end.y + end.pixel_y) - (32 * start.y + start.pixel_y)
+	var/dx =(32 * end.x + end.pixel_x) - (32 * start.x + start.pixel_x)
+	return delta_to_angle(dx, dy)
+
+/// Calculate the angle produced by a pair of x and y deltas
+/proc/delta_to_angle(x, y)
+	if(!y)
+		return (x >= 0) ? 90 : 270
+	. = arctan(x/y)
+	if(y < 0)
+		. += 180
+	else if(x < 0)
+		. += 360
+
 // The quadratic formula. Returns a list with the solutions, or an empty list
 // if they are imaginary.
 /proc/SolveQuadratic(a, b, c)

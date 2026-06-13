@@ -45,15 +45,15 @@ GLOBAL_VAR(last_connection)
 					addclientmessage(ckey,"<span class='adminnotice'>I have been allowed to bypass the whitelist</span>")
 			else
 				log_access("Failed Login: [key] - Not on whitelist")
-				return list("reason"="whitelist", "desc" = "\nBecome whitelisted! discord.gg/stonekeep")
+				return list("reason"="whitelist", "desc" = "\nBecome whitelisted! discord.gg/Rda9Z6SMgD")
 /*
-#ifdef MATURESERVER
+#ifdef MATURESERVE
 	if(!check_whitelist(ckey))
 		var/num = get_roundsplayed(ckey)
 		if(num >= 10)
 			if(check_patreon_lvl(ckey) < 2)
 				log_access("Failed Login: [key] - TrialExpire")
-				return list("reason"="trialexpire", "desc" = "\nBecome whitelisted to continue playing here! discord.gg/stonekeep")
+				return list("reason"="trialexpire", "desc" = "\nBecome whitelisted to continue playing here! discord.gg/Rda9Z6SMgD")
 #endif
 */
 /*	//Blacklist

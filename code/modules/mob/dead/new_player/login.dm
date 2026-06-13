@@ -74,18 +74,3 @@
 			if(usedkey in GLOB.anonymize)
 				usedkey = get_fake_key(usedkey)
 			SEND_TEXT(world, "<span class='notice'>[usedkey] gets drafted.</span>")
-			if(SSwarmongers.oneteammode)
-				client.warfare_faction = BLUE_WARTEAM
-
-/mob/dead/new_player/proc/autobalance()
-	var/datum/game_mode/warmongers/W = SSticker.mode
-
-	W.unionists -= src.client
-	W.regimians -= src.client
-
-	if(W.regimians.len < W.unionists.len)
-		client.warfare_faction = BLUE_WARTEAM
-		W.regimians += src.client
-	else
-		client.warfare_faction = RED_WARTEAM
-		W.unionists += src.client

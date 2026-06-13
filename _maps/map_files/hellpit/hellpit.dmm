@@ -2,13 +2,7 @@
 "ax" = (
 /mob/living/simple_animal/pet/rootchilde,
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "az" = (
 /obj/structure/warobjective/bloodstatue,
 /turf/closed/mineral/rogue/bedrock,
@@ -32,6 +26,25 @@
 	droning_sound_current = 'sound/music/root.ogg';
 	droning_sound_dawn = 'sound/music/root.ogg'
 	})
+"bu" = (
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/structure/closet/crate/chest,
+/turf/open/floor/rogue/churchmarble,
+/area/rogue/indoors/town/safe)
 "by" = (
 /obj/structure/lever{
 	redstone_id = "bridge3";
@@ -50,13 +63,7 @@
 /obj/item/flint,
 /obj/item/flint,
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "bN" = (
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/sword/iron/messer/falchwar{
@@ -73,13 +80,7 @@
 	pixel_x = -5
 	},
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "bS" = (
 /obj/structure/warfarebarrier,
 /turf/open/lava,
@@ -96,6 +97,10 @@
 	droning_sound_current = 'sound/music/root.ogg';
 	droning_sound_dawn = 'sound/music/root.ogg'
 	})
+"cc" = (
+/obj/structure/ladder,
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/safe)
 "cf" = (
 /obj/structure/stone_tile/slab/burnt,
 /obj/item/clothing/ring/warmongers/magic/gold,
@@ -139,6 +144,9 @@
 	droning_sound_current = 'sound/music/root.ogg';
 	droning_sound_dawn = 'sound/music/root.ogg'
 	})
+"dC" = (
+/turf/open/floor/rogue/churchmarble,
+/area/rogue/indoors/town/safe)
 "dI" = (
 /obj/structure/closet/crate/chest/old_crate,
 /obj/item/ammo_casing/caseless/rogue/cball,
@@ -150,13 +158,7 @@
 /obj/item/flint,
 /obj/item/flint,
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "eq" = (
 /obj/structure/warfarebarrier,
 /turf/open/floor/rogue/cobblerock,
@@ -180,13 +182,7 @@
 	pixel_x = -15
 	},
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "ez" = (
 /obj/structure/barricade/sandbags/rogue{
 	dir = 1
@@ -207,25 +203,32 @@
 "eQ" = (
 /obj/effect/landmark/redreinforcement,
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
+"fa" = (
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/item/flashlight/flare/torch/lantern,
+/obj/structure/closet/crate/chest,
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/safe)
 "fB" = (
 /obj/effect/landmark/start/grenzellord{
 	dir = 1
 	},
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "fJ" = (
 /obj/structure/teambarrier/red,
 /turf/open/floor/rogue/churchbrick,
@@ -315,23 +318,11 @@
 	pixel_x = -5
 	},
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "jL" = (
 /obj/structure/fluff/statue,
 /turf/open/floor/rogue/volcanic,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "jQ" = (
 /obj/structure/barricade/sandbags/rogue,
 /obj/structure/barricade/sandbags/rogue{
@@ -413,13 +404,7 @@
 	pixel_x = -5
 	},
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "mw" = (
 /obj/structure/stone_tile/slab,
 /turf/open/lava,
@@ -452,13 +437,7 @@
 "mZ" = (
 /obj/structure/roguemachine/musicbox,
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "nw" = (
 /obj/structure/barricade/sandbags/rogue{
 	dir = 1
@@ -486,13 +465,7 @@
 	pixel_x = -10
 	},
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "or" = (
 /obj/effect/landmark/events/haunts,
 /obj/structure/floordoor/gatehatch/inner,
@@ -549,16 +522,13 @@
 	droning_sound_current = 'sound/music/root.ogg';
 	droning_sound_dawn = 'sound/music/root.ogg'
 	})
+"rQ" = (
+/turf/open/floor/rogue/churchbrick,
+/area/rogue/indoors/town/safe)
 "rR" = (
 /obj/structure/fluff/grindwheel,
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "sm" = (
 /obj/structure/warfarebarrier/red,
 /turf/open/floor/rogue/dirt/road,
@@ -590,13 +560,7 @@
 	pixel_x = -25
 	},
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "uH" = (
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/arena{
@@ -627,13 +591,7 @@
 	},
 /obj/structure/fluff/testportal,
 /turf/open/floor/rogue/volcanic,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "wn" = (
 /obj/structure/teambarrier/blue,
 /turf/open/floor/rogue/churchmarble,
@@ -663,6 +621,10 @@
 	droning_sound_current = 'sound/music/root.ogg';
 	droning_sound_dawn = 'sound/music/root.ogg'
 	})
+"xi" = (
+/obj/structure/ladder,
+/turf/open/floor/rogue/churchmarble,
+/area/rogue/indoors/town/safe)
 "xy" = (
 /turf/open/floor/rogue/volcanic,
 /area/rogue/indoors/town/arena{
@@ -695,13 +657,7 @@
 	pixel_x = -5
 	},
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "zP" = (
 /turf/closed/mineral/rogue/bedrock,
 /area/rogue/indoors/town/arena{
@@ -817,13 +773,7 @@
 "DN" = (
 /obj/effect/landmark/start/heartfeltlord,
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "Eq" = (
 /obj/effect/decal/cleanable/sigil/SE,
 /turf/open/floor/rogue/volcanic,
@@ -887,36 +837,18 @@
 	pixel_x = -5
 	},
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "Gu" = (
 /obj/structure/roguemachine/musicbox,
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "GC" = (
 /obj/effect/landmark/start/heartfeltinfantry{
 	dir = 4
 	},
 /obj/structure/fluff/testportal,
 /turf/open/floor/rogue/volcanic,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "GX" = (
 /obj/structure/bars/grille,
 /obj/structure/warfarebarrier,
@@ -969,13 +901,7 @@
 	dir = 1
 	},
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "IK" = (
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/mace/cudgel/pick{
@@ -992,13 +918,7 @@
 	pixel_x = -5
 	},
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "JG" = (
 /obj/structure/stone_tile/slab/burnt,
 /obj/structure/warfarebarrier/red,
@@ -1031,13 +951,7 @@
 	pixel_x = 10
 	},
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "Kx" = (
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/scythe,
@@ -1048,13 +962,7 @@
 	pixel_x = -22
 	},
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "KA" = (
 /obj/item/bomb,
 /turf/open/floor/rogue/metal/barograte,
@@ -1079,13 +987,7 @@
 	pixel_x = -5
 	},
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "LG" = (
 /obj/structure/ladder,
 /turf/open/floor/rogue/churchbrick,
@@ -1106,13 +1008,7 @@
 	pixel_x = -5
 	},
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "Mh" = (
 /obj/structure/fluff/statue/gargoyle/moss/candles,
 /turf/open/floor/rogue/greenstone,
@@ -1158,13 +1054,7 @@
 	},
 /obj/structure/fluff/testportal,
 /turf/open/floor/rogue/volcanic,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "Om" = (
 /obj/structure/stone_tile/slab/burnt,
 /turf/open/lava,
@@ -1208,13 +1098,7 @@
 	})
 "Qv" = (
 /turf/closed/mineral/rogue/bedrock,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "Qx" = (
 /obj/structure/barricade/sandbags/rogue{
 	dir = 1
@@ -1236,13 +1120,7 @@
 "Rz" = (
 /obj/structure/cannon,
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "RF" = (
 /obj/structure/rack/rogue,
 /obj/item/rogueweapon/sword/iron/messer/war{
@@ -1253,26 +1131,14 @@
 	pixel_x = -5
 	},
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "Sf" = (
 /obj/effect/landmark/start/heartfeltinfantry{
 	dir = 8
 	},
 /obj/structure/fluff/testportal,
 /turf/open/floor/rogue/volcanic,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "Vs" = (
 /obj/structure/cannon,
 /turf/open/floor/rogue/dirt/road,
@@ -1316,13 +1182,7 @@
 "Wu" = (
 /obj/effect/landmark/blureinforcement,
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "WG" = (
 /obj/structure/barricade/sandbags/rogue{
 	dir = 1
@@ -1340,13 +1200,7 @@
 "WM" = (
 /obj/structure/fluff/standingflag/red,
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "WO" = (
 /obj/structure/barricade/sandbags/rogue,
 /obj/structure/warfarebarrier,
@@ -1394,13 +1248,7 @@
 "Yk" = (
 /obj/structure/fluff/standingflag,
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "Yv" = (
 /obj/structure/warfarebarrier,
 /turf/open/floor/rogue/blocks,
@@ -1412,13 +1260,7 @@
 "YO" = (
 /obj/structure/fluff/grindwheel,
 /turf/open/floor/rogue/churchbrick,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "Zi" = (
 /obj/structure/warfarebarrier/red,
 /turf/open/floor/rogue/blocks,
@@ -1443,13 +1285,7 @@
 	pixel_x = -5
 	},
 /turf/open/floor/rogue/churchmarble,
-/area/rogue/underworld{
-	droning_sound = 'sound/music/calm.ogg';
-	droning_sound_current = 'sound/music/calm.ogg';
-	droning_sound_dawn = 'sound/music/calm.ogg';
-	droning_sound_dusk = 'sound/music/calm.ogg';
-	droning_sound_night = 'sound/music/calm.ogg'
-	})
+/area/rogue/indoors/town/safe)
 "ZH" = (
 /obj/effect/decal/cleanable/sigil/S,
 /turf/open/floor/rogue/volcanic,
@@ -2534,7 +2370,7 @@ oI
 oI
 oI
 oI
-oI
+Qv
 GC
 GC
 GC
@@ -2542,8 +2378,8 @@ jL
 GC
 GC
 GC
-oI
-oI
+Qv
+Qv
 zP
 zP
 zP
@@ -2575,8 +2411,8 @@ Mt
 zP
 zP
 zP
-oI
-oI
+Qv
+Qv
 Oj
 Oj
 Oj
@@ -2584,10 +2420,10 @@ jL
 Oj
 Oj
 Oj
-oI
-oI
-oI
-oI
+Qv
+Qv
+Qv
+Qv
 oI
 oI
 oI
@@ -2605,16 +2441,16 @@ oI
 oI
 oI
 oI
-oI
-OC
-OC
-OC
-OC
-OC
-OC
-OC
-oI
-oI
+Qv
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+Qv
+Qv
 zP
 zP
 zP
@@ -2646,19 +2482,19 @@ Mt
 zP
 zP
 zP
-oI
-oI
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-oI
-oI
-oI
-oI
+Qv
+Qv
+dC
+dC
+dC
+dC
+dC
+dC
+dC
+Qv
+Qv
+Qv
+Qv
 oI
 oI
 oI
@@ -2677,15 +2513,15 @@ oI
 oI
 oI
 LL
-OC
-OC
-OC
-OC
-OC
-OC
-OC
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
 js
-oI
+Qv
 zP
 zP
 Mt
@@ -2717,19 +2553,19 @@ Mt
 Mt
 zP
 zP
-oI
+Qv
 js
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
+dC
+dC
+dC
+dC
+dC
+dC
+dC
 Gn
-oI
-oI
-oI
+Qv
+Qv
+Qv
 oI
 oI
 oI
@@ -2748,15 +2584,15 @@ oI
 oI
 oI
 me
-OC
+rQ
 KL
-OC
+rQ
 xZ
-OC
+rQ
 JH
-OC
+rQ
 js
-oI
+Qv
 zP
 zP
 Mt
@@ -2788,19 +2624,19 @@ xy
 Mt
 zP
 zP
-oI
+Qv
 js
-jZ
+dC
 JH
-jZ
+dC
 Zv
-jZ
+dC
 KL
-jZ
+dC
 ev
-oI
-oI
-oI
+Qv
+Qv
+Qv
 oI
 oI
 oI
@@ -2819,15 +2655,15 @@ oI
 oI
 oI
 tI
-OC
+rQ
 KL
-OC
+rQ
 xZ
-OC
+rQ
 JH
-OC
+rQ
 js
-oI
+Qv
 zP
 Mt
 Mt
@@ -2859,19 +2695,19 @@ xy
 Mt
 Mt
 zP
-oI
+Qv
 nP
-jZ
+dC
 JH
-jZ
+dC
 Zv
-jZ
+dC
 KL
-jZ
+dC
 Gn
-oI
-oI
-oI
+Qv
+Qv
+Qv
 oI
 oI
 oI
@@ -2890,15 +2726,15 @@ oI
 oI
 oI
 bA
-OC
-OC
+rQ
+rQ
 LL
 bN
 bN
-OC
-OC
+rQ
+rQ
 js
-oI
+Qv
 zP
 Mt
 xy
@@ -2930,19 +2766,19 @@ xy
 xy
 Mt
 zP
-oI
+Qv
 nP
-jZ
-jZ
+dC
+dC
 RF
 RF
 Gn
-jZ
-jZ
+dC
+dC
 dI
-oI
-oI
-oI
+Qv
+Qv
+Qv
 oI
 oI
 oI
@@ -2961,16 +2797,16 @@ oI
 oI
 oI
 Rz
-OC
+rQ
 Kx
-OC
-OC
-OC
+rQ
+rQ
+rQ
 Kx
-OC
+rQ
 WM
 Qv
-xy
+MH
 MH
 xy
 Hk
@@ -3000,20 +2836,20 @@ Hk
 Hk
 xy
 cb
-xy
+cb
 Qv
 Yk
-jZ
+dC
 IK
-jZ
-jZ
-jZ
+dC
+dC
+dC
 IK
-jZ
+dC
 IH
-oI
-oI
-oI
+Qv
+Qv
+Qv
 oI
 oI
 oI
@@ -3028,18 +2864,18 @@ oI
 oI
 oI
 oI
-oI
-oI
+Qv
+Qv
 YO
-OC
-OC
-OC
-OC
-OC
-OC
-OC
-OC
-OC
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
 Qv
 Hk
 Yj
@@ -3073,18 +2909,18 @@ Hk
 Bf
 Hk
 Qv
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
+dC
+dC
+dC
+dC
+dC
+dC
+dC
+dC
+dC
 rR
-oI
-oI
+Qv
+Qv
 oI
 oI
 oI
@@ -3099,19 +2935,19 @@ oI
 oI
 oI
 oI
-oI
-OC
-OC
-OC
+Qv
+rQ
+rQ
+rQ
 eQ
-OC
-OC
-OC
-OC
-OC
-OC
-OC
-OC
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
 jd
 Yj
 jd
@@ -3143,19 +2979,19 @@ jd
 jd
 Bf
 jd
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
+dC
+dC
+dC
+dC
+dC
+dC
+dC
+dC
 Wu
-jZ
-jZ
-jZ
-oI
+dC
+dC
+dC
+Qv
 oI
 oI
 oI
@@ -3170,19 +3006,19 @@ oI
 oI
 oI
 oI
-oI
-OC
-OC
-LG
-OC
-OC
+Qv
+rQ
+rQ
+cc
+rQ
+rQ
 ax
 Gu
-OC
-OC
+rQ
+rQ
 DN
-OC
-OC
+rQ
+rQ
 jd
 Yj
 jd
@@ -3214,19 +3050,19 @@ jd
 jd
 Bf
 jd
-jZ
-jZ
+dC
+dC
 fB
-jZ
-jZ
+dC
+dC
 mZ
-jZ
-jZ
-jZ
-Oe
-jZ
-jZ
-oI
+dC
+dC
+dC
+xi
+dC
+dC
+Qv
 oI
 oI
 oI
@@ -3241,19 +3077,19 @@ oI
 oI
 oI
 oI
-oI
-OC
-OC
-OC
+Qv
+rQ
+rQ
+rQ
 eQ
-OC
-OC
-OC
-OC
-OC
-OC
-OC
-OC
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
 jd
 Yj
 jd
@@ -3285,19 +3121,19 @@ jd
 jd
 Bf
 jd
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
+dC
+dC
+dC
+dC
+dC
+dC
+dC
+dC
 Wu
-jZ
-jZ
-jZ
-oI
+dC
+dC
+dC
+Qv
 oI
 oI
 oI
@@ -3312,18 +3148,18 @@ oI
 oI
 oI
 oI
-oI
-oI
+Qv
+Qv
 YO
-OC
-OC
-OC
-OC
-OC
-OC
-OC
-OC
-OC
+rQ
+rQ
+rQ
+rQ
+fa
+rQ
+rQ
+rQ
+rQ
 Qv
 Hk
 Yj
@@ -3357,18 +3193,18 @@ Hk
 Bf
 Hk
 Qv
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
+dC
+dC
+dC
+dC
+bu
+dC
+dC
+dC
+dC
 rR
-oI
-oI
+Qv
+Qv
 oI
 oI
 oI
@@ -3387,16 +3223,16 @@ oI
 oI
 oI
 Rz
-OC
+rQ
 Kx
-OC
-OC
-OC
+rQ
+rQ
+rQ
 Kx
-OC
+rQ
 WM
 Qv
-xy
+MH
 MH
 xy
 Hk
@@ -3426,20 +3262,20 @@ Hk
 Hk
 xy
 cb
-xy
+cb
 Qv
 Yk
-jZ
+dC
 IK
-jZ
-jZ
-jZ
+dC
+dC
+dC
 IK
-jZ
+dC
 IH
-oI
-oI
-oI
+Qv
+Qv
+Qv
 oI
 oI
 oI
@@ -3458,15 +3294,15 @@ oI
 oI
 oI
 bA
-OC
-OC
+rQ
+rQ
 LL
 bN
 bN
-OC
-OC
+rQ
+rQ
 js
-oI
+Qv
 zP
 Mt
 xy
@@ -3498,19 +3334,19 @@ xy
 xy
 Mt
 zP
-oI
+Qv
 nP
-jZ
-jZ
+dC
+dC
 RF
 RF
 Gn
-jZ
-jZ
+dC
+dC
 dI
-oI
-oI
-oI
+Qv
+Qv
+Qv
 oI
 oI
 oI
@@ -3529,15 +3365,15 @@ oI
 oI
 oI
 tI
-OC
+rQ
 KL
-OC
+rQ
 xZ
-OC
+rQ
 JH
-OC
+rQ
 js
-oI
+Qv
 zP
 Mt
 Mt
@@ -3569,19 +3405,19 @@ xy
 Mt
 Mt
 zP
-oI
+Qv
 nP
-jZ
+dC
 JH
-jZ
+dC
 Zv
-jZ
+dC
 KL
-jZ
+dC
 Gn
-oI
-oI
-oI
+Qv
+Qv
+Qv
 oI
 oI
 oI
@@ -3600,15 +3436,15 @@ oI
 oI
 oI
 me
-OC
+rQ
 KL
-OC
+rQ
 xZ
-OC
+rQ
 JH
-OC
+rQ
 js
-oI
+Qv
 zP
 zP
 Mt
@@ -3640,19 +3476,19 @@ xy
 Mt
 zP
 zP
-oI
+Qv
 js
-jZ
+dC
 JH
-jZ
+dC
 Zv
-jZ
+dC
 KL
-jZ
+dC
 ev
-oI
-oI
-oI
+Qv
+Qv
+Qv
 oI
 oI
 oI
@@ -3671,15 +3507,15 @@ oI
 oI
 oI
 LL
-OC
-OC
-OC
-OC
-OC
-OC
-OC
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
 js
-oI
+Qv
 zP
 zP
 Mt
@@ -3711,19 +3547,19 @@ Mt
 Mt
 zP
 zP
-oI
+Qv
 js
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
+dC
+dC
+dC
+dC
+dC
+dC
+dC
 Gn
-oI
-oI
-oI
+Qv
+Qv
+Qv
 oI
 oI
 oI
@@ -3741,16 +3577,16 @@ oI
 oI
 oI
 oI
-oI
-OC
-OC
-OC
-OC
-OC
-OC
-OC
-oI
-oI
+Qv
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+rQ
+Qv
+Qv
 zP
 zP
 zP
@@ -3782,19 +3618,19 @@ Mt
 zP
 zP
 zP
-oI
-oI
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-jZ
-oI
-oI
-oI
-oI
+Qv
+Qv
+dC
+dC
+dC
+dC
+dC
+dC
+dC
+Qv
+Qv
+Qv
+Qv
 oI
 oI
 oI
@@ -3812,7 +3648,7 @@ oI
 oI
 oI
 oI
-oI
+Qv
 Sf
 Sf
 Sf
@@ -3820,8 +3656,8 @@ jL
 Sf
 Sf
 Sf
-oI
-oI
+Qv
+Qv
 zP
 zP
 zP
@@ -3853,8 +3689,8 @@ Mt
 zP
 zP
 zP
-oI
-oI
+Qv
+Qv
 vS
 vS
 vS
@@ -3862,10 +3698,10 @@ jL
 vS
 vS
 vS
-oI
-oI
-oI
-oI
+Qv
+Qv
+Qv
+Qv
 oI
 oI
 oI
@@ -3883,16 +3719,16 @@ oI
 oI
 oI
 oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
+Qv
+Qv
+Qv
+Qv
+Qv
+Qv
+Qv
+Qv
+Qv
+Qv
 zP
 zP
 zP
@@ -3924,19 +3760,19 @@ zP
 zP
 zP
 zP
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
-oI
+Qv
+Qv
+Qv
+Qv
+Qv
+Qv
+Qv
+Qv
+Qv
+Qv
+Qv
+Qv
+Qv
 oI
 oI
 oI

@@ -546,7 +546,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 
 /obj/machinery/holopad/proc/setup_replay_holo(datum/holorecord/record)
 	var/obj/effect/overlay/holo_pad_hologram/Hologram = new(loc)//Spawn a blank effect at the location.
-	Hologram.add_overlay(record.caller_image)
+	Hologram.add_overlay(record.requester_image)
 	Hologram.alpha = 170
 	Hologram.add_atom_colour("#77abff", FIXED_COLOUR_PRIORITY)
 	Hologram.dir = SOUTH //for now
@@ -556,9 +556,9 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	Hologram.mouse_opacity = MOUSE_OPACITY_TRANSPARENT//So you can't click on it.
 	Hologram.layer = FLY_LAYER//Above all the other objects/mobs. Or the vast majority of them.
 	Hologram.setAnchored(TRUE)//So space wind cannot drag it.
-	Hologram.name = "[record.caller_name] (Hologram)"//If someone decides to right click.
+	Hologram.name = "[record.requester_name] (Hologram)"//If someone decides to right click.
 	Hologram.set_light(2)	//hologram lighting
-	visible_message("<span class='notice'>A holographic image of [record.caller_name] flickers to life before my eyes!</span>")
+	visible_message("<span class='notice'>A holographic image of [record.requester_name] flickers to life before my eyes!</span>")
 	return Hologram
 
 /obj/machinery/holopad/proc/replay_start()
@@ -589,7 +589,7 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	record_mode = TRUE
 	record_start = world.time
 	record_user = user
-	disk.record.set_caller_image(user)
+	disk.record.set_requester_image(user)
 	temp = "Recording...<br>"
 	temp += "<A href='?src=[REF(src)];record_stop=1'>End recording.</A>"
 
@@ -597,8 +597,8 @@ For the other part of the code, check silicon say.dm. Particularly robot talk.*/
 	if(!record_mode)
 		return
 	//make this command so you can have multiple languages in single record
-	if((!disk.record.caller_name || disk.record.caller_name == "Unknown") && istype(speaker))
-		disk.record.caller_name = speaker.name
+	if((!disk.record.requester_name || disk.record.requester_name == "Unknown") && istype(speaker))
+		disk.record.requester_name = speaker.name
 	if(!disk.record.language)
 		disk.record.language = language
 	else if(language != disk.record.language)

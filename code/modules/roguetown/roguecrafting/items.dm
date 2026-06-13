@@ -390,23 +390,6 @@ datum/crafting_recipe/roguetown/poisonbolt
 	structurecraft = /obj/structure/fluff/dryingrack
 	craftdiff = 1
 
-/datum/crafting_recipe/roguetown/woodenbullets
-	name = "wooden balls x10"
-	result = list(/obj/item/ammo_casing/caseless/rogue/bullet/wood,
-				/obj/item/ammo_casing/caseless/rogue/bullet/wood,
-				/obj/item/ammo_casing/caseless/rogue/bullet/wood,
-				/obj/item/ammo_casing/caseless/rogue/bullet/wood,
-				/obj/item/ammo_casing/caseless/rogue/bullet/wood,
-				/obj/item/ammo_casing/caseless/rogue/bullet/wood,
-				/obj/item/ammo_casing/caseless/rogue/bullet/wood,
-				/obj/item/ammo_casing/caseless/rogue/bullet/wood,
-				/obj/item/ammo_casing/caseless/rogue/bullet/wood,
-				/obj/item/ammo_casing/caseless/rogue/bullet/wood)
-	reqs = list(/obj/item/grown/log/tree/small = 1,
-	/datum/reagent/water = 50)
-	tools = list(/obj/item/rogueweapon/huntingknife)
-	craftdiff = 1
-
 /datum/crafting_recipe/roguetown/readingscroll
 	name = "novice's guide to literature"
 	result = list(/obj/item/literary)

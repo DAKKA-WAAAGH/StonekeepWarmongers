@@ -42,18 +42,21 @@
 			used_title = J.f_title
 		if(used_title == "Adventurer")
 			used_title = advjob
-			. = list("<span class='info'>ø ------------ ø\nThis is <EM>[used_name]</EM>, the wandering [used_title].")
+			. = list("<span class='info'>ø This is <EM>[used_name]</EM>, the wandering [used_title]. ø")
 		else
-			. = list("<span class='info'>ø ------------ ø\nThis is <EM>[used_name]</EM>, the [used_title].")
+			. = list("<span class='info'>ø This is <EM>[used_name]</EM>, the [used_title]. ø")
 	else
-		. = list("<span class='info'>ø ------------ ø\nThis is the <EM>[used_name]</EM>, the [race_name].")
+		. = list("<span class='info'>ø This is the <EM>[used_name]</EM>, the [race_name]. ø")
 
 	if(ishuman(user))
 		var/mob/living/carbon/human/H = user
-		if(H.warfare_faction != src.warfare_faction)
-			. += "<span class='userdanger'>THEY'RE THE ENEMY! KILL THEM!</span>"
-		else if(HAS_TRAIT(src, TRAIT_NOBLE))
-			. += "<span class='notice'>Our Lord! Protect him!</span>"
+		if(warfare_faction)
+			if(H.warfare_faction != src.warfare_faction)
+				. += "<span class='userdanger'>THEY'RE THE ENEMY! KILL THEM!</span>"
+			else if(HAS_TRAIT(src, TRAIT_NOBLE))
+				. += "<span class='notice'>Our Lord! Protect him!</span>"
+		else
+			. += "<font color='grey'>Who... is that?</font>"
 
 	var/list/obscured = check_obscured_slots()
 	var/skipface = (wear_mask && (wear_mask.flags_inv & HIDEFACE)) || (head && (head.flags_inv & HIDEFACE))
@@ -63,7 +66,7 @@
 		if(istype(wear_shirt, /obj/item/clothing/suit))
 			var/obj/item/clothing/suit/U = wear_shirt
 			if(U.attached_accessory)
-				accessory_msg += " with \icon[U.attached_accessory] <span class='notice'>\a [U.attached_accessory]</span>"
+				accessory_msg += " with \icon[icon(U.attached_accessory.icon, U.attached_accessory.icon_state)] <span class='notice'>\a [U.attached_accessory]</span>"
 		. += "[m3] [wear_shirt.get_examine_string(user)][accessory_msg]."
 
 	//head
@@ -425,9 +428,8 @@
 					"<a href='?src=[REF(src)];hud=s;add_crime=1'>\[Add crime\]</a>",
 					"<a href='?src=[REF(src)];hud=s;view_comment=1'>\[View comment log\]</a>",
 					"<a href='?src=[REF(src)];hud=s;add_comment=1'>\[Add comment\]</a>"), "")
-//	else if(isobserver(user) && traitstring)
-//		. += "<span class='info'><b>Traits:</b> [traitstring]</span>"
-	. += "ø ------------ ø</span>"
+	if(IsAdminGhost(user))
+		. += "<span class='info'><b>Ckey:</b> [ckey]</span>"
 
 /mob/living/proc/status_effect_examines(pronoun_replacement) //You can include this in any mob's examine() to show the examine texts of status effects!
 	var/list/dat = list()

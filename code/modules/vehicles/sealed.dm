@@ -2,6 +2,7 @@
 	var/enter_delay = 20
 	var/mouse_pointer
 
+/*
 /obj/vehicle/sealed/generate_actions()
 	. = ..()
 	initialize_passenger_action_type(/datum/action/vehicle/sealed/climb_out)
@@ -11,6 +12,7 @@
 	. = E
 	if(istype(E))
 		E.vehicle_entered_target = src
+*/
 
 /obj/vehicle/sealed/MouseDrop_T(atom/dropping, mob/M)
 	if(!istype(dropping) || !istype(M))

@@ -60,3 +60,18 @@
 		if(counted)
 			SSticker.tri_lost += amt
 		to_chat(src, "\n<font color='purple'>[amt*-1] TRIUMPH(s) lost.</font>")
+
+/*
+	mobs also got ckeys p simple
+*/
+/mob/proc/adjust_frags(amt)
+	if(!ckey)
+		return
+	else
+		SStriumphs.frag_adjust(amt, ckey)
+		SStriumphs.adjust_fragboard(key)
+
+	if(amt > 0)
+		to_chat(src, "\n<font color='pink'>[amt] FRAG(s) awarded.</font>")
+	else if(amt < 0)
+		to_chat(src, "\n<font color='pink'>[amt*-1] FRAG(s) lost.</font>")

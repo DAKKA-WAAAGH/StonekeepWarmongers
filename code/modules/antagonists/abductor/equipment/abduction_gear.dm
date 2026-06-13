@@ -165,6 +165,13 @@
 	var/cloaked = FALSE
 	var/datum/action/innate/dash/invisible/jaunt
 
+	var/uncloak_sound = 'sound/magic/whiteflame.ogg'
+	var/cloak_sound = 'sound/magic/whiteflame.ogg'
+
+/obj/item/abductor/cloaker/strange
+	uncloak_sound = 'sound/foley/stranger_enter.ogg'
+	cloak_sound = 'sound/foley/stranger_leave.ogg'
+
 /obj/item/abductor/cloaker/Initialize()
 	. = ..()
 	jaunt = new(src)
@@ -187,6 +194,7 @@
 			playsound(O.loc, 'sound/magic/vlightning.ogg', 75, TRUE)
 			sleep(20)
 			H.forceMove(O.loc)
+			playsound(O.loc, 'sound/magic/vlightning.ogg', 75, TRUE)
 
 /obj/item/abductor/cloaker/attack(mob/living/M, mob/living/user)
 	if(ishuman(M))
@@ -198,6 +206,7 @@
 		playsound(O.loc, 'sound/magic/vlightning.ogg', 75, TRUE)
 		sleep(20)
 		H.forceMove(O.loc)
+		playsound(O.loc, 'sound/magic/vlightning.ogg', 75, TRUE)
 
 /obj/item/abductor/cloaker/attack_self(mob/user)
 	if(ishuman(user))
@@ -206,13 +215,13 @@
 			cloaked = TRUE
 			to_chat(H, "<span class='info'>YOU ARE NOW: CLOAKED</span>")
 			H.invisibility = 50
-			playsound(H, 'sound/magic/whiteflame.ogg', 75, TRUE)
+			playsound(H, cloak_sound, 75, TRUE)
 			new /obj/effect/temp_visual/dir_setting/ninja/cloak(get_turf(H), H.dir)
 		else
 			cloaked = FALSE
 			to_chat(H, "<span class='info'>YOU ARE NOW: UNCLOAKED</span>")
 			H.invisibility = 0
-			playsound(H, 'sound/magic/whiteflame.ogg', 75, TRUE)
+			playsound(H, uncloak_sound, 75, TRUE)
 			new /obj/effect/temp_visual/dir_setting/ninja(get_turf(H), H.dir)
 
 /obj/item/abductor/gizmo

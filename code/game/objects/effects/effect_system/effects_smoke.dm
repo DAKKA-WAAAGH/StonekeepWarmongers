@@ -153,12 +153,12 @@
 		M.adjustFireLoss(55)
 		var/emote = pick("cough","cry","scream","painscream","agony")
 		M.emote(emote)
+		M.freak_out_camera()
+		M.apply_status_effect(/datum/status_effect/debuff/gas)
+		M.bleed(rand(15,40))
 		if(prob(55))
-			M.apply_status_effect(/datum/status_effect/debuff/gas)
-			M.freak_out()
 			to_chat(M, "<span class='danger'>MY SKIN IS FALLING OFF!</span>")
-		if(prob(20))
-			M.blood_volume -= 15
+		else
 			to_chat(M, "<span class='danger'>Blood squirts out from [pick("my eyes","my mouth","my nose","my ears","underneath my fingernails")]!</span>")
 		return 1
 

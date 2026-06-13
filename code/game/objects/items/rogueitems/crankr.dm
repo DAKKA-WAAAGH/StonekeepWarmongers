@@ -1,18 +1,28 @@
 /obj/item/rogue/cranker
-	name = "CRANKeR"
-	desc = "A strange skull-shaped medical device used to grind up bodyparts and teeth to make all sorts of things."
+	name = "SCHLaNKER"
+	desc = "A strange skull-shaped medical device used to grind up bodyparts and teeth to make all sorts of things, including chemicals, medicine, and new glass bootles."
 	icon = 'icons/roguetown/items/cooking.dmi'
 	icon_state = "cranker"
 	w_class = WEIGHT_CLASS_SMALL
 	slot_flags = ITEM_SLOT_HIP
 	var/obj/item/bp // bodypart/teeth to grind
 	var/datum/reagent/chosen_potion = /datum/reagent/medicine/healthpot
-	var/obj/item/reagent_containers/glass/bottle/rogue/pot // where to put the health potion
+	var/obj/item/pot // where to put the health potion
+
+/obj/item/rogue/cranker/New(loc, ...)
+	. = ..()
+	if(prob(30))
+		name = "KRaTOM" // Don't eat mud.
+	else if(prob(30))
+		name = "CRaNKER"
 
 /obj/item/rogue/cranker/examine(mob/user)
 	. = ..()
 	if(pot)
+		. += "<span class='info'>It's loaded.</span>"
 		. += "<span class='tutorial'>Use middleclick to unscrew the bottle.</span>"
+	else
+		. += "<span class='tutorial'>Use middleclick to fabricate a new glass bottle.</span>"
 	if(bp)
 		. += "<span class='tutorial'>Use it in-hand to begin grinding.</span>"
 	. += "<span class='tutorial'>Use rightclick to change what you'll be cooking.</span>"
@@ -30,6 +40,10 @@
 		playsound(get_turf(user), 'sound/foley/grab.ogg', 100, FALSE, -2)
 		H.put_in_hands(pot)
 		pot = null
+	else
+		to_chat(user, "<span class='info'>I fabricate a new glass bottle into my [src].</span>")
+		playsound(get_turf(user), 'sound/foley/winch.ogg', 100, FALSE, -2)
+		pot = new /obj/item/reagent_containers/glass/bottle/rogue(src)
 		return
 
 /obj/item/rogue/cranker/attack_right(mob/user)
@@ -40,16 +54,16 @@
 	switch(chosen)
 		if("HEALTH")
 			chosen_potion = /datum/reagent/medicine/healthpot
-			to_chat(user, "<span class='info'>People will love you, but they will all know you're just a little too boring.</span>")
+			to_chat(user, "<span class='info'>People will love you, but they will all know you're just a little too boring. HEALING+</span>")
 		if("DUST OF MOON")
 			chosen_potion = /datum/reagent/moondust
-			to_chat(user, "<span class='info'>After all, you didn't want those bullets piercing your lungs anyway.</span>")
+			to_chat(user, "<span class='info'>After all, you didn't want those bullets piercing your lungs anyway. SPEED+</span>")
 		if("OZ")
 			chosen_potion = /datum/reagent/ozium
-			to_chat(user, "<span class='info'>Everyone loves it, who doesn't? You'll be unbeatable.</span>")
+			to_chat(user, "<span class='info'>Everyone loves it, who doesn't? You'll be unbeatable. STRENGTH+, SPEED-</span>")
 		if("LOVE")
 			chosen_potion = /datum/reagent/druqks
-			to_chat(user, "<span class='info'>Love defeats all hardship.</span>")
+			to_chat(user, "<span class='info'>Love defeats all hardship. ENDURANCE+</span>")
 
 /obj/item/rogue/cranker/attack_self(mob/living/carbon/human/user)
 	. = ..()
@@ -74,8 +88,10 @@
 	switch(user.warfare_faction)
 		if(RED_WARTEAM)
 			C.red_bonus++
+			to_chat(user, "<span class='tutorial'>+1 SUPPLY POINT</span>")
 		if(BLUE_WARTEAM)
 			C.blu_bonus++
+			to_chat(user, "<span class='tutorial'>+1 SUPPLY POINT</span>")
 	
 /obj/item/rogue/cranker/attackby(obj/item/I, mob/user, params)
 	if(user.mind.get_skill_level(/datum/skill/misc/medicine) <= 1)

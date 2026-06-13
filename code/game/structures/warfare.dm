@@ -2,7 +2,7 @@
 	name = "objective"
 	resistance_flags = INDESTRUCTIBLE | LAVA_PROOF | FIRE_PROOF | UNACIDABLE | ACID_PROOF
 	var/gametype = /datum/warmode
-	var/qdel_on_init = FALSE
+	var/invis_on_init = FALSE // whether to set invisibility, density and opacity on init
 
 /obj/structure/warobjective/Initialize()
 	. = ..()
@@ -15,9 +15,10 @@
 	C.warmode = WM
 	WM.objective = src
 
-	if(qdel_on_init)
-		WM.objective = null
-		qdel(src)
+	if(invis_on_init)
+		invisibility = INVISIBILITY_ABSTRACT
+		density = FALSE
+		opacity = FALSE
 
 // TDM
 
@@ -27,7 +28,6 @@
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	icon_state = "psy" //ironic...
 	pixel_x = -32
-	resistance_flags = INDESTRUCTIBLE
 	layer = ABOVE_MOB_LAYER
 	plane = GAME_PLANE_UPPER
 	gametype = /datum/warmode/tdm
@@ -35,8 +35,8 @@
 // CTF
 
 /obj/structure/warobjective/ponr
-	name = "Regimer Point of No Return"
-	desc = "A very important flag."
+	name = "Regimer Flong"
+	desc = "A very important flong."
 	icon = 'icons/shamelessly_stolen.dmi'
 	icon_state = "ponrblue"
 	anchored = TRUE
@@ -45,70 +45,120 @@
 	opacity = FALSE
 	gametype = /datum/warmode/noreturn
 
-/obj/structure/warobjective/ponr/attack_hand(mob/user)
+/obj/structure/warobjective/ponr/Initialize()
 	. = ..()
+	START_PROCESSING(SSprocessing, src)
+
+/obj/structure/warobjective/ponr/process()
+	for(var/turf/closed/wall/W in RANGE_TURFS(2, src)) //no cheating by just boxing in the statue, that is super lame.
+		W.dismantle_wall()
+
+/obj/structure/warobjective/ponr/attack_hand(mob/user)
 	var/mob/living/carbon/human/H
 	var/datum/game_mode/warmongers/C = SSticker.mode
 	var/datum/warmode/noreturn/NR = C.warmode
 	if(ishuman(user))
 		H = user
 
-	if(NR.wealreadywon)
-		return
-	if(NR.blu_flag)
-		to_chat(H, "<span class='info'>Someone else is carrying the flag.</span>")
+	if(NR.red_flag == H)
+		NR.red_flag = null
+		H.filters = list()
+
+		NR.blu_captures++
+		if(NR.blu_captures >= NR.captures_required)
+			C.do_war_end(H, BLUE_WARTEAM)
+		for(var/client/reg in C.regimians)
+			to_chat(reg, "<span class='info'>We have captured their flag! [NR.blu_captures]/[NR.captures_required]</span>")
+			if(aspect_chosen(/datum/round_aspect/halo))
+				SEND_SOUND(reg, 'sound/vo/halo/flag_cap.mp3')
+			else
+				SEND_SOUND(reg, 'sound/misc/flag_captured.ogg')
+		for(var/client/unio in C.unionists)
+			to_chat(unio, "<span class='warning'>They've captured our flag. [NR.blu_captures]/[NR.captures_required]</span>")
+			SEND_SOUND(unio, 'sound/misc/hel.ogg')
 		return
 
-	if(NR.red_flag == H)
-		NR.wealreadywon = TRUE
-		C.do_war_end(H, BLUE_WARTEAM)
-		if(aspect_chosen(/datum/round_aspect/halo))
-			SEND_SOUND(world, 'sound/vo/halo/flag_cap.mp3')
-		return
-	
 	if(H.warfare_faction == BLUE_WARTEAM)
 		to_chat(H, "<span class='info'>This belongs to us.</span>")
 		return
 
+	if(NR.blu_flag)
+		to_chat(H, "<span class='info'>Someone else is carrying the flag.</span>")
+		return
+
 	NR.blu_flag = H
-	to_chat(world, "<span class='userdanger'>REGIME FLAG TAKEN.</span>")
-	if(aspect_chosen(/datum/round_aspect/halo))
-		SEND_SOUND(world, 'sound/vo/halo/flag_take.mp3')
+	H.add_filter("flag_highlight",1,list("type"="drop_shadow","color"=COLOR_BLUE,"size"=3))
+	for(var/client/unio in C.unionists)
+		to_chat(unio, "<span class='userdanger'>We have taken the enemy flag!</span>")
+		if(aspect_chosen(/datum/round_aspect/halo))
+			SEND_SOUND(unio, 'sound/vo/halo/flag_take.mp3')
+		else
+			SEND_SOUND(unio, 'sound/misc/flag_taken.ogg')
+	for(var/client/reg in C.regimians)
+		if(prob(1))
+			to_chat(reg, "<span class='userdanger'>WADAFAK BITCH! OUR FLAG WAS TAKEN!!!</span>")
+		else
+			to_chat(reg, "<span class='userdanger'>OUR FLAG HAS BEEN TAKEN!!!</span>")
+		if(aspect_chosen(/datum/round_aspect/halo))
+			SEND_SOUND(reg, 'sound/vo/halo/flag_stolen.mp3')
+		else
+			SEND_SOUND(reg, 'sound/misc/hello.ogg')
 
 /obj/structure/warobjective/ponr/red
-	name = "Union's Point of No Return"
-	desc = "A very important flag."
+	name = "Union's Flang"
+	desc = "A very important flang."
 	icon_state = "ponrred"
 
 /obj/structure/warobjective/ponr/red/attack_hand(mob/user)
-	. = ..()
 	var/mob/living/carbon/human/H
 	var/datum/game_mode/warmongers/C = SSticker.mode
 	var/datum/warmode/noreturn/NR = C.warmode
 	if(ishuman(user))
 		H = user
 
-	if(NR.wealreadywon)
-		return
-	if(NR.red_flag)
-		to_chat(H, "<span class='info'>Someone else is carrying the flag.</span>")
+	if(NR.blu_flag == H)
+		NR.blu_flag = null
+		H.filters = list()
+
+		NR.red_captures++
+		if(NR.red_captures >= NR.captures_required)
+			C.do_war_end(H, RED_WARTEAM)
+		for(var/client/unio in C.unionists)
+			to_chat(unio, "<span class='info'>We have captured their flag! [NR.red_captures]/[NR.captures_required]</span>")
+			if(aspect_chosen(/datum/round_aspect/halo))
+				SEND_SOUND(unio, 'sound/vo/halo/flag_cap.mp3')
+			else
+				SEND_SOUND(unio, 'sound/misc/flag_captured.ogg')
+		for(var/client/reg in C.regimians)
+			to_chat(reg, "<span class='warning'>They've captured our flag. [NR.red_captures]/[NR.captures_required]</span>")
+			SEND_SOUND(reg, 'sound/misc/hel.ogg')
 		return
 
-	if(NR.blu_flag == H)
-		NR.wealreadywon = TRUE
-		C.do_war_end(H, RED_WARTEAM)
-		if(aspect_chosen(/datum/round_aspect/halo))
-			SEND_SOUND(world, 'sound/vo/halo/flag_cap.mp3')
-		return
-	
 	if(H.warfare_faction == RED_WARTEAM)
 		to_chat(H, "<span class='info'>This belongs to us.</span>")
 		return
 
+	if(NR.red_flag)
+		to_chat(H, "<span class='info'>Someone else is carrying the flag.</span>")
+		return
+
 	NR.red_flag = H
-	to_chat(world, "<span class='userdanger'>UNION FLAG TAKEN.</span>")
-	if(aspect_chosen(/datum/round_aspect/halo))
-		SEND_SOUND(world, 'sound/vo/halo/flag_take.mp3')
+	H.add_filter("flag_highlight",1,list("type"="drop_shadow","color"=COLOR_RED,"size"=3))
+	for(var/client/reg in C.regimians)
+		to_chat(reg, "<span class='userdanger'>We have taken the enemy flag!</span>")
+		if(aspect_chosen(/datum/round_aspect/halo))
+			SEND_SOUND(reg, 'sound/vo/halo/flag_take.mp3')
+		else
+			SEND_SOUND(reg, 'sound/misc/flag_taken.ogg')
+	for(var/client/unio in C.unionists)
+		if(prob(1))
+			to_chat(unio, "<span class='userdanger'>WADAFAK BITCH! OUR FLAG WAS TAKEN!!!</span>")
+		else
+			to_chat(unio, "<span class='userdanger'>OUR FLAG HAS BEEN TAKEN!!!</span>")
+		if(aspect_chosen(/datum/round_aspect/halo))
+			SEND_SOUND(unio, 'sound/vo/halo/flag_stolen.mp3')
+		else
+			SEND_SOUND(unio, 'sound/misc/hello.ogg')
 
 // LD
 
@@ -310,24 +360,70 @@
 	name = "\improper grand orb"
 	desc = "A relic of a former age. It hums with the power of ancient quackery."
 	icon = 'icons/roguetown/misc/machines.dmi'
-	icon_state = "ballooner"
+	icon_state = "shower"
+	resistance_flags = INDESTRUCTIBLE
+	maptext_width = 64
+	maptext_x = -16
+	maptext_y = 20
 	var/area/rogue/assault/assault
 
-/obj/structure/capturepoint_shower/Initialize()
-	. = ..()
+/obj/structure/capturepoint_shower/proc/DoShit()
+	var/datum/game_mode/warmongers/C = SSticker.mode
+
+	if(!istype(C.warmode, /datum/warmode/assault))
+		return
+	var/datum/warmode/assault/AS = C.warmode // hehe
+	START_PROCESSING(SSfastprocess, src)
+
 	var/area/A = get_area(src)
 	if(istype(A, /area/rogue/assault))
 		var/area/rogue/assault/ASS = A
 		assault = ASS
-	name = "[uppertext(assault.name)] ASSAULT POINT"
+		AS.showers += src
+		
+		name = "[uppertext(assault.name)] ASSAULT POINT"
 
-/obj/structure/capturepoint_shower/examine(mob/user)
-	. = ..()
+/obj/structure/capturepoint_shower/process()
 	var/datum/game_mode/warmongers/C = SSticker.mode
 	if(!istype(C.warmode, /datum/warmode/assault))
 		return
 	var/datum/warmode/assault/ASS = C.warmode // hehe
+	maptext_y = rand(18,22)
+	maptext_x = rand(-18,-19)
+	if(assault.holder == "Regimians")
+		maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#c18700b8'>CAPTURED</font></div>"
+	else
+		maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#fcb000b8'>[assault.holder]\n[ASS.attack_progress]/[assault.tocapture_points]</font></div>"
 
-	if(assault)
-		. += "<span class='tutorial'>It is controlled by the [assault.holder].</span>"
-		. += "<span class='tutorial'>Progress: [ASS.attack_progress]/[assault.tocapture_points]</span>"
+// capture point navigation
+
+/atom/movable/screen/navigate_arrow
+	icon = 'icons/effects/96x96.dmi'
+	name = "navigation sense"
+	icon_state = "navigate_arrow_appear"
+	pixel_x = -32
+	pixel_y = -32
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
+	screen_loc = rogueui_advsetup
+	var/atom/thing
+	var/mob/owner
+
+/atom/movable/screen/navigate_arrow/New(mob/ownera)
+	. = ..()
+	owner = ownera
+
+/atom/movable/screen/navigate_arrow/process()
+	if(owner)
+		animate(src, 0.2 SECONDS, TRUE, transform = matrix(get_angle(owner, thing), MATRIX_ROTATE))
+
+/atom/movable/screen/navigate_arrow/proc/start_effect(atom/thingo, arrow_color, duration = INFINITY)
+	START_PROCESSING(SSfastprocess, src)
+	thing = thingo
+	color = arrow_color
+	if(duration != INFINITY)
+		addtimer(CALLBACK(src, PROC_REF(end_effect)), duration)
+
+/atom/movable/screen/navigate_arrow/proc/end_effect()
+	icon_state = "navigate_arrow_disappear"
+	STOP_PROCESSING(SSfastprocess, src)
+	QDEL_IN(src, 0.4 SECONDS)

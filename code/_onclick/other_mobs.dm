@@ -177,7 +177,7 @@
 	var/nodmg = FALSE
 	var/dam2do = 10*(user.STASTR/20)
 	if(HAS_TRAIT(user, TRAIT_STRONGBITE))
-		dam2do *= 2
+		dam2do *= 6
 	if(!HAS_TRAIT(user, TRAIT_STRONGBITE))
 		if(!affecting.has_wound(/datum/wound/bite))
 			nodmg = TRUE
@@ -292,13 +292,20 @@
 							M.onkick(src)
 				else
 					A.onkick(src)
-				OffBalance(5)
+				OffBalance(1)
 				return
 			if(INTENT_JUMP)
 				if(A == src || A == src.loc)
 					return
 				if(src.get_num_legs() < 2)
+					to_chat(src, "<span class='warning'>I lack the equipment for that sort of ordeal.</span>")
 					return
+				var/datum/game_mode/warmongers/C = SSticker.mode
+				if(istype(C.warmode, /datum/warmode/noreturn))
+					var/datum/warmode/noreturn/NR = C.warmode
+					if(NR.blu_flag == src || NR.red_flag == src)
+						to_chat(src, "<span class='warning'>GAH! This flag is too heavy!</span>")
+						return
 				if(pulledby && pulledby != src)
 					to_chat(src, "<span class='warning'>I'm being grabbed.</span>")
 					return
@@ -309,6 +316,7 @@
 					return
 				if(A.z != src.z)
 					if(!HAS_TRAIT(src, TRAIT_ZJUMP))
+						to_chat(src, "<span class='warning'>I can't jump THAT high!</span>")
 						return
 				changeNext_move(mmb_intent.clickcd)
 				face_atom(A)

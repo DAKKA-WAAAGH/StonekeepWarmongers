@@ -6,10 +6,5 @@
 	"minetype": null,
 	"space_empty_levels": 0,
 	"space_ruin_levels": 0,
-	"shuttles": {
-	    "cargo": "cargo_rogue",
-	    "ferry": "ferry_fancy",
-	    "whiteship": "whiteship_box",
-	    "emergency": "emergency_rogue"
-    }
+	"shuttles": {}
 }

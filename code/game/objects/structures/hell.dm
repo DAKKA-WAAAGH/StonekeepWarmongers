@@ -53,6 +53,18 @@ GLOBAL_LIST_EMPTY(hellspawns)
 /mob/dead/observer
 	var/isinhell
 	var/last_helld = 0
+	
+/mob/dead/observer/say_verb(message as text)
+	set name = "Say"
+	set category = "IC"
+	set hidden = 1
+	
+	if(message)
+		if(client)
+			if(GLOB.ooc_allowed)
+				client.ooc(message)
+			else
+				client.lobbyooc(message)
 
 /mob/dead/observer/proc/go2hell()
 	var/obj/effect/landmark/L = pick(GLOB.hellspawns)

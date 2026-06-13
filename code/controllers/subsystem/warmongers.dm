@@ -27,6 +27,9 @@ SUBSYSTEM_DEF(warmongers)
 
 	var/oneteammode = FALSE // players only allowed to choose the regime
 
+	var/landmark_respawn_id_attacker // used for big capture point maps
+	var/landmark_respawn_id_defender
+
 	var/red_warteam_cmode_music = 'sound/music/drunkandlovingit.ogg'
 	var/blu_warteam_cmode_music = 'sound/music/prayformoreammo.ogg'
 	// generic footsoldier anthems
@@ -35,32 +38,51 @@ SUBSYSTEM_DEF(warmongers)
 	red_airship = locate(/area/rogue/indoors/airship/red)
 	blue_airship = locate(/area/rogue/indoors/airship/blue)
 
+/datum/controller/subsystem/warmongers/proc/get_respawn_point(var/mob/living/carbon/human/HU)
+	var/turf/starto
+	for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)
+		if(sloc.name != HU.mind.assigned_role)
+			continue
+		starto = get_turf(sloc)
+	if(HU.warfare_faction == BLUE_WARTEAM && landmark_respawn_id_attacker)
+		for(var/obj/effect/landmark/assaultrespawn/ASSR in GLOB.landmarks_list)
+			if(ASSR.respawn_id != landmark_respawn_id_attacker)
+				continue
+			starto = get_turf(ASSR)
+	if(HU.warfare_faction == RED_WARTEAM && landmark_respawn_id_defender)
+		for(var/obj/effect/landmark/assaultrespawn/defender/ASSR in GLOB.landmarks_list)
+			if(ASSR.respawn_id != landmark_respawn_id_defender)
+				continue
+			starto = get_turf(ASSR)
+	return starto
+
 /datum/controller/subsystem/warmongers/proc/respawn(var/area/airship)
-	var/obj/effect/landmark/blureinforcement/blu = locate(/obj/effect/landmark/blureinforcement) in GLOB.landmarks_list
-	var/obj/effect/landmark/redreinforcement/red = locate(/obj/effect/landmark/redreinforcement) in GLOB.landmarks_list
-	
 	for(var/mob/living/carbon/human/H in airship)
+		window_flash(H.client)
+
 		sleep(rand(1,3))
 		H.blind_eyes(1)
 		H.emote("scream")
 		H.apply_status_effect(/datum/status_effect/buff/spawn_protection)
+
 		if(H.warfare_faction)
-			if(H.warfare_faction == RED_WARTEAM)
-				H.forceMove(red.loc)
-				if(H.buckled)
-					H.buckled.forceMove(red.loc)
-			else
-				H.forceMove(blu.loc)
-				if(H.buckled)
-					H.buckled.forceMove(blu.loc)
+			var/turf/starto = get_respawn_point(H)
+
+			H.forceMove(starto)
+			if(H.buckled)
+				H.buckled.forceMove(starto)
 			//H.lay_down()
 
 			H.pixel_y = 200
+			H.alpha = 0
 			animate(H, 1 SECONDS, easing = BOUNCE_EASING, pixel_y = 0)
+			animate(H, 1 SECONDS, alpha = 255)
 
 			if(H.buckled)
 				H.buckled.pixel_y = 200
+				H.buckled.alpha = 0
 				animate(H.buckled, 1 SECONDS, easing = BOUNCE_EASING, pixel_y = 0)
+				animate(H.buckled, 1 SECONDS, alpha = 255)
 
 			spawn(0.35 SECONDS)
 				playsound(H.loc, 'sound/misc/fall.ogg', 100, FALSE, -1)
@@ -152,6 +174,7 @@ SUBSYSTEM_DEF(warmongers)
 			reinforcementinas += "/obj/item/bomb/poison"
 			reinforcementinas += "/obj/item/bomb/poison"
 			SSwarmongers.warfare_techlevel = WARMONGERS_TECHLEVEL_COWBOY
+			to_chat(world, "<span class='notice'>OUR NATION'S ARMORY IS EVOLVING! PROTOTYPE WEAPONRY AUTHORIZED!</span>")
 		if(5)
 			reinforcementinas += "/obj/item/bomb"
 			reinforcementinas += "/obj/item/bomb"
@@ -189,7 +212,7 @@ SUBSYSTEM_DEF(warmongers)
 		if(WARMONGERS_TECHLEVEL_FLINTLOCKS)
 			return /obj/item/gun/ballistic/revolver/grenadelauncher/flintlock/bayo/carbine
 		if(WARMONGERS_TECHLEVEL_COWBOY)
-			return /obj/item/gun/ballistic/revolver/grenadelauncher/repeater
+			return /obj/item/gun/ballistic/revolver/grenadelauncher/boltaction
 		if(WARMONGERS_TECHLEVEL_AUTO)
 			return /obj/item/gun/ballistic/revolver/grenadelauncher/supermachine
 		if(WARMONGERS_TECHLEVEL_NONE)
@@ -200,7 +223,7 @@ SUBSYSTEM_DEF(warmongers)
 		if(WARMONGERS_TECHLEVEL_FLINTLOCKS)
 			return /obj/item/gun/ballistic/revolver/grenadelauncher/flintlock/sniper
 		if(WARMONGERS_TECHLEVEL_COWBOY)
-			return /obj/item/gun/ballistic/revolver/grenadelauncher/repeater
+			return /obj/item/gun/ballistic/revolver/grenadelauncher/repeater/sniper
 		if(WARMONGERS_TECHLEVEL_AUTO)
 			return /obj/item/gun/ballistic/revolver/grenadelauncher/supermachine
 		if(WARMONGERS_TECHLEVEL_NONE)
@@ -211,13 +234,20 @@ SUBSYSTEM_DEF(warmongers)
 		if(WARMONGERS_TECHLEVEL_FLINTLOCKS)
 			return /obj/item/gun/ballistic/revolver/grenadelauncher/flintlock/sniper/alternate
 		if(WARMONGERS_TECHLEVEL_COWBOY)
-			return /obj/item/gun/ballistic/revolver/grenadelauncher/repeater
+			return /obj/item/gun/ballistic/revolver/grenadelauncher/boltaction/sniper
 		if(WARMONGERS_TECHLEVEL_AUTO)
 			return /obj/item/gun/ballistic/revolver/grenadelauncher/supermachine
 		if(WARMONGERS_TECHLEVEL_NONE)
 			return null
 
-/proc/GetSidearmForWarfarePPU()
+/proc/GetSidearmForWarfarePPU(var/isofficer = FALSE)
+	var/datum/game_mode/warmongers/W = SSticker.mode
+	if(isofficer && W.reinforcementwave == 4)
+		if(prob(50))
+			return /obj/item/gun/ballistic/revolver/grenadelauncher/flintlock/pistol/axed
+		else
+			return /obj/item/gun/ballistic/revolver/grenadelauncher/flintlock/pistol/sworded
+
 	switch(SSwarmongers.warfare_techlevel)
 		if(WARMONGERS_TECHLEVEL_FLINTLOCKS)
 			return /obj/item/gun/ballistic/revolver/grenadelauncher/flintlock/pistol
@@ -226,11 +256,18 @@ SUBSYSTEM_DEF(warmongers)
 		if(WARMONGERS_TECHLEVEL_NONE)
 			return null
 
-/proc/GetSidearmForWarfareRegime()
+/proc/GetSidearmForWarfareRegime(var/isofficer = FALSE)
+	var/datum/game_mode/warmongers/W = SSticker.mode
+	if(isofficer && W.reinforcementwave == 4)
+		if(prob(50))
+			return /obj/item/gun/ballistic/revolver/grenadelauncher/flintlock/pistol/axed/alternate
+		else
+			return /obj/item/gun/ballistic/revolver/grenadelauncher/flintlock/pistol/sworded/alternate
+
 	switch(SSwarmongers.warfare_techlevel)
 		if(WARMONGERS_TECHLEVEL_FLINTLOCKS)
 			return /obj/item/gun/ballistic/revolver/grenadelauncher/flintlock/pistol/alternate
 		if(WARMONGERS_TECHLEVEL_COWBOY)
-			return /obj/item/gun/ballistic/revolver/grenadelauncher/revolvashot
+			return /obj/item/gun/ballistic/revolver/grenadelauncher/boltashot
 		if(WARMONGERS_TECHLEVEL_NONE)
 			return null

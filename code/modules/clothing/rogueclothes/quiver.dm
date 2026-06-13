@@ -129,21 +129,22 @@
 		ammo_list += A
 	update_icon()
 
-/obj/item/quiver/woodbullets
-	name = "ammunition pouch"
+/obj/item/quiver/shitgunner
+	name = "heavy ammunition pouch"
 	icon = 'icons/roguetown/items/misc.dmi'
-	icon_state = "sack_rope"
+	max_storage = 10
+	icon_state = "fbag"
 	item_state = "quiver"
 
-/obj/item/quiver/woodbullets/update_icon()
+/obj/item/quiver/shitgunner/update_icon()
 	if(ammo_list.len)
-		icon_state = "sack_rope"
+		icon_state = "fbag"
 	else
 		icon_state = "cbag"
 
-/obj/item/quiver/woodbullets/Initialize()
+/obj/item/quiver/shitgunner/Initialize()
 	..()
 	for(var/i in 1 to max_storage)
-		var/obj/item/ammo_casing/caseless/rogue/bullet/wood/A = new()
+		var/obj/item/ammo_casing/caseless/rogue/bullet/shotgun/A = new()
 		ammo_list += A
 	update_icon()

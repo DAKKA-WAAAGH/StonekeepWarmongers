@@ -59,6 +59,11 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	"÷" = MODE_VOCALCORDS
 ))
 
+var/regex/cyrillic_re = new(@"[\u0400-\u04FF]")
+
+proc/contains_cyrillic(t as text) // Удалите это, если создаете русский сервер!
+    return cyrillic_re.Find(t)
+
 /mob/living/proc/Ellipsis(original_msg, chance = 50, keep_words)
 	if(chance <= 0)
 		return "..."
@@ -98,7 +103,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(!message || message == "")
 		return
 
-	if(ic_blocked && SSticker.current_state != GAME_STATE_FINISHED) // to allow slang like 'lol' in OOC after game end
+	if((ic_blocked && SSticker.current_state != GAME_STATE_FINISHED) || contains_cyrillic(message)) // to allow slang like 'lol' in OOC after game end. THIS FILTERS RUSSIAN FROM THE SERVER!
 		to_chat(src, "<span class='danger'>AAAAGH! MY HEAD HURTS FROM THE WORDS I TRIED TO UTTER!</span>")
 		adjustOrganLoss(ORGAN_SLOT_BRAIN, 40)
 		playsound_local(get_turf(src), 'sound/lobotomy.ogg', 60)
@@ -343,6 +348,7 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(speech_sound)
 		if(client?.hasPerk(/datum/warperk/mortalcombat) && (findtext(rendered, "mortal combat") || findtext(rendered, "mortal kombat")))
 			playsound(I, 'sound/misc/mortalkombat.ogg', 65, FALSE, -1)
+			client.unlock_achievement(new /datum/achievement/wronggame())
 		else
 			playsound(I, pick(speech_sound), 65, TRUE, 1, vary = FALSE)
 			ping_sound_through_walls(get_turf(I))
@@ -407,8 +413,10 @@ GLOBAL_LIST_INIT(department_radio_keys, list(
 	if(derpspeech)
 		message = derpspeech(message, stuttering)
 
+	/*
 	if(stuttering)
 		message = stutter(message)
+	*/
 
 	if(slurring)
 		message = slur(message)

@@ -102,7 +102,7 @@
 		mode() // Activate held item
 
 /mob/living/carbon/attackby(obj/item/I, mob/user, params)
-	if(!user.cmode)
+	if(!user.cmode && istype(user.rmb_intent, /datum/rmb_intent/weak))
 		var/try_to_fail = !istype(user.rmb_intent, /datum/rmb_intent/weak)
 		var/list/possible_steps = list()
 		for(var/datum/surgery_step/surgery_step as anything in GLOB.surgery_steps)
@@ -507,7 +507,7 @@
 	if(!domhand || !num)
 		return STASTR
 	var/used = STASTR
-	if(num == domhand)
+	if(num == domhand || client?.hasPerk(/datum/warperk/akimbo))
 		return used
 	else
 		used = STASTR - 1
@@ -860,6 +860,9 @@
 		overlay_fullscreen("DDZ", /atom/movable/screen/fullscreen/crit/zeth)
 	else if(IsUnconscious())
 		overlay_fullscreen("UNCON", /atom/movable/screen/fullscreen/crit/uncon)
+	else if(stat >= SOFT_CRIT)
+		overlay_fullscreen("DD", /atom/movable/screen/fullscreen/crit/death)
+		overlay_fullscreen("DDZ", /atom/movable/screen/fullscreen/crit/zeth/nocd)
 	else
 		if(succumb_timer)
 			succumb_timer = 0

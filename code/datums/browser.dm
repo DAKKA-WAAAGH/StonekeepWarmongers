@@ -85,7 +85,7 @@
 
 	return {"<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<head>
 		[head_content]
@@ -169,6 +169,7 @@
 	opentime = 0
 	close()
 
+/*
 //designed as a drop in replacement for alert(); functions the same. (outside of needing User specified)
 /proc/tgalert(mob/User, Message, Title, Button1="Ok", Button2, Button3, StealFocus = 1, Timeout = 6000)
 	if (!User)
@@ -194,6 +195,7 @@
 	A.wait()
 	if (A.selectedbutton)
 		return A.selectedbutton
+*/
 
 /datum/browser/modal
 	var/opentime = 0
@@ -211,28 +213,6 @@
 /datum/browser/modal/close()
 	.=..()
 	opentime = 0
-
-/datum/browser/modal/open(use_onclose)
-	set waitfor = 0
-	opentime = world.time
-
-	if (stealfocus)
-		. = ..(use_onclose = 1)
-	else
-		var/focusedwindow = winget(user, null, "focus")
-		. = ..(use_onclose = 1)
-
-		//waits for the window to show up client side before attempting to un-focus it
-		//winexists sleeps until it gets a reply from the client, so we don't need to bother sleeping
-		for (var/i in 1 to 10)
-			if (user && winexists(user, window_id))
-				if (focusedwindow)
-					winset(user, focusedwindow, "focus=true")
-				else
-					winset(user, "mapwindow", "focus=true")
-				break
-	if (timeout)
-		addtimer(CALLBACK(src, PROC_REF(close)), timeout)
 
 /datum/browser/modal/listpicker
 	var/valueslist = list()

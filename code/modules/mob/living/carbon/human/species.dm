@@ -651,7 +651,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		return
 
 	//we check if our hat or helmet hides our facial hair.
-	if(H.head)
+	if(H.head && !H.client?.prefs?.helmetless)
 		var/obj/item/I = H.head
 		if(isclothing(I))
 			var/obj/item/clothing/C = I
@@ -716,7 +716,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					facial_overlay.pixel_y += H.dna.species.offset_features[OFFSET_FACE_F][2]
 			standing += facial_overlay
 
-	if(H.head)
+	if(H.head && !H?.client?.prefs?.helmetless)
 		var/obj/item/I = H.head
 		if(isclothing(I))
 			var/obj/item/clothing/C = I
@@ -2264,7 +2264,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 //			H.throw_at(target_shove_turf, 1, 1, H, spin = FALSE)
 
 	I.funny_attack_effects(H, user, nodmg)
-	knockback(I, H, user, nodmg)
+	//knockback(I, H, user, nodmg)
 
 	H.send_item_attack_message(I, user, parse_zone(selzone))
 
@@ -2307,7 +2307,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 					if(BPH.knock_out_teeth(get_dir(H, user), rand(1,5)))
 						H.visible_message("<span class='danger'>[H]'s teeth sail off in an arc!</span>", "<span class='userdanger'>[H]'s teeth sail off in an arc!</span>")
 						H.say(pick(GLOB.hit_appends))
-				if((user.a_intent.blade_class in GLOB.fracture_bclasses) && (prob(I.force/2 * user.STASTR/4)))
+				if((user.a_intent.blade_class in GLOB.fracture_bclasses) && (prob(I.force/2 * user.STASTR/3.5)))
 					H.adjustOrganLoss(ORGAN_SLOT_BRAIN, 20)
 					if(H.stat == CONSCIOUS)
 						H.visible_message("<span class='danger'>[H] is knocked senseless!</span>", "<span class='danger'>You're knocked senseless!</span>")

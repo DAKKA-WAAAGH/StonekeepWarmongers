@@ -43,6 +43,9 @@
 	nomouseover = FALSE
 	var/swimdir = FALSE
 
+/turf/open/water/bruh
+	slowdown = 4
+
 /turf/open/water/proc/dryup()
 	if(water_volume <= 0)
 		qdel(water_overlay)

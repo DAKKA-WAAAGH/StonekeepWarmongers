@@ -4,6 +4,13 @@
 /datum/drifter_queue_menu
 	var/client/linked_client
 
+/datum/asset/simple/stonekeep_drifter_queue_menu_slop_layout
+	verify = FALSE
+	assets = list(
+		"slop_menustyle4.css" = 'html/browser/slop_menustyle4.css',
+		//"slop_scriptstyle4.js" = 'html/browser/slop_scriptstyle4.js'
+	)
+
 /datum/drifter_queue_menu/proc/first_show_drifter_queue_menu()
 	var/datum/asset/thicc_assets = get_asset_datum(/datum/asset/simple/stonekeep_drifter_queue_menu_slop_layout)
 	thicc_assets.send(linked_client)

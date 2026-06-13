@@ -71,7 +71,7 @@ SUBSYSTEM_DEF(vote)
 					choices[GLOB.master_mode] += non_voters.len
 					if(choices[GLOB.master_mode] >= greatest_votes)
 						greatest_votes = choices[GLOB.master_mode]
-			else if(mode == "map")
+			/*else if(mode == "map") fuck the non-voters.
 				for (var/non_voter_ckey in non_voters)
 					var/client/C = non_voters[non_voter_ckey]
 					if(C.prefs.preferred_map)
@@ -82,6 +82,7 @@ SUBSYSTEM_DEF(vote)
 						var/default_map = global.config.defaultmap.map_name
 						choices[default_map] += 1
 						greatest_votes = max(greatest_votes, choices[default_map])
+				*/
 	//get all options with that many votes and return them in a list
 	. = list()
 	if(greatest_votes)

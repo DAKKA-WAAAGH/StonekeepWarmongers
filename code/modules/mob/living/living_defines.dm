@@ -8,7 +8,7 @@
 	pressure_resistance = 10
 
 	var/resize = 1 //Badminnery resize
-	var/lastattacker = null
+	var/lastattacker = null // used for counting FRAGS
 	var/lastattackerckey = null
 
 	//Health and life related vars

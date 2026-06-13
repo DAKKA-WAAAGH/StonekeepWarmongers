@@ -81,6 +81,13 @@
 	end_day = 2
 	end_month = JANUARY
 
+/datum/holiday/new_year/celebrate()
+	SSticker.login_music = 'sound/music/korkoran.ogg'
+	for(var/i in GLOB.new_player_list)
+		var/mob/dead/new_player/P = i
+		if(P.client)
+			P.client.playtitlemusic()
+
 /datum/holiday/birthday_war
 	name = "Birthday of WARMONGERS"
 	begin_day = 16

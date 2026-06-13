@@ -65,12 +65,14 @@
 			else
 				explosion(T, heavy_impact_range = heavy_impact, light_impact_range = light_impact, flame_range = flame_impact, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg','sound/misc/explode/bottlebomb (3).ogg'))
 				new /obj/item/shard (T)
+				new /obj/effect/decal/cleanable/glass(T)
 		else
 			if(prob(prob2fail))
 				snuff()
 			else
 				playsound(T, 'sound/items/firesnuff.ogg', 100)
 				new /obj/item/shard (T)
+				new /obj/effect/decal/cleanable/glass(T)
 	qdel(src)
 
 /obj/item/bomb/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
@@ -105,6 +107,7 @@
 		playsound(src.loc, 'sound/combat/smoke.ogg', 100, FALSE, 5, 5)
 		qdel(smoke)
 		new /obj/item/shard (T)
+		new /obj/effect/decal/cleanable/glass(T)
 	qdel(src)
 
 /obj/item/bomb/poison
@@ -130,6 +133,7 @@
 		playsound(src.loc, 'sound/combat/smoke.ogg', 100, FALSE, 5, 5)
 		qdel(smoke)
 		new /obj/item/shard (T)
+		new /obj/effect/decal/cleanable/glass(T)
 	qdel(src)
 
 /obj/item/bomb/fire
@@ -137,7 +141,7 @@
 	desc = "Dangerous fire in a ceramic coating."
 	icon_state = "firebomb"
 	light_impact = 0
-	flame_impact = 4
+	flame_impact = 3
 
 /obj/item/bomb/fire/explode(skipprob)
 	STOP_PROCESSING(SSfastprocess, src)
@@ -149,18 +153,20 @@
 			else
 				explosion(T, light_impact_range = light_impact, flame_range = flame_impact, smoke = TRUE, soundin = pick('sound/misc/explode/incendiary (1).ogg','sound/misc/explode/incendiary (2).ogg'))
 				new /obj/item/shard (T)
+				new /obj/effect/decal/cleanable/glass(T)
 		else
 			if(prob(prob2fail))
 				snuff()
 			else
 				playsound(T, 'sound/items/firesnuff.ogg', 100)
 				new /obj/item/shard (T)
+				new /obj/effect/decal/cleanable/glass(T)
 	qdel(src)
 
 /obj/item/bomb/fire/weak
 	name = "cheap fire bomb"
 	desc = "This out seems to kinda suck."
-	flame_impact = 3
+	flame_impact = 2
 
 /obj/item/bomb/homemade
 	prob2fail = 30
@@ -175,7 +181,7 @@
 	icon = 'icons/roguetown/items/cooking.dmi'
 	icon_state = "clearbomb"
 	light_impact = 0
-	flame_impact = 5
+	flame_impact = 4
 
 /obj/item/bomb/mollie/explode(skipprob)
 	STOP_PROCESSING(SSfastprocess, src)
@@ -187,10 +193,12 @@
 			else
 				explosion(T, light_impact_range = light_impact, flame_range = flame_impact, soundin = pick('sound/misc/explode/incendiary (1).ogg','sound/misc/explode/incendiary (2).ogg'))
 				new /obj/item/shard (T)
+				new /obj/effect/decal/cleanable/glass(T)
 		else
 			if(prob(prob2fail))
 				snuff()
 			else
 				playsound(T, 'sound/items/firesnuff.ogg', 100)
 				new /obj/item/shard (T)
+				new /obj/effect/decal/cleanable/glass(T)
 	qdel(src)

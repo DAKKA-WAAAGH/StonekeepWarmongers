@@ -1,5 +1,60 @@
 // Alright. I'm sorting this shit now because Zeth is either a fucking sociopath or incompetent when it comes to tagging.
 
+/obj/item/reagent_containers/glass/bottle/rogue
+	desc = "Luckily for the shoeless, it's sugar glass! Yummy. Don't eat it though, it's only 95% sugar glass. That 5% can FUCK you up."
+
+/obj/item/reagent_containers/glass/bottle/rogue/examine(mob/user)
+	. = ..()
+	. += "<span class='tutorial'>If it is uncorked then it can be thrown to release it's contents into the surroundings.</span>"
+	. += "<span class='tutorial'>Right-click to uncork.</span>"
+
+/obj/item/reagent_containers/glass/bottle/rogue/throw_impact(atom/hit_atom, datum/thrownthing/throwingdatum)
+	if(closed)
+		return
+	if(ishuman(throwingdatum.thrower))
+		var/mob/living/carbon/human/thrower = throwingdatum.thrower
+		var/list/humans = list()
+		var/list/all_humans = list()
+		var/turf/T = get_turf(src)
+		for(var/mob/living/carbon/human/H in viewers(4, T))
+			all_humans += H
+			if(H.stat != DEAD && H.reagents && H.warfare_faction == thrower.warfare_faction)
+				humans += H
+
+		if(!length(humans))
+			return ..()
+
+		var/amount_per_person = reagents.total_volume / length(humans)
+		amount_per_person = round(amount_per_person, 0.1)
+
+		for(var/mob/living/carbon/human/HU in all_humans)
+			HU.adjust_fire_stacks(-2.5)
+			HU.ExtinguishMob()
+			if(HU.stat == DEAD && HU.on_fire)
+				HU.dust()
+
+		for(var/mob/living/carbon/human/H in humans)
+			var/obj/effect/particle_effect/smoke/S = new(get_turf(T))
+			S.color = mix_color_from_reagents(reagents.reagent_list)
+			S.alpha = rand(50,125)
+
+			var/image/I = image('icons/effects/effects.dmi', H, "smoke", ABOVE_MOB_LAYER)
+			I.color = mix_color_from_reagents(reagents.reagent_list)
+			flick_overlay_view(I, H, 30)
+		
+			var/matrix/M = matrix()
+			M.Scale(2,2)
+			
+			reagents.trans_to(H, amount_per_person, transfered_by = thrower)
+
+			animate(I, 30, alpha = 0, transform = M)
+		
+		new /obj/effect/decal/cleanable/glass(T)
+
+		playsound(T, 'sound/items/firesnuff.ogg', 75)
+
+		qdel(src)
+		return
 
 //////////////////////////
 /// ALCHEMICAL POTIONS ///

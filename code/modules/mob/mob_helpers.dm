@@ -881,8 +881,10 @@
 		return
 	if(!check_rights_for(user.client, R_ADMIN)) // Are they allowed?
 		return
+	/*
 	if(!user.client.AI_Interact) // Do they have it enabled?
 		return
+	*/
 	return TRUE
 
 /**

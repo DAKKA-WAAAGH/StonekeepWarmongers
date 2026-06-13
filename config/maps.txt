@@ -20,17 +20,20 @@ map bloodfort
 endmap
 
 map laststand
-	#voteweight 1.5
+	voteweight 1.5
+	minplayers 8
 	votable
 endmap
 
 map murderfield
 	#voteweight 1.5
+	minplayers 16
 	votable
 endmap
 
 map darkwaters
 	#voteweight 1.5
+	minplayers 8
 	votable
 endmap
 
@@ -40,27 +43,35 @@ map darkwaters-ponr
 endmap
 
 map foxhole
-	#voteweight 1.5
+	voteweight 1.5
+	votable
+endmap
+
+map bday
 	votable
 endmap
 
 map sandblasted
 	#voteweight 1.5
+	minplayers 16
 	votable
 endmap
 
 map ziggurat
 	#voteweight 1.5
+	minplayers 8
 	votable
 endmap
 
 map darkstone
 	#voteweight 1.5
+	minplayers 16
 	votable
 endmap
 
 map darkpebble
 	#voteweight 1.5
+	maxplayers 16
 	votable
 endmap
 

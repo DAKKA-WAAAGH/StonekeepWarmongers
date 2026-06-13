@@ -37,7 +37,7 @@
 			for(var/i = 0; i < maxStepsTick; ++i)
 				if(!IsDeadOrIncap())
 					if(myPath.len >= 1)
-						walk_to(src,myPath[1],0,5)
+						walk_to(src,get_turf(target),0,5)
 						myPath -= myPath[1]
 			return 1
 

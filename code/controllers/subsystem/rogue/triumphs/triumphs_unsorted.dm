@@ -11,6 +11,11 @@
 		return
 	return SStriumphs.get_triumphs(ckey)
 
+/mob/proc/get_frags()
+	if(!ckey)
+		return
+	return SStriumphs.get_frags(ckey)
+
 /client/proc/adjusttriumph()
 	set category = "GameMaster"
 	set name = "Adjust Triumphs"

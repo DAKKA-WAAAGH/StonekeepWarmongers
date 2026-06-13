@@ -510,6 +510,7 @@
 			if (!istype(ears, /obj/item/clothing/ears/earmuffs))
 				SEND_SOUND(src, sound('sound/foley/shellshock.ogg', volume = 75))
 				adjustEarDamage(30, 120)
+				unlock_achievement(new /datum/achievement/coduty())
 			Unconscious(20)							//short amount of time for follow up attacks against elusive enemies like wizards
 			Knockdown(25)
 
@@ -773,14 +774,14 @@
 	return ..()
 
 /mob/living/carbon/human/proc/check_for_injuries(mob/user = src, advanced = FALSE, silent = FALSE)
-	var/list/examination = list("<span class='info'>ø ------------ ø")
+	var/list/examination = list()
 	var/m1
 	var/deep_examination = advanced
 	if(user == src)
 		m1 = "I am"
 		if(!deep_examination)
 			deep_examination = HAS_TRAIT(src, TRAIT_SELF_AWARE)
-		examination += "<span class='notice'>Let's see how I am doing.</span>"
+		examination += "<span class='notice'>ø Let's see how I am doing. ø</span>"
 		if(!stat && !silent)
 			visible_message("<span class='notice'>[src] examines [p_them()]self.</span>", \
 				"<span class='notice'>I check myself for injuries.</span>")
@@ -833,9 +834,8 @@
 			continue
 		examination += bodypart.check_for_injuries(user, deep_examination)
 
-	examination += "ø ------------ ø</span>"
 	if(!silent)
-		to_chat(user, examination.Join("\n"))
+		to_chat(user, examine_block(examination.Join("\n")))
 	return examination
 
 /mob/living/carbon/human/proc/check_limb_for_injuries(mob/user = src, choice = BODY_ZONE_CHEST, advanced = FALSE, silent = FALSE)

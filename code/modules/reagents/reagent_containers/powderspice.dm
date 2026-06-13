@@ -13,7 +13,7 @@
 	name = "Drukqs"
 	description = ""
 	color = "#60A584" // rgb: 96, 165, 132
-	overdose_threshold = 16
+	overdose_threshold = 0
 	metabolization_rate = 0.2
 
 /datum/reagent/druqks/overdose_process(mob/living/M)
@@ -179,7 +179,7 @@
 	name = "Ozium"
 	description = ""
 	color = "#60A584" // rgb: 96, 165, 132
-	overdose_threshold = 16
+	overdose_threshold = 0
 	metabolization_rate = 0.2
 
 /datum/reagent/ozium/on_mob_metabolize(mob/living/L)

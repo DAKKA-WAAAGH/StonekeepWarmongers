@@ -7,6 +7,10 @@
 #define BLUE_WARTEAM "Regimians" // Grenzelhoft
 #define RED_WARTEAM "Unionists" // Heartfelt
 
+#define DIFF_EASY		"easy"	//Used in achievements.
+#define DIFF_MEDIUM		"medium"
+#define DIFF_HARD		"hard"
+
 #define WARMONGERS_TECHLEVEL_FLINTLOCKS 1
 #define WARMONGERS_TECHLEVEL_NONE 2
 #define WARMONGERS_TECHLEVEL_COWBOY 3

@@ -310,15 +310,15 @@
 /obj/projectile/bullet/fragment
 	name = "fragment"
 	desc = "Haha. You're not able to see this!"
-	damage = 10
+	damage = 25
 	damage_type = BRUTE
-	woundclass = BCLASS_STAB
+	woundclass = BCLASS_BULLET
 	range = 50
 	jitter = 5
 	eyeblur = 3
 	icon = 'icons/roguetown/weapons/ammo.dmi'
-	icon_state = "woodenball_proj"
-	ammo_type = /obj/item/ammo_casing/caseless/rogue/bullet/wood
+	icon_state = "pellets_proj"
+	ammo_type = /obj/item/ammo_casing/caseless/rogue/bullet/shotgun
 	impact_effect_type = /obj/effect/temp_visual/impact_effect
 	flag = "bullet"
 	armor_penetration = 40
@@ -342,12 +342,13 @@
 	desc = "A round iron shot, simple and spherical. Not as malleable as lead though."
 	projectile_type = /obj/projectile/bullet/reusable/bullet/iron
 
-/obj/item/ammo_casing/caseless/rogue/bullet/wood
-	name = "fragmentation ball"
-	desc = "A small wooden ball. It shatters into multiple pellets when shot."
-	icon_state = "woodenball"
-	pellets = 7
-	variance = 25
+/obj/item/ammo_casing/caseless/rogue/bullet/shotgun
+	name = "bagball"
+	desc = "A round lead shot that has a bag of small fragments attached to it. Safe to say, this will ruin someone's day."
+	caliber = "bagball"
+	icon_state = "cluster"
+	pellets = 12
+	variance = 30
 	projectile_type = /obj/projectile/bullet/fragment
 
 /obj/projectile/bullet/reusable/cannonball
@@ -370,11 +371,25 @@
 	flag = "bullet"
 	hitscan = FALSE
 	armor_penetration = 100
-	speed = 0.8
+	speed = 0.6
+	
+/obj/projectile/bullet/reusable/cannonball/process()
+	. = ..()
+	if(prob(40))
+		new /obj/effect/particle_effect/smoke/transparent(get_turf(src))
 
 /obj/projectile/bullet/reusable/cannonball/on_hit(atom/target,blocked = FALSE)
-	if(iscarbon(target))
-		var/mob/living/carbon/M = target
+	if(ishuman(target))
+		var/mob/living/carbon/human/M = target
+		var/mob/living/carbon/human/human_firer
+		if(ishuman(firer))
+			human_firer = firer
+		if(M == firer)
+			M.unlock_achievement(new /datum/achievement/cannonblast_self())
+		else if(M.warfare_faction == human_firer.warfare_faction)
+			human_firer.unlock_achievement(new /datum/achievement/cannonblast())
+			to_chat(human_firer, "<span class='warning'>I just decimated a teammate.</span>")
+			to_chat(M, "<span class='userdanger'>I just got decimated by a teammate.</span>")
 		M.visible_message("<span class='danger'>[M] explodes into a shower of gibs!</span>")
 		M.gib()
 	explosion(get_turf(target), heavy_impact_range = 4, light_impact_range = 6, flame_range = 0, smoke = TRUE, soundin = pick('sound/misc/explode/bottlebomb (1).ogg','sound/misc/explode/bottlebomb (2).ogg','sound/misc/explode/bottlebomb (3).ogg'))

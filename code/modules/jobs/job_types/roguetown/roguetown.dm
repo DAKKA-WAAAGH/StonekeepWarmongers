@@ -60,8 +60,11 @@
 	H.client?.fit_viewport()
 	
 	if(J?.tutorial)
-		to_chat(H, "<span class='info'><b>[uppertext(J.title)]</b></span>")
-		to_chat(H, "<span class='info'>[J.tutorial]</span>")
+		var/list/tt = list()
+
+		tt += "<span class='info'><b>[uppertext(J.title)]</b></span>"
+		tt += "<span class='info'>[J.tutorial]</span>"
+		to_chat(H, examine_block(tt.Join("\n")))
 		if(H.warfare_faction == RED_WARTEAM && (istype(W.warmode, /datum/warmode/assault) || istype(W.warmode, /datum/warmode/lords)) && !SSwarmongers.warfare_ready_to_die)
 			to_chat(H, "<span class='notice'>YOU'RE PLAYING AS THE UNION! REMEMBER TO BUILD DEFENSES OR YOUR DEATH IS GUARANTEED!</span>")
 
@@ -74,5 +77,5 @@
 		U.attach_accessory(new /obj/item/clothing/accessory/medal/badmin(U))
 	else if(H.client?.holder)
 		U.attach_accessory(new /obj/item/clothing/accessory/medal/gold/admin(U))
-	if(check_bypasslist(H.ckey))
+	else if(check_bypasslist(H.ckey))
 		U.attach_accessory(new /obj/item/clothing/accessory/medal/silver/veteran(U))

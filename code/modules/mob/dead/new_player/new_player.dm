@@ -678,7 +678,6 @@ GLOBAL_LIST_INIT(roleplay_readme, world.file2list("string/rt/Lore_Primer.txt"))
 			H.adjust_triumphs(-WP.cost)
 			H.client.haspaid = TRUE
 		H.client.equippedPerk = WP
-		H.client.equippedPerk.apply(H)
 
 /mob/proc/after_creation()
 	return

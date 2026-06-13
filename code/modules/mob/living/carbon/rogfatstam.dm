@@ -118,30 +118,27 @@
 			flash_fullscreen("stressflash")
 			return
 	mob_timers["freakout"] = world.time
+
 	shake_camera(src, 1, 3)
 	flash_fullscreen("stressflash")
 	changeNext_move(CLICK_CD_EXHAUSTED)
 	add_stress(/datum/stressevent/freakout)
-	if(stress >= 30)
+	var/heart_value = 30
+	if(stress >= heart_value)
 		heart_attack()
 	else
 		emote("fatigue", forced = TRUE)
 		if(stress > 15)
 			addtimer(CALLBACK(src, TYPE_PROC_REF(/mob, do_freakout_scream)), rand(30,50))
-	camera_bullshit(2, -224, QUAD_EASING, 1, 30)
+	freak_out_camera()
 
-/mob/living/carbon/proc/camera_bullshit(scale = 2, translate = -224, animeasing = QUAD_EASING, anim_in = 1, anim_out = 30)
+/mob/living/carbon/proc/freak_out_camera()
 	if(hud_used)
 		var/matrix/skew = matrix()
-		skew.Scale(scale)
-		skew.Translate(translate,0)
-		var/matrix/newmatrix = skew 
-		for(var/C in hud_used.plane_masters)
-			var/atom/movable/screen/plane_master/whole_screen = hud_used.plane_masters[C]
-			if(whole_screen.plane == HUD_PLANE)
-				continue
-			animate(whole_screen, transform = newmatrix, time = anim_in, easing = animeasing)
-			animate(transform = -newmatrix, time = anim_out, easing = animeasing)
+		skew.Scale(2)
+		for(var/atom/movable/screen/plane_master/pm_iterator as anything in hud_used.plane_masters["[GAME_PLANE]"])
+			animate(pm_iterator, transform = skew, time = 1, easing = QUAD_EASING)
+			animate(transform = -skew, time = 30, easing = QUAD_EASING)
 
 /mob/living/proc/rogfat_reset()
 	rogfat = 0

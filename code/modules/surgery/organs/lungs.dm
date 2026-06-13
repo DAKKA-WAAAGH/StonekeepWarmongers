@@ -396,7 +396,7 @@
 				owner.visible_message("<span class='danger'>[owner] grabs [owner.p_their()] throat, struggling for breath!</span>", \
 									"<span class='danger'>I suddenly feel like you can't breathe!</span>")
 			failed = TRUE
-			owner.adjustOxyLoss(25)
+			owner.adjustOxyLoss(10)
 	else
 		failed = FALSE
 

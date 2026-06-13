@@ -28,8 +28,8 @@
 			updatehealth()
 		update_stress()
 		handle_nausea()
-		if(blood_volume > BLOOD_VOLUME_SURVIVE)
-			if(!heart_attacking)
+		if(blood_volume > BLOOD_VOLUME_SURVIVE)	
+			if(!heart_attacking && !has_wound(/datum/wound/lungs))
 				adjustOxyLoss(-1.6)
 			else
 				if(getOxyLoss() < 20)

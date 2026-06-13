@@ -43,16 +43,16 @@
 			/obj/item/bomb/fire
 			)
 
-/datum/warshippable/woodammo
-	name = "FRAGMENTATION AMMUNITION POUCHES"
-	items = list(/obj/item/quiver/woodbullets,
-			/obj/item/quiver/woodbullets
-			)
-
 /datum/warshippable/normalammo
 	name = "LEAD BALL POUCHES"
 	items = list(/obj/item/quiver/bullets,
 			/obj/item/quiver/bullets
+			)
+
+/datum/warshippable/shotgun_ammo
+	name = "HEAVY AMMUNITION POUCHES"
+	items = list(/obj/item/quiver/shitgunner,
+			/obj/item/quiver/shitgunner
 			)
 
 /datum/warshippable/cannonballs
@@ -63,9 +63,19 @@
 			/obj/item/ammo_casing/caseless/rogue/cball
 			)
 
+/datum/warshippable/healther
+	name = "HEALTHER"
+	items = list(/obj/structure/healther)
+
 /datum/warshippable/bombard
 	name = "BOMBARDIER"
 	items = list(/obj/structure/bombard)
+	faction = RED_WARTEAM
+
+/datum/warshippable/bombard/alt
+	name = "MORTARD"
+	items = list(/obj/structure/bombard/alt)
+	faction = BLUE_WARTEAM
 
 /datum/warshippable/cannon
 	name = "BARKSTONE"
@@ -80,6 +90,12 @@
 	name = "KAITZAR'S ORGAN"
 	items = list(/obj/structure/maxim/alt)
 	faction = BLUE_WARTEAM
+
+/datum/warshippable/maxim_ammo
+	name = "THREE MACHINE AMMO"
+	items = list(/obj/item/rogue/maxim_ammo,
+				/obj/item/rogue/maxim_ammo,
+				/obj/item/rogue/maxim_ammo)
 
 /datum/warshippable/caltrops
 	name = "CALTROPS"

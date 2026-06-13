@@ -254,23 +254,29 @@
 /obj/effect/decal/cleanable/blood/puddle
 	name = "puddle of blood"
 	desc = ""
-	icon_state = "pool1"
+	icon_state = "pool3"
 	bloodiness = 10
 	var/blood_vol = 10
+	appearance_flags = PIXEL_SCALE
 	random_icon_states = null
 
 /obj/effect/decal/cleanable/blood/puddle/update_icon()
+	var/matrix/M = matrix()
 	switch(blood_vol)
 		if(450 to INFINITY)
-			icon_state = "pool5"
+			transform = M.Scale(1.25,1.25)
+			animate(src, 40 SECONDS, transform = M.Scale(1.5,1.5))
 		if(350 to 450)
-			icon_state = "pool4"
+			transform = M.Scale(1,1)
+			animate(src, 30 SECONDS, transform = M.Scale(1.25,1.25))
 		if(250 to 350)
-			icon_state = "pool3"
+			transform = M.Scale(0.5,0.5)
+			animate(src, 20 SECONDS, transform = M.Scale(1,1))
 		if(50 to 250)
-			icon_state = "pool2"
+			transform = M.Scale(0.35,0.35)
+			animate(src, 10 SECONDS, transform = M.Scale(0.5,0.5))
 		if(1 to 50)
-			icon_state = "pool1"
+			transform = M.Scale(0.35,0.35)
 
 /obj/effect/decal/cleanable/blood/puddle/replace_decal(obj/effect/decal/cleanable/C) // Returns true if we should give up in favor of the pre-existing decal
 	if(..())

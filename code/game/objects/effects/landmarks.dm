@@ -60,6 +60,15 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 	. = ..()
 	new /obj/structure/shopkeep/red(get_turf(src))
 
+/obj/effect/landmark/assaultrespawn // Used by regimians to respawn upon capturing a control point
+	name = "Assault Respawn Point"
+	icon_state = "reinforcements-blu-respawn"
+	var/respawn_id
+
+/obj/effect/landmark/assaultrespawn/defender // Used by unionists to respawn upon attackers capturing a control point
+	name = "Assault Respawn Point"
+	icon_state = "reinforcements-red-respawn"
+
 /obj/effect/landmark/start
 	name = "start"
 	icon = 'icons/mob/landmarks.dmi'

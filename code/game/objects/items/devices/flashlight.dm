@@ -332,6 +332,7 @@
 	righthand_file = 'icons/mob/inhands/items_righthand.dmi'
 	light_color = "#da8c45"
 	on_damage = 2
+	droprot = TRUE
 	flags_1 = null
 	possible_item_intents = list(/datum/intent/use)
 	slot_flags = ITEM_SLOT_HIP

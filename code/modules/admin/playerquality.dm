@@ -212,6 +212,7 @@
 	fdel(json_file)
 	WRITE_FILE(json_file, json_encode(json))
 
+	SStriumphs.triumph_adjust(1, ckey(key)) // TRIUMPH FARM BAYBEE
 	//add the pq, only on the first commend
 	if(curcomm == 1)
 //	if(get_playerquality(key) < 29)

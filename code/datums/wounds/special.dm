@@ -265,3 +265,70 @@
 			"The testicles are destroyed!",
 			"The testicles are eviscerated!",
 		)
+
+// organ damage
+
+/datum/wound/lungs
+	name = "pierced lungs"
+	check_name = "<span class='userdanger'><B>LUNGS</B></span>"
+	crit_message = list(
+		"The lungs are pierced!",
+		"The lungs are deflated!",
+	)
+	whp = 50
+	woundpain = 10 // not that painful but it fucking sucks
+	mob_overlay = ""
+	sewn_overlay = ""
+	can_sew = TRUE
+	can_cauterize = TRUE
+	disabling = FALSE
+	critical = TRUE
+	passive_healing = 0.25
+
+/datum/wound/lungs/can_stack_with(datum/wound/other)
+	if(istype(other, /datum/wound/lungs) && (type == other.type))
+		return FALSE
+	return TRUE
+
+/datum/wound/lungs/on_mob_gain(mob/living/affected)
+	. = ..()
+	affected.emote("breathgasp", forced = TRUE)
+	to_chat(affected, "<span class='userdanger'>CAN'T... BREATHE!</span>")
+
+/datum/wound/lungs/on_life()
+	. = ..()
+	if(!bodypart_owner.bandage) // bandage stuffs the wound allowing breathing, or thats the idea
+		owner.adjustOxyLoss(rand(5,10))
+
+/datum/wound/heartbreak
+	name = "pierced heart"
+	crit_message = list(
+		"The heart is pierced!",
+		"The heart is deflated!",
+	)
+	check_name = "<span class='userdanger'><B>HEARTBREAK</B></span>"
+	sound_effect = "fracturedry"
+	whp = 50
+	woundpain = 10 // not that painful but it fucking sucks
+	mob_overlay = ""
+	sewn_overlay = ""
+	can_sew = TRUE
+	can_cauterize = TRUE
+	disabling = FALSE
+	critical = TRUE
+	passive_healing = 0.25
+
+/datum/wound/heartbreak/can_stack_with(datum/wound/other)
+	if(istype(other, /datum/wound/heartbreak) && (type == other.type))
+		return FALSE
+	return TRUE
+
+/datum/wound/heartbreak/on_mob_gain(mob/living/carbon/affected)
+	. = ..()
+	if(iscarbon(affected))
+		affected.emote("breathgasp", forced = TRUE)
+		affected.heart_attack()
+
+/datum/wound/heartbreak/on_life()
+	. = ..()
+	owner.adjustOxyLoss(rand(20,50))

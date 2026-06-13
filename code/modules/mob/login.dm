@@ -86,6 +86,9 @@
 	if(SSticker.current_state == GAME_STATE_FINISHED)
 		do_game_over()
 
+	var/savefile/F = new /savefile("data/player_saves/[copytext(ckey, 1, 2)]/[ckey]/achievements.sav")
+	client.achievement_holder.Read(F)
+
 	log_message("Client [key_name(src)] has taken ownership of mob [src]([src.type])", LOG_OWNERSHIP)
 	SEND_SIGNAL(src, COMSIG_MOB_CLIENT_LOGIN, client)
 

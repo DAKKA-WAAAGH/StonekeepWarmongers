@@ -3,7 +3,7 @@
 /datum/looping_sound/musloop
 	mid_sounds = list()
 	mid_length = 99999
-	volume = 50
+	volume = 110
 	extra_range = 7
 	persistent_loop = TRUE
 	var/stress2give = /datum/stressevent/music
@@ -44,6 +44,11 @@
 	var/playing = FALSE
 	var/list/music_tracks
 
+/obj/structure/roguemachine/musicbox/examine(mob/user)
+	. = ..()
+	. += "<span class='tutorial'>Left-click to toggle playing.</span>"
+	. += "<span class='tutorial'>Right-click to change track.</span>"
+
 /obj/structure/roguemachine/musicbox/Initialize()
 	soundloop = new(list(src), FALSE)
 	music_tracks = MUSIC_TAV
@@ -77,13 +82,13 @@
 	if(.)
 		return
 	user.changeNext_move(CLICK_CD_MELEE)
-	playsound(loc, 'sound/misc/beep.ogg', 100, FALSE, -1)
+	playsound(loc, 'sound/misc/beep.ogg', 75, FALSE, -1)
 	if(!playing)
 		if(curfile)
 			playing = TRUE
 			soundloop.mid_sounds = list(curfile)
 			soundloop.cursound = null
-			soundloop.volume = 90
+			soundloop.volume = 110
 			soundloop.start()
 	else
 		playing = FALSE

@@ -10,11 +10,11 @@
 
 /datum/reagent/medicine/healthpot/on_mob_life(mob/living/carbon/M)
 	for(var/obj/item/bodypart/bodypart as anything in M.bodyparts)
-		if(bodypart.heal_damage(15, 20))
+		if(bodypart.heal_damage(5, 10))
 			M.update_damage_overlays()
-		if(bodypart.heal_wounds(25))
+		if(bodypart.heal_wounds(10))
 			M.update_damage_overlays()
-	M.adjustToxLoss(-10)
+	M.adjustToxLoss(-5)
 	M.adjustOxyLoss(-10)
 	M.blood_volume += 25
 

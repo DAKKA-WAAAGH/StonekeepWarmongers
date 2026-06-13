@@ -118,30 +118,24 @@
 	icon = 'icons/roguetown/misc/96x96.dmi'
 	icon_state = "t1"
 	stump_type = /obj/structure/table/wood/treestump/burnt
-	var/obj/effect/dummy/whatthefuck
 	pixel_x = -32
 	opacity = FALSE
-
-/obj/structure/flora/roguetree/burnt/Destroy()
-	qdel(whatthefuck)
-	return ..()
 
 /obj/structure/flora/roguetree/burnt/Initialize()
 	. = ..()
 	icon_state = "t[rand(1,4)]"
 
 	var/matrix/M = matrix(1, 1, 0,
-                      0, 1,   0)
+					0, 1,   0)
 
-	whatthefuck = new(get_turf(src))
-	whatthefuck.appearance = appearance
-	whatthefuck.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	whatthefuck.color = "#00000088"
-	whatthefuck.pixel_x = 20
-	whatthefuck.alpha = 45
-	whatthefuck.transform = M
+	var/image/shadow = image(src.icon, src, src.icon_state)
 
-	whatthefuck.filters += GAUSSIAN_BLUR(1)
+	shadow.transform = M
+	shadow.pixel_x = 47
+	shadow.color = "#00000040"
+	shadow.filters += GAUSSIAN_BLUR(1)
+
+	underlays += shadow
 
 /obj/structure/flora/roguetree/underworld
 	name = "screaming tree"
@@ -194,12 +188,7 @@
 	isunburnt = FALSE
 	icon_state = "st1"
 	pixel_x = -32
-	var/obj/effect/dummy/whatthefuck
 	icon = 'icons/roguetown/misc/96x96.dmi'
-
-/obj/structure/table/wood/treestump/burnt/Destroy()
-	qdel(whatthefuck)
-	return ..()
 
 /obj/structure/table/wood/treestump/burnt/Initialize()
 	. = ..()
@@ -208,15 +197,14 @@
 	var/matrix/M = matrix(1, 1, 0,
 					0, 1,   0)
 
-	whatthefuck = new(get_turf(src))
-	whatthefuck.appearance = appearance
-	whatthefuck.mouse_opacity = MOUSE_OPACITY_TRANSPARENT
-	whatthefuck.color = "#00000088"
-	whatthefuck.pixel_x = 20
-	whatthefuck.alpha = 45
-	whatthefuck.transform = M
+	var/image/shadow = image(src.icon, src, src.icon_state)
 
-	whatthefuck.filters += GAUSSIAN_BLUR(1)
+	shadow.transform = M
+	shadow.pixel_x = 47
+	shadow.color = "#00000040"
+	shadow.filters += GAUSSIAN_BLUR(1)
+
+	underlays += shadow
 
 /*	.............   Ancient log   ................ */	// Functionally a sofa, slightly better than sleeping on the ground
 /obj/structure/chair/bench/ancientlog

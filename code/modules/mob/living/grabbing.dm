@@ -189,6 +189,7 @@
 				"<span class='userdanger'>[user] rips off my [parse_zone(sublimb_grabbed)]![C.next_attack_msg.Join()]</span>", "<span class='hear'>I hear a sickening sound of pugilism!</span>", COMBAT_MESSAGE_RANGE, user)
 			user.stop_pulling(TRUE)
 			user.put_in_active_hand(limb_grabbed, TRUE, TRUE)
+			user.unlock_achievement(new /datum/achievement/doomslayer())
 
 			var/obj/item/bodypart/affecting = C.get_bodypart(BODY_ZONE_CHEST)
 			if(affecting && limb_grabbed.dismember_wound)
@@ -411,7 +412,7 @@
 	var/armor_block = C.run_armor_check(sublimb_grabbed, "melee")
 	var/damage = user.get_punch_dmg()
 	if(HAS_TRAIT(user, TRAIT_STRONGBITE))
-		damage = damage*2
+		damage = damage*6
 	C.next_attack_msg.Cut()
 	if(C.apply_damage(damage, BRUTE, limb_grabbed, armor_block))
 		playsound(C.loc, "smallslash", 100, FALSE, -1)

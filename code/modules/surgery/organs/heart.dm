@@ -108,7 +108,7 @@
 			if(dmg < 1)
 				dmg = 1
 			owner.adjustOxyLoss(dmg)
-			owner.adjustToxLoss(dmg / 3)
+			//owner.adjustToxLoss(dmg / 3)
 
 /obj/item/organ/heart/cursed
 	name = "cursed heart"

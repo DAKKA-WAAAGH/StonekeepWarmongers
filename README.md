@@ -7,7 +7,7 @@
 
 | Website                   | Link                                           |
 |---------------------------|------------------------------------------------|
-| Discord          | [https://discord.gg/KMq9VGEuXx](https://discord.gg/KMq9VGEuXx) |
+| Discord          | [https://discord.gg/Rda9Z6SMgD](https://discord.gg/Rda9Z6SMgD) |
 | Code                      | [https://github.com/Darkrp-community/OpenKeep](https://github.com/Darkrp-community/StonekeepWarmongers)    |
 
 ## LICENSE

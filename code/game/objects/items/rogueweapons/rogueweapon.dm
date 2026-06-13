@@ -47,6 +47,9 @@
 	if(!get_sharpness() || !affecting.can_dismember(src))
 		return 0
 
+	if(affecting.owner.stat == DEAD)
+		return 200
+
 	var/total_dam = affecting.get_damage()
 	var/nuforce = get_complex_damage(src, user)
 	var/pristine_blade = TRUE

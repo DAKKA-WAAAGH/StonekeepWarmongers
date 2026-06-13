@@ -69,6 +69,15 @@
 
 /atom/movable/screen/plane_master/game_world/backdrop(mob/mymob)
 	filters = list()
+
+	filters += filter(
+		type = "drop_shadow",
+		x = 5,
+		y = -5,
+		size = 10,
+		color = "#00000050"
+	)
+
 	if(istype(mymob) && mymob.client && mymob.client.prefs && mymob.client.prefs.ambientocclusion)
 		filters += AMBIENT_OCCLUSION
 		//filters += filter(type="bloom", size = 4, offset = 0, threshold = "#282828")

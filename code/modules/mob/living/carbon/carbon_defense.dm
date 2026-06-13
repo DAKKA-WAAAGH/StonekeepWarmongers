@@ -70,7 +70,8 @@
 
 /mob/living/carbon/human/check_projectile_wounding(obj/projectile/P, def_zone, blocked)
 	..()
-	camera_bullshit(1.25, -100, ELASTIC_EASING, 2, 2)
+	//camera_bullshit(1.25, -100, ELASTIC_EASING, 2, 2)
+	freak_out_camera()
 	if(ishuman(P.firer))
 		var/mob/living/carbon/human/H = P.firer
 		if(warfare_faction == H.warfare_faction)
@@ -120,7 +121,8 @@
 				new /obj/effect/gibspawner/generic(get_turf(src))
 				if(ishuman(P.firer))
 					var/mob/living/carbon/human/H = P.firer
-					if(get_dist(H,src) >= 8)
+					H.unlock_achievement(new /datum/achievement/headshot())
+					if(get_dist(H,src) >= 6)
 						if(HAS_TRAIT(H, TRAIT_SNIPER))
 							H.adjust_triumphs(2)
 						else

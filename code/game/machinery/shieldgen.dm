@@ -524,11 +524,14 @@
 		if(H.warfare_faction == team)
 			return 1
 		else
+			to_chat(H, "<span class='tutorial'>I can not enter the rooms of spawnings.</span>")
 			return 0
 	if(isliving(mover))
 		return 1
 	if(istype(mover, /obj/projectile))
 		return 1
+	if(istype(mover, /obj/item/bomb))
+		return 0
 	if(isobj(mover)) // i have no idea at this point
 		return 1
 	return 0

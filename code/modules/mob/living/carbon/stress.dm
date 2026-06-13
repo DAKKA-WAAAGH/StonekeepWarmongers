@@ -91,6 +91,7 @@
 	oldstress = stress
 
 	if(stress >= STRESS_INSANE)
+		if(!client)	return
 		var/align = pick("center","left","right")
 		var/vert = pick("bottom","middle","top")
 		var/text_to_show = pick_list("stress_messages.json", "insanity")

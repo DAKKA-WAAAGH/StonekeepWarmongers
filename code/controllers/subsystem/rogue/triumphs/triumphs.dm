@@ -43,10 +43,15 @@ SUBSYSTEM_DEF(triumphs)
 	var/list/triumph_leaderboard = list()
 	var/triumph_leaderboard_positions_tracked = 21
 
+	var/list/frag_leaderboard = list()
+	var/frag_leaderboard_positions_tracked = 21
+
 	// A cache for triumphs
 	// Basically when client first hops in for the session we will cram their ckey in and retrieve from file
 	// When the server session is about to end we will write it all in.
 	var/list/triumph_amount_cache = list()
+
+	var/list/frag_amount_cache = list()
 
 /*
 	TRIUMPH BUY MENU THINGS
@@ -89,7 +94,7 @@ SUBSYSTEM_DEF(triumphs)
 	. = ..()
 
 	prep_the_triumphs_leaderboard()
-
+	prep_the_frags_leaderboard()
 
 	for(var/cur_path in subtypesof(/datum/triumph_buy))
 		var/datum/triumph_buy/cur_datum = new cur_path // We will do this
@@ -238,6 +243,23 @@ SUBSYSTEM_DEF(triumphs)
 	if(fexists(leaderboard_file))
 		fdel(leaderboard_file)
 	WRITE_FILE(leaderboard_file, json_encode(triumph_leaderboard))
+
+	for(var/target_ckey in frag_amount_cache)
+		var/list/saving_data = list()
+		// this will be for example "data/player_saves/a/ass/triumphs.json" if their ckey was ass
+		var/target_file = file("data/player_saves/[target_ckey[1]]/[target_ckey]/frags.json")
+		if(fexists(target_file))
+			fdel(target_file)
+
+		saving_data["frag_count"] = frag_amount_cache[target_ckey]
+
+		WRITE_FILE(target_file, json_encode(saving_data))
+
+	// handle the leaderboard here too i guess
+	var/fragboard_file = file("data/triumph_leaderboards/frags_leaderboard_season_[GLOB.triumph_wipe_season].json")
+	if(fexists(fragboard_file))
+		fdel(fragboard_file)
+	WRITE_FILE(fragboard_file, json_encode(frag_leaderboard))
 	SSpersistence.CollectData()
 
 // Adjust triumphs
@@ -255,6 +277,19 @@ SUBSYSTEM_DEF(triumphs)
 	else
 		triumph_amount_cache[target_ckey] = 0
 
+// Adjust frags
+/datum/controller/subsystem/triumphs/proc/frag_adjust(amt, target_ckey)
+	if(target_ckey in frag_amount_cache)
+		frag_amount_cache[target_ckey] += amt
+		var/list/saving_data = list()
+		var/target_file = file("data/player_saves/[target_ckey[1]]/[target_ckey]/frags.json")
+		if(fexists(target_file))
+			fdel(target_file)
+
+		saving_data["frag_count"] = frag_amount_cache[target_ckey]
+		WRITE_FILE(target_file, json_encode(saving_data))
+	else
+		frag_amount_cache[target_ckey] = 0
 
 // Wipe the triumphs of one person
 /datum/controller/subsystem/triumphs/proc/wipe_target_triumphs(target_ckey)
@@ -303,6 +338,21 @@ SUBSYSTEM_DEF(triumphs)
 
 	return triumph_amount_cache[target_ckey]
 
+/datum/controller/subsystem/triumphs/proc/get_frags(target_ckey)
+	if(!(target_ckey in frag_amount_cache))
+		var/target_file = file("data/player_saves/[target_ckey[1]]/[target_ckey]/frags.json")
+		if(!fexists(target_file)) // no file or new player, write them in something
+			var/list/new_guy = list("frag_count" = 0)
+			WRITE_FILE(new_guy, json_encode(new_guy))
+			frag_amount_cache[target_ckey] = 0
+			return 0
+
+		var/list/not_new_guy = json_decode(file2text(target_file))
+		var/cur_client_frag_count = not_new_guy["frag_count"]
+		frag_amount_cache[target_ckey] = cur_client_frag_count
+		return cur_client_frag_count
+
+	return frag_amount_cache[target_ckey]
 
 /*
 	TRIUMPH LEADERBOARD STUFF
@@ -336,6 +386,15 @@ SUBSYSTEM_DEF(triumphs)
 
 	sort_leaderboard()
 
+/datum/controller/subsystem/triumphs/proc/prep_the_frags_leaderboard()
+	var/json_file = file("data/triumph_leaderboards/frags_leaderboard_season_[GLOB.triumph_wipe_season].json")
+	if(!fexists(json_file)) // If theres no file then fuck you!
+		return // we got a empty list up there neways
+
+	frag_leaderboard = json_decode(file2text(json_file))
+
+	sort_leaderboard()
+
 // Adjust leaderboard
 // I want a key here so it looks pretty
 /datum/controller/subsystem/triumphs/proc/adjust_leaderboard(CLIENT_KEY_not_CKEY)
@@ -358,6 +417,26 @@ SUBSYSTEM_DEF(triumphs)
 
 	sort_leaderboard() // Now sort it, sort it NOW!
 
+/datum/controller/subsystem/triumphs/proc/adjust_fragboard(CLIENT_KEY_not_CKEY)
+	var/user_key = CLIENT_KEY_not_CKEY
+	var/frag_total = frag_amount_cache[ckey(CLIENT_KEY_not_CKEY)]
+
+	if(5 > frag_total) // You aren't tracked at all unless you got at least 5, no iterating a bunch of losers repeatedly
+		return
+
+	// You automatically get added in if we haven't filled in all the crap
+	if(frag_leaderboard_positions_tracked > frag_leaderboard.len)
+		frag_leaderboard[user_key] = frag_total
+
+	// Guy in last place is still greater than this guy
+	if(frag_leaderboard[frag_leaderboard[frag_leaderboard.len]] > frag_total)
+		return
+
+	frag_leaderboard.Cut(frag_leaderboard.len) // Cut the end
+	frag_leaderboard[user_key] = frag_total // Add our guy to the end
+
+	sort_fragboard() // Now sort it, sort it NOW!
+
 // Sort what we got
 /datum/controller/subsystem/triumphs/proc/sort_leaderboard()
 	if(triumph_leaderboard.len > 1) // If we got more than one guy in here time to sort lol
@@ -376,3 +455,38 @@ SUBSYSTEM_DEF(triumphs)
 				continue
 
 		triumph_leaderboard = sorted_list
+
+	if(frag_leaderboard.len > 1) // If we got more than one guy in here time to sort lol
+		var/list/sorted_list = list()
+		for(var/cache_key in frag_leaderboard)
+			if(!sorted_list.len)
+				sorted_list[cache_key] = frag_leaderboard[cache_key]
+
+			for(var/sorted_key in sorted_list)
+				if(sorted_list[sorted_key] < frag_leaderboard[cache_key])
+					sorted_list.Insert(sorted_list.Find(sorted_key), cache_key)
+					sorted_list[cache_key] = frag_leaderboard[cache_key]
+					break
+
+			if(sorted_list.Find(cache_key))
+				continue
+
+		frag_leaderboard = sorted_list
+
+/datum/controller/subsystem/triumphs/proc/sort_fragboard()
+	if(frag_leaderboard.len > 1) // If we got more than one guy in here time to sort lol
+		var/list/sorted_list = list()
+		for(var/cache_key in frag_leaderboard)
+			if(!sorted_list.len)
+				sorted_list[cache_key] = frag_leaderboard[cache_key]
+
+			for(var/sorted_key in sorted_list)
+				if(sorted_list[sorted_key] < frag_leaderboard[cache_key])
+					sorted_list.Insert(sorted_list.Find(sorted_key), cache_key)
+					sorted_list[cache_key] = frag_leaderboard[cache_key]
+					break
+
+			if(sorted_list.Find(cache_key))
+				continue
+
+		frag_leaderboard = sorted_list

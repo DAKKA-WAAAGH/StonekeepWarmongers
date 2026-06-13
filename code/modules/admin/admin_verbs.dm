@@ -149,6 +149,7 @@ GLOBAL_PROTECT(admin_verbs_server)
 	/datum/admins/proc/settechlevel,
 	/datum/admins/proc/oneteammode,
 	/datum/admins/proc/readoutlords,
+	/datum/admins/proc/readoutrespawnpoints,
 	/datum/admins/proc/recallcrown,
 	/datum/admins/proc/teleport2crown,
 	/datum/admins/proc/forcemode,
@@ -207,7 +208,8 @@ GLOBAL_PROTECT(admin_verbs_debug)
 	/client/proc/reload_configuration,
 	/datum/admins/proc/create_or_modify_area,
 	/client/proc/returntolobby,
-	/client/proc/set_tod_override
+	/client/proc/set_tod_override,
+	/client/proc/stresstest_chat
 	)
 GLOBAL_LIST_INIT(admin_verbs_possess, list(/proc/possess, GLOBAL_PROC_REF(release)))
 GLOBAL_PROTECT(admin_verbs_possess)
@@ -260,6 +262,7 @@ GLOBAL_LIST_INIT(admin_verbs_hideable, list(
 	/datum/admins/proc/oneteammode,
 	/datum/admins/proc/reinforcementsnow,
 	/datum/admins/proc/readoutlords,
+	/datum/admins/proc/readoutrespawnpoints,
 	/datum/admins/proc/recallcrown,
 	/datum/admins/proc/teleport2crown,
 	/datum/admins/proc/restart,
@@ -455,6 +458,48 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 		GLOB.todoverride = null
 		world << "[ckey] has disabled the time of day override."
 	settod()
+
+/client/proc/stresstest_chat()
+	set name = "Stress Chat"
+	set category = "Debug"
+	set hidden = TRUE
+
+	if(!holder)
+		return
+	/*
+		#define SPAN_DWARF "dwarf"
+		#define SPAN_ELF "elf"
+		#define SPAN_SAND "sandspeak"
+		#define SPAN_DELF "delf"
+		#define SPAN_HELL "hellspeak"
+		#define SPAN_LUPIAN "lupian"
+		#define SPAN_BEAST "beast"
+		#define SPAN_ORC "orc"
+		#define SPAN_DRACONIC "reptile"
+		#define SPAN_UNDEAD "undead" //nyi
+		#define SPAN_CAT "cat" //nyi
+	*/
+	var/who = usr
+	var/languages = list(
+		"human",
+		"dwarf",
+		"elf",
+		"sandspeak",
+		"delf",
+		"beast",
+		"orc",
+		//"undead",
+		"hellspeak",
+		"reptile",
+		"lupian",
+		//"cat"
+
+	)
+
+	for(var/i = 1; i <= 100; i++)
+		for(var/lang in languages)
+			to_chat(who, "<span class='say'><span class='name'><span style='color:#ff6600;text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000;'>Jorrel</span></span> <span class='message'>says, \"<span class=' [lang] '>This is me speaking [lang].</span>\"</span></span>")
+
 
 /client/proc/ban_panel()
 	set name = "Banning Panel"
@@ -733,7 +778,7 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 
 /client/proc/readmin()
 	set name = "Readmin"
-	set category = "Admin"
+	set category = "Control"
 	set desc = ""
 
 	var/datum/admins/A = GLOB.deadmins[ckey]

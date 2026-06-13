@@ -6,6 +6,11 @@
 	var/life = 15
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
+/obj/effect/particle_effect/water/ship
+	name = "water"
+	icon_state = "extinguish"
+	life = 2
+	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 
 /obj/effect/particle_effect/water/Initialize()
 	. = ..()

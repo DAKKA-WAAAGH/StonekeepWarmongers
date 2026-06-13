@@ -30,7 +30,7 @@
 	autogrant_actions_passenger = list()
 	autogrant_actions_controller = list()
 	occupant_actions = list()
-	generate_actions()
+	//generate_actions()
 
 /obj/vehicle/examine(mob/user)
 	. = ..()
@@ -85,7 +85,7 @@
 	occupants[M] = NONE
 	add_control_flags(M, control_flags)
 	after_add_occupant(M)
-	grant_passenger_actions(M)
+	//grant_passenger_actions(M)
 	return TRUE
 
 /obj/vehicle/proc/after_add_occupant(mob/M)
@@ -99,9 +99,9 @@
 	if(!istype(M))
 		return FALSE
 	remove_control_flags(M, ALL)
-	remove_passenger_actions(M)
+	//remove_passenger_actions(M)
 	occupants -= M
-	cleanup_actions_for_mob(M)
+	//cleanup_actions_for_mob(M)
 	after_remove_occupant(M)
 	return TRUE
 
@@ -144,18 +144,22 @@
 	if(!istype(controller) || !flags)
 		return FALSE
 	occupants[controller] |= flags
+	/*
 	for(var/i in GLOB.bitflags)
 		if(flags & i)
 			grant_controller_actions_by_flag(controller, i)
+	*/
 	return TRUE
 
 /obj/vehicle/proc/remove_control_flags(mob/controller, flags)
 	if(!istype(controller) || !flags)
 		return FALSE
 	occupants[controller] &= ~flags
+	/*
 	for(var/i in GLOB.bitflags)
 		if(flags & i)
 			remove_controller_actions_by_flag(controller, i)
+	*/
 	return TRUE
 
 /obj/vehicle/Bump(atom/movable/M)

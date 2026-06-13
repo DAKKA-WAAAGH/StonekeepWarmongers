@@ -121,7 +121,16 @@ GLOBAL_LIST_INIT(primordial_wounds, init_primordial_wounds())
 
 /// Sound that plays when this wound is applied to a mob
 /datum/wound/proc/get_sound_effect(mob/living/affected, obj/item/bodypart/affected_bodypart)
-	if(critical && prob(1))
+	if(critical && prob(25))
+
+		var/obj/effect/temp_visual/warnie/E = new(get_turf(affected))
+		E.icon = 'icons/effects/64x32.dmi'
+		E.icon_state = "crit"
+		E.transform = E.transform.Scale(0.5,0.5)
+		E.pixel_y = 5
+		animate(E, 10, pixel_y = 20, alpha = 0)
+		spawn(10) qdel(E)
+
 		return 'sound/combat/tf2crit.ogg'
 	return pick(sound_effect)
 
