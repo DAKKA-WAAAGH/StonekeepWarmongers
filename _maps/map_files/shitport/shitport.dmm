@@ -3,6 +3,13 @@
 /obj/structure/mineral_door/wood/deadbolt,
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/indoors)
+"ay" = (
+/obj/structure/stairs/stone{
+	dir = 4
+	},
+/obj/structure/warfarebarrier/red,
+/turf/open/transparent/openspace/airless,
+/area/rogue/outdoors)
 "aM" = (
 /obj/effect/landmark/bluairship,
 /turf/open/floor/rogue/cobble,
@@ -1023,6 +1030,10 @@
 /obj/structure/roguewindow,
 /turf/open/floor/rogue/concrete,
 /area/rogue/indoors)
+"JI" = (
+/obj/structure/teambarrier/red,
+/turf/closed/wall/mineral/rogue/wooddark,
+/area/rogue/indoors)
 "JN" = (
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors)
@@ -1359,12 +1370,8 @@
 /turf/open/transparent/openspace/airless,
 /area/rogue/outdoors)
 "Yc" = (
-/obj/structure/stairs/stone{
-	dir = 4
-	},
-/obj/structure/warfarebarrier/red,
-/turf/open/transparent/openspace/airless,
-/area/rogue/outdoors)
+/turf/closed/wall/mineral/rogue/wooddark,
+/area/rogue/indoors)
 "Yq" = (
 /obj/effect/shadow{
 	dir = 8
@@ -1423,6 +1430,10 @@
 	},
 /turf/open/water/bruh,
 /area/rogue/outdoors)
+"ZR" = (
+/obj/structure/teambarrier/blue,
+/turf/closed/wall/mineral/rogue/wooddark,
+/area/rogue/indoors)
 
 (1,1,1) = {"
 Mr
@@ -9030,13 +9041,13 @@ vH
 Yq
 Yq
 Yq
-At
+ZR
 wX
 wX
 wX
 wX
 wX
-wX
+Yc
 Yq
 rQ
 ir
@@ -9048,6 +9059,7 @@ ir
 ir
 qX
 Yq
+Yc
 wX
 wX
 wX
@@ -9060,8 +9072,7 @@ wX
 wX
 wX
 wX
-wX
-wX
+Yc
 "}
 (2,1,2) = {"
 VA
@@ -9254,10 +9265,10 @@ Qh
 Qh
 Qh
 Qh
+Yc
 Qh
 Qh
-Qh
-Qh
+Yc
 Qh
 Qh
 Qh
@@ -9432,13 +9443,13 @@ gH
 eE
 EN
 wR
-At
+ZR
 wX
 wX
 wX
 wX
 wX
-wX
+Yc
 HQ
 gv
 zY
@@ -9450,12 +9461,7 @@ zY
 zY
 wT
 wR
-wX
-wX
-wX
-wX
-JC
-wX
+Yc
 wX
 wX
 wX
@@ -9464,6 +9470,11 @@ wX
 wX
 wX
 wX
+JC
+wX
+wX
+wX
+Yc
 "}
 (8,1,2) = {"
 VA
@@ -9633,13 +9644,13 @@ NI
 eE
 EN
 wR
-At
+ZR
 wX
 wX
 wX
 wX
 wX
-wX
+Yc
 HQ
 xw
 zY
@@ -9651,6 +9662,7 @@ zY
 zY
 vS
 wR
+Yc
 wX
 wX
 wX
@@ -9661,8 +9673,7 @@ wX
 wX
 wX
 wX
-wX
-wX
+Yc
 HQ
 bi
 "}
@@ -9837,7 +9848,7 @@ EN
 At
 DO
 DO
-DO
+Yc
 DO
 DO
 wX
@@ -10038,7 +10049,7 @@ EN
 At
 DO
 DO
-DO
+Yc
 DO
 DO
 JC
@@ -10236,13 +10247,13 @@ wh
 mq
 EN
 wR
-At
+ZR
 At
 At
 il
 At
 At
-At
+ZR
 ft
 ft
 ft
@@ -10254,7 +10265,7 @@ zS
 ft
 ft
 ft
-At
+ZR
 At
 il
 At
@@ -10265,7 +10276,7 @@ At
 Vf
 At
 At
-At
+ZR
 no
 nd
 "}
@@ -10432,13 +10443,13 @@ VA
 KN
 EN
 wR
+Yc
 wX
 wX
 wX
 wX
 wX
-wX
-wX
+Yc
 HQ
 EN
 MN
@@ -10460,13 +10471,13 @@ yO
 MN
 EN
 wR
+Yc
 wX
 wX
 wX
 wX
 wX
-wX
-wX
+Yc
 HQ
 bi
 "}
@@ -10968,13 +10979,13 @@ VA
 KN
 EN
 wR
+Yc
 wX
 wX
+Yc
 wX
 wX
-wX
-wX
-wX
+Yc
 RX
 EN
 yO
@@ -10996,13 +11007,13 @@ AA
 yO
 EN
 mn
+Yc
 wX
 wX
+Yc
 wX
 wX
-wX
-wX
-wX
+Yc
 HQ
 bi
 "}
@@ -11504,13 +11515,13 @@ VA
 KN
 EN
 wR
-wX
+Yc
 wX
 wX
 JC
 wX
 wX
-wX
+Yc
 HQ
 EN
 hK
@@ -11532,13 +11543,13 @@ yO
 hK
 EN
 wR
-wX
+Yc
 wX
 wX
 JC
 wX
 wX
-wX
+Yc
 HQ
 bi
 "}
@@ -14050,13 +14061,13 @@ VA
 KN
 EN
 wR
-wX
+Yc
 wX
 wX
 JC
 wX
 wX
-wX
+Yc
 HQ
 EN
 NR
@@ -14078,13 +14089,13 @@ vM
 NR
 EN
 wR
-wX
+Yc
 wX
 wX
 JC
 wX
 wX
-wX
+Yc
 HQ
 bi
 "}
@@ -14586,13 +14597,13 @@ VA
 KN
 EN
 wR
+Yc
 wX
 wX
+Yc
 wX
 wX
-wX
-wX
-wX
+Yc
 RX
 EN
 vM
@@ -14614,13 +14625,13 @@ AA
 vM
 EN
 mn
+Yc
 wX
 wX
+Yc
 wX
 wX
-wX
-wX
-wX
+Yc
 HQ
 bi
 "}
@@ -15122,13 +15133,13 @@ VA
 KN
 EN
 wR
+Yc
 wX
 wX
 wX
 wX
 wX
-wX
-wX
+Yc
 HQ
 EN
 Te
@@ -15150,13 +15161,13 @@ vM
 Te
 EN
 wR
+Yc
 wX
 wX
 wX
 wX
 wX
-wX
-wX
+Yc
 HQ
 bi
 "}
@@ -15328,13 +15339,13 @@ de
 Kl
 EN
 wR
-zk
+JI
 zk
 zk
 la
 zk
 zk
-zk
+JI
 ZE
 ZE
 ZE
@@ -15346,7 +15357,7 @@ XA
 ZE
 ZE
 ZE
-zk
+JI
 zk
 la
 zk
@@ -15357,7 +15368,7 @@ zk
 Hz
 zk
 zk
-zk
+JI
 IV
 sE
 "}
@@ -15532,7 +15543,7 @@ EN
 zk
 DO
 DO
-DO
+Yc
 DO
 DO
 JC
@@ -15733,7 +15744,7 @@ EN
 zk
 DO
 DO
-DO
+Yc
 DO
 DO
 wX
@@ -15931,13 +15942,13 @@ Yr
 XM
 EN
 wR
-zk
+JI
 wX
 wX
 wX
 wX
 wX
-wX
+Yc
 HQ
 yQ
 zY
@@ -15949,6 +15960,7 @@ zY
 zY
 vS
 wR
+Yc
 wX
 wX
 wX
@@ -15959,8 +15971,7 @@ wX
 wX
 wX
 wX
-wX
-wX
+Yc
 HQ
 bi
 "}
@@ -16128,17 +16139,17 @@ VA
 VA
 VA
 TL
-Yc
+ay
 XM
 EN
 wR
-zk
+JI
 wX
 wX
 wX
 wX
 wX
-wX
+Yc
 HQ
 EH
 zY
@@ -16150,12 +16161,7 @@ zY
 zY
 wT
 wR
-wX
-wX
-wX
-wX
-JC
-wX
+Yc
 wX
 wX
 wX
@@ -16164,6 +16170,11 @@ wX
 wX
 wX
 wX
+JC
+wX
+wX
+wX
+Yc
 "}
 (108,1,2) = {"
 VA
@@ -16356,10 +16367,10 @@ Qh
 Qh
 Qh
 Qh
+Yc
 Qh
 Qh
-Qh
-Qh
+Yc
 Qh
 Qh
 Qh
@@ -16534,13 +16545,13 @@ Zg
 XS
 XS
 XS
-zk
+JI
 wX
 wX
 wX
 wX
 wX
-wX
+Yc
 XS
 cU
 Ip
@@ -16552,6 +16563,7 @@ Ip
 Ip
 xR
 XS
+Yc
 wX
 wX
 wX
@@ -16564,6 +16576,5 @@ wX
 wX
 wX
 wX
-wX
-wX
+Yc
 "}
