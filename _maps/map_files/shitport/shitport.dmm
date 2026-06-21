@@ -64,7 +64,7 @@
 /turf/closed/wall/mineral/rogue/wooddark,
 /area/rogue/indoors)
 "cK" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/cobble,
 /area/rogue/assault)
 "cR" = (
@@ -293,7 +293,7 @@
 /turf/open/water/bruh,
 /area/rogue/outdoors)
 "ku" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors)
 "kO" = (
@@ -312,7 +312,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors)
 "lo" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/outdoors)
 "lw" = (
@@ -751,7 +751,7 @@
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors)
 "Bj" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/herringbone,
 /area/rogue/assault)
 "Bo" = (
@@ -1304,7 +1304,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors)
 "Wi" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/ruinedwood/spiral,
 /area/rogue/outdoors)
 "Wl" = (
@@ -1338,6 +1338,7 @@
 	dir = 4
 	},
 /obj/structure/fluff/railing/border,
+/obj/structure/warfarebarrier/red,
 /turf/open/transparent/openspace/airless,
 /area/rogue/outdoors)
 "XS" = (
@@ -1358,6 +1359,9 @@
 /turf/open/transparent/openspace/airless,
 /area/rogue/outdoors)
 "Yc" = (
+/obj/structure/stairs/stone{
+	dir = 4
+	},
 /obj/structure/warfarebarrier/red,
 /turf/open/transparent/openspace/airless,
 /area/rogue/outdoors)
@@ -1374,7 +1378,7 @@
 /turf/open/transparent/openspace/airless,
 /area/rogue/outdoors)
 "YX" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors)
 "Zg" = (
@@ -15788,8 +15792,8 @@ VA
 VA
 VA
 VA
-Yc
-Yc
+VA
+VA
 TL
 EN
 EN
@@ -15855,7 +15859,7 @@ VA
 VA
 VA
 VA
-TL
+KN
 Yr
 XM
 EN
@@ -15922,7 +15926,7 @@ VA
 VA
 VA
 VA
-TL
+KN
 Yr
 XM
 EN
@@ -15989,7 +15993,7 @@ VA
 VA
 VA
 VA
-TL
+KN
 Yr
 XM
 EN
@@ -16056,7 +16060,7 @@ VA
 VA
 VA
 VA
-TL
+KN
 Yr
 XM
 EN
@@ -16124,7 +16128,7 @@ VA
 VA
 VA
 TL
-Yr
+Yc
 XM
 EN
 wR
