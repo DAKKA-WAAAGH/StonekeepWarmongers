@@ -689,7 +689,7 @@ GLOBAL_VAR_INIT(mobids, 1)
 		var/mob/M = dropping
 		if(ismob(user))
 			var/mob/U = user
-			if(!iscyborg(U) || !U.cmode || U.used_intent.type == INTENT_HARM)
+			if(!U.cmode)
 				M.show_inv(U)
 				return TRUE
 		else
@@ -733,6 +733,15 @@ GLOBAL_VAR_INIT(mobids, 1)
 				var/timeto = SSwarmongers.next_respawn - round_duration_in_ticks
 				var/next_respawn = SSwarmongers.respawning ? "Now" : "[round(timeto/10)] seconds"
 				stat("TIME UNTIL ARRIVAL: [next_respawn]")
+			if(ishuman(src))
+				var/mob/living/carbon/human/H = src
+				var/numer = "IT DOESN'T MATTER."
+				switch(H.warfare_faction)
+					if(BLUE_WARTEAM)
+						numer = W.blu_bonus
+					if(RED_WARTEAM)
+						numer = W.red_bonus
+				stat("SUPPLY POINTS: [numer]")
 
 	if(client && client.holder && check_rights(R_ADMIN,0))
 		if(statpanel("MC"))

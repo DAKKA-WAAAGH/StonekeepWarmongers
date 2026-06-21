@@ -38,6 +38,9 @@ SUBSYSTEM_DEF(warmongers)
 	red_airship = locate(/area/rogue/indoors/airship/red)
 	blue_airship = locate(/area/rogue/indoors/airship/blue)
 
+	if(splittext(SSmapping.config.map_name, "-")[1] == "TDM")
+		time_between_respawns = 30 SECONDS
+
 /datum/controller/subsystem/warmongers/proc/get_respawn_point(var/mob/living/carbon/human/HU)
 	var/turf/starto
 	for(var/obj/effect/landmark/start/sloc in GLOB.start_landmarks_list)

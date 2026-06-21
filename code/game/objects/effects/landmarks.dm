@@ -100,13 +100,14 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 		GLOB.jobspawn_overrides[X] -= src
 	return ..()
 
-/obj/effect/landmark/events/haunts
-	name = "hauntz"
+/obj/effect/landmark/events/aspect_spawners
+	name = "Round Aspect Spawners"
+	desc = "MAPPING NOTE: Used for spawning Explodabarrels or some other stuff for round aspects."
 	icon_state = "generic_event"
 
-/obj/effect/landmark/events/haunts/Initialize(mapload)
+/obj/effect/landmark/events/aspect_spawners/Initialize(mapload)
 	..()
-	GLOB.hauntstart += src
+	GLOB.round_aspect_spawners += src
 	icon_state = ""
 
 
@@ -117,7 +118,7 @@ INITIALIZE_IMMEDIATE(/obj/effect/landmark)
 
 /obj/effect/landmark/events/testportal/Initialize(mapload)
 	..()
-//	GLOB.hauntstart += loc
+//	GLOB.round_aspect_spawners += loc
 #ifdef TESTSERVER
 	var/obj/structure/fluff/testportal/T = new /obj/structure/fluff/testportal(loc)
 	T.aportalloc = aportalloc

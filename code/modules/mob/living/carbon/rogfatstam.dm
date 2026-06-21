@@ -104,7 +104,12 @@
 		var/stuffy = list("DEATH GRABS MY WEARY HEART!","ARGH! MY HEART BEATS NO MORE!","NO... MY HEART HAS BEAT IT'S LAST!","MY HEART HAS GIVEN UP!","MY HEART BETRAYS ME!","THE METRONOME OF MY LIFE STILLS!")
 		to_chat(src, "<span class='userdanger'>[pick(stuffy)]</span>")
 		emote("breathgasp", forced = TRUE)
-		addtimer(CALLBACK(src, PROC_REF(adjustOxyLoss), 110), 30)
+		addtimer(CALLBACK(src, PROC_REF(check_heart_break), 110), 10 SECONDS)
+
+/mob/living/carbon/proc/check_heart_break()
+	var/obj/item/bodypart/chest/chest = get_bodypart(BODY_ZONE_CHEST)
+	if(!chest.bandage)
+		adjustOxyLoss(110)
 
 /mob/living/proc/freak_out()
 	return

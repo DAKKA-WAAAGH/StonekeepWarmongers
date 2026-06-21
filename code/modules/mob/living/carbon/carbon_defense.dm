@@ -477,31 +477,17 @@
 
 /mob/living/carbon/proc/help_shake_act(mob/living/carbon/M)
 	if(on_fire)
-		visible_message("<span class='notice'>[src] pats the flames on [M] to extinguish them.</span>")
+		visible_message("<span class='notice'>[M] pats the flames on [src] to extinguish them.</span>")
 		fire_stacks -= 5
-		sleep(30)
+		//sleep(30) // what was the point of this again?
 		if(fire_stacks <= 0)
 			ExtinguishMob(TRUE)
 		return
 
-//	if(!(mobility_flags & MOBILITY_STAND))
-//		if(buckled)
-//			to_chat(M, "<span class='warning'>I need to unbuckle [src] first to do that!</span>")
-//			return
-//		M.visible_message("<span class='notice'>[M] shakes [src] trying to get [p_them()] up!</span>", "<span class='notice'>I shake [src] trying to get [p_them()] up!</span>")					
-//	else
 	M.visible_message("<span class='notice'>[M] shakes [src].</span>", \
 				"<span class='notice'>I shake [src] to get [p_their()] attention.</span>")
 	shake_camera(src, 2, 1)
-	SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "hug", /datum/mood_event/hug)
-	if(HAS_TRAIT(M, TRAIT_FRIENDLY))
-		var/datum/component/mood/mood = M.GetComponent(/datum/component/mood)
-		if (mood.sanity >= SANITY_GREAT)
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/besthug, M)
-		else if (mood.sanity >= SANITY_DISTURBED)
-			SEND_SIGNAL(src, COMSIG_ADD_MOOD_EVENT, "friendly_hug", /datum/mood_event/betterhug, M)
-	for(var/datum/brain_trauma/trauma in M.get_traumas())
-		trauma.on_hug(M, src)
+
 	AdjustStun(-60)
 	AdjustKnockdown(-60)
 	AdjustUnconscious(-60)
@@ -509,9 +495,6 @@
 	AdjustParalyzed(-60)
 	AdjustImmobilized(-60)
 	set_resting(FALSE)
-
-	playsound(loc, 'sound/blank.ogg', 50, TRUE, -1)
-
 
 /mob/living/carbon/flash_act(intensity = 1, override_blindness_check = 0, affect_silicon = 0, visual = 0)
 	var/obj/item/organ/eyes/eyes = getorganslot(ORGAN_SLOT_EYES)

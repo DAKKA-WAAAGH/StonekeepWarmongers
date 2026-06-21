@@ -119,7 +119,7 @@
 	droning_sound_dawn = 'sound/music/root.ogg'
 	})
 "cA" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors/town/arena{
 	dynamic_lighting = 0;
@@ -245,7 +245,7 @@
 	droning_sound_dawn = 'sound/music/root.ogg'
 	})
 "gS" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /obj/structure/warfarebarrier/red,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town/arena{
@@ -427,7 +427,7 @@
 	droning_sound_dawn = 'sound/music/root.ogg'
 	})
 "mH" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/indoors/town/arena{
 	dynamic_lighting = 0;
@@ -467,7 +467,7 @@
 /turf/open/floor/rogue/churchmarble,
 /area/rogue/indoors/town/safe)
 "or" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /obj/structure/floordoor/gatehatch/inner,
 /obj/structure/kybraxor{
 	redstone_id = "bridge2";
@@ -733,7 +733,7 @@
 	droning_sound_dawn = 'sound/music/root.ogg'
 	})
 "Cm" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town/arena{
 	dynamic_lighting = 0;
@@ -750,7 +750,7 @@
 	droning_sound_dawn = 'sound/music/root.ogg'
 	})
 "Dq" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /obj/structure/warfarebarrier,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/indoors/town/arena{
@@ -1039,7 +1039,7 @@
 	droning_sound_night = 'sound/music/calm.ogg'
 	})
 "Of" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /obj/structure/floordoor/gatehatch/inner,
 /obj/structure/kybraxor{
 	redstone_id = "bridge3";
@@ -1148,7 +1148,7 @@
 	droning_sound_dawn = 'sound/music/root.ogg'
 	})
 "VN" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /obj/structure/floordoor/gatehatch/inner,
 /obj/structure/kybraxor{
 	redstone_id = "bridge4";
@@ -1220,7 +1220,7 @@
 	droning_sound_dawn = 'sound/music/root.ogg'
 	})
 "Xm" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /obj/structure/floordoor/gatehatch/inner,
 /obj/structure/kybraxor{
 	redstone_id = "bridge1";

@@ -881,12 +881,14 @@ GLOBAL_LIST_EMPTY(chosen_names)
 		dat = list("<center>REGISTER!</center>")
 
 	winshow(user, "stonekeep_prefwin", TRUE)
-	var/datum/browser/popup = new(user, "preferences_browser", "<div align='center'>[used_title]</div>", 700, 550)
-	popup.set_window_options("can_close=0;can_minimize=0;border=0;titlebar=0")
+
+	var/datum/browser/noclose/popup
+	popup = new(user, "preferences_browser", "<div align='center'>[used_title]</div>", 700, 550)
+
+	//popup.set_window_options("can_close=0;can_minimize=0;border=0;titlebar=0")
 	popup.set_content(dat.Join())
 	popup.open(FALSE)
 	update_preview_icon()
-//	onclose(user, "stonekeep_prefwin", src)
 
 #undef APPEARANCE_CATEGORY_COLUMN
 #undef MAX_MUTANT_ROWS
@@ -1721,7 +1723,7 @@ Slots: [job.spawn_positions]</span>
 						hair_color = hairs[pick(hairs)]
 						facial_hair_color = hair_color
 						ResetJobs()
-						to_chat(user, "<font color='red'>Classes reset.</font>")
+						//to_chat(user, "<font color='red'>Classes reset.</font>")
 
 				if("faith")
 					var/list/faiths_named = list()
@@ -1913,7 +1915,7 @@ Slots: [job.spawn_positions]</span>
 						ResetJobs()
 						if(pref_species.desc)
 							to_chat(user, "[pref_species.desc]")
-						to_chat(user, "<font color='red'>Classes reset.</font>")
+						//to_chat(user, "<font color='red'>Classes reset.</font>")
 						random_character(gender)
 						accessory = "Nothing"
 
@@ -2133,7 +2135,7 @@ Slots: [job.spawn_positions]</span>
 						gender = pickedGender
 						real_name = real_name = pref_species.random_name(gender,1)
 						ResetJobs()
-						to_chat(user, "<font color='red'>Classes reset.</font>")
+						//to_chat(user, "<font color='red'>Classes reset.</font>")
 						random_character(gender)
 						accessory = "Nothing"
 						detail = "Nothing"

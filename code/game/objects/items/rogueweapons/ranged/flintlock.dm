@@ -274,9 +274,12 @@
 	for(var/obj/item/ammo_casing/CB in get_ammo_list(FALSE, TRUE))
 		var/obj/projectile/BB = CB.BB
 		if(user.client)
-			if(user.client.chargedprog >= 75)
+			if(user.client.chargedprog >= 50)
 				BB.accuracy       += 20   // Better accuracy when fully aimed.
 				BB.bonus_accuracy += 2
+			if(user.client.chargedprog >= 95)
+				BB.accuracy       += 50   // Fully accurate.
+				BB.bonus_accuracy += 50
 			if(user.STAPER > 8)
 				// Each point of Perception above 8 improves accuracy.
 				BB.accuracy       += (user.STAPER - 8) * 4
@@ -287,7 +290,7 @@
 			if(user.m_intent == MOVE_INTENT_SNEAK)
 				BB.bonus_accuracy += 2
 			if(has_bayonet)
-				BB.bonus_accuracy -= 3   // Bayonet slightly hampers aim.
+				BB.bonus_accuracy -= 1   // Bayonet slightly hampers aim.
 		BB.bonus_accuracy += (user.mind.get_skill_level(/datum/skill/combat/flintlocks) * 2)
 
 	// Fire!
@@ -565,6 +568,7 @@
 	user.unlock_achievement(new /datum/achievement/backblast())
 	user.visible_message("<span class='danger'>\The [user] is thrown back from \the [src]'s recoil!</span>")
 
+// Shotgun alt
 
 /obj/item/gun/ballistic/revolver/grenadelauncher/flintlock/shotgun/alternate
 	name = "nockbark"

@@ -154,6 +154,15 @@
 	for(var/i = 0 to 10)
 		new /obj/item/natural/stone(src)
 
+/datum/warshippable/metals
+	name = "METALS SUPPLIES"
+	items = list(/obj/structure/closet/crate/chest/metalsupps)
+
+/obj/structure/closet/crate/chest/metalsupps/PopulateContents()
+	for(var/i = 0 to 6)
+		new /obj/item/ingot/steel(src)
+		new /obj/item/ingot/iron(src)
+
 /datum/warshippable/explodabarrel
 	name = "EXPLODABARRELS"
 	items = list(/obj/structure/fluff/explodabarrel,

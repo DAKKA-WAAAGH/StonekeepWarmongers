@@ -181,7 +181,7 @@
 	icon = 'icons/roguetown/items/cooking.dmi'
 	icon_state = "clearbomb"
 	light_impact = 0
-	flame_impact = 4
+	flame_impact = 3
 
 /obj/item/bomb/mollie/explode(skipprob)
 	STOP_PROCESSING(SSfastprocess, src)

@@ -65,6 +65,8 @@
 		H.filters = list()
 
 		NR.blu_captures++
+		C.blu_bonus += 2
+		C.red_bonus -= 1
 		if(NR.blu_captures >= NR.captures_required)
 			C.do_war_end(H, BLUE_WARTEAM)
 		for(var/client/reg in C.regimians)
@@ -121,6 +123,8 @@
 		H.filters = list()
 
 		NR.red_captures++
+		C.red_bonus += 2
+		C.blu_bonus -= 1
 		if(NR.red_captures >= NR.captures_required)
 			C.do_war_end(H, RED_WARTEAM)
 		for(var/client/unio in C.unionists)
@@ -365,6 +369,7 @@
 	maptext_width = 64
 	maptext_x = -16
 	maptext_y = 20
+	light_color = "#fcb000b8"
 	var/area/rogue/assault/assault
 
 /obj/structure/capturepoint_shower/proc/DoShit()
@@ -374,6 +379,8 @@
 		return
 	var/datum/warmode/assault/AS = C.warmode // hehe
 	START_PROCESSING(SSfastprocess, src)
+
+	set_light(4)
 
 	var/area/A = get_area(src)
 	if(istype(A, /area/rogue/assault))
@@ -393,7 +400,10 @@
 	if(assault.holder == "Regimians")
 		maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#c18700b8'>CAPTURED</font></div>"
 	else
-		maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#fcb000b8'>[assault.holder]\n[ASS.attack_progress]/[assault.tocapture_points]</font></div>"
+		if(ASS.current_capture_point == assault.capture_order || (ASS.current_capture_point == 0 && assault.capture_order == 0))
+			maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#fcb000b8'>[assault.holder]\n[ASS.attack_progress]/[assault.tocapture_points]</font></div>"
+		else
+			maptext = "<div align='center' valign='middle' style='position:relative; top:0px; left:6px'><font color='#fcb000b8'>[assault.holder]\n0/[assault.tocapture_points]</font></div>"
 
 // capture point navigation
 
@@ -405,6 +415,7 @@
 	pixel_y = -32
 	mouse_opacity = MOUSE_OPACITY_TRANSPARENT
 	screen_loc = rogueui_advsetup
+	alpha = 120
 	var/atom/thing
 	var/mob/owner
 

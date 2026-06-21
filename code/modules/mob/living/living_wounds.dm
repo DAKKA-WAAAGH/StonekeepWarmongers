@@ -37,6 +37,13 @@
 		all_wounds += simple_wounds
 	return all_wounds
 
+/mob/living/proc/get_critical_wounds()
+	var/list/all_wounds = list()
+	for(var/datum/wound/W in get_wounds())
+		if(W.critical)
+			all_wounds += W
+	return all_wounds
+
 /// Gets all sewable wounds in a mob
 /mob/living/proc/get_sewable_wounds()
 	var/list/woundies = list()

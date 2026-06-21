@@ -1,5 +1,5 @@
 {
-    "map_name": "LS-Darkstone",
+    "map_name": "TDM-Darkstone",
     "map_path": "map_files/darkstone",
     "map_file": "darkstone.dmm",
 	"traits": [{"Up": 1}, {"Down": -1}],

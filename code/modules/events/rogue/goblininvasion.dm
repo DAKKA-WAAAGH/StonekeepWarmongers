@@ -14,15 +14,15 @@
 	var/list/starts
 
 /datum/round_event_control/rogue/gobinvade/canSpawnEvent()
-	if(!LAZYLEN(GLOB.hauntstart))
+	if(!LAZYLEN(GLOB.round_aspect_spawners))
 		return FALSE
 	. = ..()
 
 /datum/round_event/rogue/gobinvade/start()
-	var/list/spawn_locs = GLOB.hauntstart.Copy()
+	var/list/spawn_locs = GLOB.round_aspect_spawners.Copy()
 	if(LAZYLEN(spawn_locs))
 		for(var/i in 1 to spawncount)
-			var/obj/effect/landmark/events/haunts/_T = pick_n_take(spawn_locs)
+			var/obj/effect/landmark/events/aspect_spawners/_T = pick_n_take(spawn_locs)
 			if(_T)
 				_T = get_turf(_T)
 				if(isfloorturf(_T))

@@ -685,7 +685,7 @@
 			return FALSE
 	return TRUE
 
-/mob/proc/toggle_eye_intent(mob/user) //clicking the fixeye button either makes you fixeye or clears your target
+/mob/proc/toggle_eye_intent() //clicking the fixeye button either makes you fixeye or clears your target
 	if(fixedeye)
 		fixedeye = 0
 		if(!tempfixeye)

@@ -376,37 +376,10 @@ SUBSYSTEM_DEF(ticker)
 			SSjob.ResetOccupations()
 			return 0
 
-//	if(failedstarts >= 13)
-//		qdel(mode)
-//		mode = new /datum/game_mode/roguewar
-//		if(istype(C, /datum/game_mode/chaosmode))
-//			if(isrogueworld)
-//				C.allmig = TRUE
-//		else
-//
-//			else
-//				C.roguefight = TRUE
-//				isroguefight = TRUE
-
-#ifdef ROGUEWORLD
-	if(mode)
-		if(istype(mode, /datum/game_mode/chaosmode))
-			var/datum/game_mode/chaosmode/C = mode
-			isrogueworld = TRUE
-			C.allmig = TRUE
-#endif
-
 	CHECK_TICK
 	//Configure mode and assign player to special mode stuff
 	var/can_continue = 0
 	can_continue = src.mode.pre_setup()		//Choose antagonists
-	CHECK_TICK
-
-//	if(istype(mode, /datum/game_mode/roguewar))
-//		unready_all()
-
-	CHECK_TICK
-
 	can_continue = can_continue && SSjob.DivideOccupations(mode.required_jobs) 				//Distribute jobs
 	CHECK_TICK
 
@@ -425,19 +398,10 @@ SUBSYSTEM_DEF(ticker)
 	log_game("GAME SETUP: Divide Occupations success")
 
 	CHECK_TICK
-//	if(hide_mode)
-//		var/list/modes = new
-//		for (var/datum/game_mode/M in runnable_modes)
-//			modes += M.name
-//		modes = sortList(modes)
-//		message_admins("<b>The gamemode is: secret!\nPossibilities:</B> [english_list(modes)]")
-//	else
-//		mode.announce()
 
 	if(!CONFIG_GET(flag/ooc_during_round))
 		toggle_ooc(FALSE) // Turn it off
 
-	CHECK_TICK
 	GLOB.start_landmarks_list = shuffle(GLOB.start_landmarks_list) //Shuffle the order of spawn points so they dont always predictably spawn bottom-up and right-to-left
 	if(!isrogueworld && !isroguefight)
 		create_characters() //Create player characters
@@ -460,7 +424,9 @@ SUBSYSTEM_DEF(ticker)
 	log_game("GAME SETUP: round start events success")
 	LAZYCLEARLIST(round_start_events)
 	SSrole_class_handler.RoundStart()
+
 	CHECK_TICK
+
 	if(isrogueworld)
 		for(var/obj/structure/fluff/traveltile/TT in GLOB.traveltiles)
 			if(TT.aallmig)
@@ -553,7 +519,6 @@ SUBSYSTEM_DEF(ticker)
 	CHECK_TICK
 
 	PostSetup()
-	CHECK_TICK
 	log_game("GAME SETUP: postsetup success")
 
 	return TRUE

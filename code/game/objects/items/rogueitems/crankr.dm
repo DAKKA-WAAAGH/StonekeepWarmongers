@@ -8,6 +8,7 @@
 	var/obj/item/bp // bodypart/teeth to grind
 	var/datum/reagent/chosen_potion = /datum/reagent/medicine/healthpot
 	var/obj/item/pot // where to put the health potion
+	var/counter = 0 // make 3 potions for 1 triumph
 
 /obj/item/rogue/cranker/New(loc, ...)
 	. = ..()
@@ -26,6 +27,18 @@
 	if(bp)
 		. += "<span class='tutorial'>Use it in-hand to begin grinding.</span>"
 	. += "<span class='tutorial'>Use rightclick to change what you'll be cooking.</span>"
+
+/obj/item/rogue/cranker/attack(mob/living/M, mob/living/user)
+	. = ..()
+	if(M.stat == DEAD)
+		counter++
+		if(counter >= 5)
+			user.adjust_triumphs(1)
+			counter = 0
+		else
+			to_chat(user, "<span class='tutorial'>TRI PROGRESS+</span>")
+		M.dust(TRUE, FALSE)
+		playsound(get_turf(M), 'sound/magic/heal.ogg', 75, TRUE)
 
 /obj/item/rogue/cranker/MiddleClick(mob/user, params)
 	. = ..()
@@ -84,7 +97,12 @@
 	playsound(get_turf(user), "wetbreak", 100, TRUE, -5)
 	pot.reagents.add_reagent(chosen_potion, 25)
 	to_chat(user, "<span class='info'>The product is ready.</span>")
-	user.adjust_triumphs(1)
+	counter++
+	if(counter >= 3)
+		user.adjust_triumphs(1)
+		counter = 0
+	else
+		to_chat(user, "<span class='tutorial'>TRI PROGRESS+</span>")
 	switch(user.warfare_faction)
 		if(RED_WARTEAM)
 			C.red_bonus++

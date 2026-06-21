@@ -18,7 +18,7 @@
 	if(loaded)
 		. += "<span class='info'>It is loaded.</span>"
 	if(shootingdown)
-		. += "<span class='info'>It will shoot the things below.</span>"
+		. += "<span class='danger'>It will shoot the things below.</span>"
 	. += "<span class='tutorial'>Load with big lead balls, then use a torch, lantern or flint to fire.</span>"
 	. += "<span class='tutorial'>Use rightclick to make it shoot at the tile below if infront of an open space.</span>"
 
@@ -37,12 +37,18 @@
 		playsound(src, 'sound/foley/trap_arm.ogg', 65)
 	if(istype(I, /obj/item/flashlight/flare/torch))
 		var/obj/item/flashlight/flare/torch/LR = I
-		if(!loaded)
+		if(!loaded || !SSwarmongers.warfare_ready_to_die)
+			to_chat(user, "<span class='danger'>No, that would be stupid.</span>")
 			return
 		if(LR.on)
 			playsound(src.loc, 'sound/items/firelight.ogg', 100)
-			user.visible_message("<span class='danger'>\The [user] lights \the [src]!</span>")
-			fire(user)
+			if(shootingdown)
+				var/step = get_step(src, dir)
+				if(!istype(step, /turf/open/transparent/openspace))
+					to_chat(user, "<span class='danger'>IT'S SHOOTING DOWN! I'LL BLOW MYSELF UP!</span>")
+			if(do_after(user, 0.6 SECONDS, TRUE, src))
+				user.visible_message("<span class='danger'>\The [user] lights \the [src]!</span>")
+				fire(user)
 	if(istype(I, /obj/item/flint))
 		var/obj/item/flint/F = I
 		if(!loaded || !SSwarmongers.warfare_ready_to_die)
@@ -50,8 +56,13 @@
 			return
 		F.afterattack(src, user, TRUE)
 		playsound(src.loc, 'sound/items/firelight.ogg', 100)
-		user.visible_message("<span class='danger'>\The [user] lights \the [src]!</span>")
-		fire(user)
+		if(shootingdown)
+			var/step = get_step(src, dir)
+			if(!istype(step, /turf/open/transparent/openspace))
+				to_chat(user, "<span class='danger'>IT'S SHOOTING DOWN! I'LL BLOW MYSELF UP!</span>")
+		if(do_after(user, 0.6 SECONDS, TRUE, src))
+			user.visible_message("<span class='danger'>\The [user] lights \the [src]!</span>")
+			fire(user)
 	else
 		return ..()
 

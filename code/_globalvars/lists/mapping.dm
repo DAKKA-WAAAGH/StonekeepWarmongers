@@ -39,7 +39,7 @@ GLOBAL_LIST_EMPTY(prisonwarped)	//list of players already warped
 GLOBAL_LIST_EMPTY(blobstart) //stationloving objects, blobs, santa, respawning devils
 GLOBAL_LIST_EMPTY(underworldspawn)
 GLOBAL_LIST_EMPTY(underworldcoin)
-GLOBAL_LIST_EMPTY(hauntstart)
+GLOBAL_LIST_EMPTY(round_aspect_spawners)
 GLOBAL_LIST_EMPTY(testportals)
 GLOBAL_LIST_EMPTY(traveltiles)
 GLOBAL_LIST_EMPTY(secequipment) //sec equipment lockers that scale with the number of sec players

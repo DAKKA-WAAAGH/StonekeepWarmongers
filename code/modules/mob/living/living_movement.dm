@@ -1,9 +1,10 @@
 /mob/living/Moved()
 	. = ..()
-	stop_looking()
+	
 	update_turf_movespeed(loc)
 	if(m_intent == MOVE_INTENT_RUN)
-		consider_ambush()
+		//consider_ambush()
+		stop_looking()
 
 /mob/living/CanPass(atom/movable/mover, turf/target)
 	if((mover.pass_flags & PASSMOB))

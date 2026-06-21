@@ -26,10 +26,10 @@
 	if(can_buckle)
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
-		D.set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
-		D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-		D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
-		D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
+		D.set_vehicle_dir_layer(SOUTH, HALO_LAYER)
+		D.set_vehicle_dir_layer(NORTH, HALO_LAYER)
+		D.set_vehicle_dir_layer(EAST, ABOVE_MOB_LAYER)
+		D.set_vehicle_dir_layer(WEST, ABOVE_MOB_LAYER)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/saiga
 	icon = 'icons/roguetown/mob/monster/saiga.dmi'
@@ -256,10 +256,10 @@
 	if(can_buckle)
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
-		D.set_vehicle_dir_layer(SOUTH, ABOVE_MOB_LAYER)
-		D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-		D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
-		D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
+		D.set_vehicle_dir_layer(SOUTH, HALO_LAYER)
+		D.set_vehicle_dir_layer(NORTH, HALO_LAYER)
+		D.set_vehicle_dir_layer(EAST, ABOVE_MOB_LAYER)
+		D.set_vehicle_dir_layer(WEST, ABOVE_MOB_LAYER)
 
 
 /mob/living/simple_animal/hostile/retaliate/rogue/saigabuck/eat_plants()
@@ -420,10 +420,10 @@
 	if(can_buckle)
 		var/datum/component/riding/D = LoadComponent(/datum/component/riding)
 		D.set_riding_offsets(RIDING_OFFSET_ALL, list(TEXT_NORTH = list(0, 8), TEXT_SOUTH = list(0, 8), TEXT_EAST = list(-2, 8), TEXT_WEST = list(2, 8)))
-		D.set_vehicle_dir_layer(SOUTH, OBJ_LAYER)
-		D.set_vehicle_dir_layer(NORTH, OBJ_LAYER)
-		D.set_vehicle_dir_layer(EAST, OBJ_LAYER)
-		D.set_vehicle_dir_layer(WEST, OBJ_LAYER)
+		D.set_vehicle_dir_layer(SOUTH, HALO_LAYER)
+		D.set_vehicle_dir_layer(NORTH, HALO_LAYER)
+		D.set_vehicle_dir_layer(EAST, ABOVE_MOB_LAYER)
+		D.set_vehicle_dir_layer(WEST, ABOVE_MOB_LAYER)
 
 /mob/living/simple_animal/hostile/retaliate/rogue/horse/update_icon()
 	cut_overlays()

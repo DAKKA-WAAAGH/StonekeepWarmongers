@@ -13,7 +13,7 @@
 	var/list/starts
 
 /datum/round_event_control/rogue/skellyinvade/canSpawnEvent()
-	if(!LAZYLEN(GLOB.hauntstart))
+	if(!LAZYLEN(GLOB.round_aspect_spawners))
 		return FALSE
 
 /datum/round_event/rogue/skellyinvade/setup()
@@ -22,9 +22,9 @@
 //	spawncount = 3 + maxi
 
 /datum/round_event/rogue/skellyinvade/start()
-	if(LAZYLEN(GLOB.hauntstart))
+	if(LAZYLEN(GLOB.round_aspect_spawners))
 		for(var/i in 1 to spawncount)
-			var/obj/effect/landmark/events/haunts/_T = pick_n_take(GLOB.hauntstart)
+			var/obj/effect/landmark/events/aspect_spawners/_T = pick_n_take(GLOB.round_aspect_spawners)
 			if(_T)
 				_T = get_turf(_T)
 				if(isfloorturf(_T))

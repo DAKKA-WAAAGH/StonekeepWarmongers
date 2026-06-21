@@ -316,7 +316,7 @@
 		belt = /obj/item/storage/belt/rogue/leather/rope/war/bulky
 	beltl = GetSidearmForWarfarePPU()
 	backr = /obj/item/quiver/bullets
-	backl = /obj/item/storage/backpack/rogue/satchel
+	backl = /obj/item/storage/backpack/rogue/satchel/booze
 	beltr = /obj/item/rogueweapon/sword/sabre/warcrime
 	armor = /obj/item/clothing/suit/roguetown/armor/armordress/ppr/jammies
 	if(H.dna.species.id == "fat")
@@ -343,6 +343,7 @@
 		H.change_stat("constitution", 3)
 		H.change_stat("speed", 1)
 		H.change_stat("perception", 4)
+		H.change_stat("fortune", 3)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/inspire)
 		H.cmode_music = 'sound/music/soberandhatingit.ogg'
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
@@ -486,7 +487,6 @@
 	head = /obj/item/clothing/head/roguetown/helmet/war/ppr/redhoodmask
 	if(prob(50))
 		head = /obj/item/clothing/head/roguetown/helmet/war/ppr/redhoodmask/alternate
-	backpack_contents = list(/obj/item/bomb/mollie=6)
 	if(H.mind)
 		H.mind.adjust_skillrank(/datum/skill/combat/flintlocks, 4, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/misc/swimming, 2, TRUE)
@@ -608,10 +608,12 @@
 	beltr = /obj/item/quiver/bullets
 	beltl = /obj/item/rogueweapon/huntingknife/idagger/war
 	backr = GetSniperForWarfarePPU()
+	backl = /obj/item/storage/backpack/rogue/satchel/booze
 	neck = /obj/item/rogue/barkenpowderflask
 	head = /obj/item/clothing/head/roguetown/helmet/war/ppr/nimrodhelm
 	if(prob(50))
 		head = /obj/item/clothing/head/roguetown/helmet/war/ppr/nimrodhelm/alternate
+	backpack_contents = list(/obj/item/bomb/homemade=2,/obj/item/bomb/fire/weak=1)
 	if(H.mind)
 		H.mind.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/combat/flintlocks, 5, TRUE)
@@ -747,7 +749,7 @@
 	head = /obj/item/clothing/head/roguetown/helmet/war/ppr/redhoodmask
 	if(prob(50))
 		head = /obj/item/clothing/head/roguetown/helmet/war/ppr/redhoodmask/alternate
-	backpack_contents = list(/obj/item/bomb/mollie=6)
+	backpack_contents = list(/obj/item/bomb/mollie=3,/obj/item/bomb/poison=1,/obj/item/bomb/homemade=2)
 	if(H.mind)
 		H.mind.adjust_skillrank(/datum/skill/combat/swords, 2, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/combat/wrestling, 3, TRUE)
@@ -807,7 +809,7 @@
 		belt = /obj/item/storage/belt/rogue/leather/rope/war/bulky
 	head = /obj/item/clothing/head/roguetown/war/tallhat
 	backl = /obj/item/storage/backpack/rogue/satchel/surgbag
-	neck = /obj/item/reagent_containers/glass/bottle/waterskin
+	neck = /obj/item/needle/blessed
 	beltl = /obj/item/rogue/cranker
 	beltr = /obj/item/rogueweapon/surgery/limbgrabber
 	backpack_contents = list(/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1)
@@ -941,6 +943,7 @@
 		H.change_stat("constitution", 3)
 		H.change_stat("speed", 1)
 		H.change_stat("perception", 4)
+		H.change_stat("fortune", 3)
 		H.mind.AddSpell(new /obj/effect/proc_holder/spell/targeted/inspire)
 		H.cmode_music = 'sound/music/makeamartyrofme.ogg'
 	ADD_TRAIT(H, TRAIT_NOBLE, TRAIT_GENERIC)
@@ -1202,10 +1205,12 @@
 	beltr = /obj/item/quiver/bullets
 	beltl = /obj/item/rogueweapon/mace/cudgel/pick
 	backr = GetSniperForWarfareRegime()
+	backl = /obj/item/storage/backpack/rogue/satchel
 	neck = /obj/item/rogue/barkenpowderflask
 	head = /obj/item/clothing/head/roguetown/helmet/war/regime/tallhelm
 	if(prob(50))
 		head = /obj/item/clothing/head/roguetown/helmet/war/regime/tallhelm/alternate
+	backpack_contents = list(/obj/item/bomb/smoke=2,/obj/item/bomb=1)
 	if(H.mind)
 		H.mind.adjust_skillrank(/datum/skill/combat/swords, 1, TRUE)
 		H.mind.adjust_skillrank(/datum/skill/combat/flintlocks, 5, TRUE)
@@ -1324,7 +1329,7 @@
 	if(H.dna.species.id == "bulky")
 		belt = /obj/item/storage/belt/rogue/leather/rope/war/bulky
 	backl = /obj/item/storage/backpack/rogue/satchel/surgbag
-	neck = /obj/item/reagent_containers/glass/bottle/waterskin
+	neck = /obj/item/needle/blessed
 	beltl = /obj/item/rogue/cranker
 	beltr = /obj/item/rogueweapon/surgery/limbgrabber
 	backpack_contents = list(/obj/item/reagent_containers/glass/bottle/rogue/healthpot = 1)

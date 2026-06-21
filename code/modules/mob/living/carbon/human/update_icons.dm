@@ -145,8 +145,10 @@ There are several things that need to be remembered:
 		var/g = BP.offset
 		if(gender == FEMALE || dna.species.use_f)
 			g = BP.offset_f
+		var/bandage_layer = -DAMAGE_LAYER
 		if(BP.body_zone == BODY_ZONE_HEAD)
 			update_hair()
+			bandage_layer = -UNDER_HAT_LAYER
 		var/bleed_checker = FALSE
 		var/list/wound_overlays
 		if(!BP.skeletonized)
@@ -167,7 +169,7 @@ There are several things that need to be remembered:
 			if(BP.get_bleed_rate())
 				bleed_checker = TRUE
 				if(BP.bandage)
-					var/mutable_appearance/damage_overlay = mutable_appearance(limb_icon, "[BP.body_zone]_b", -DAMAGE_LAYER)
+					var/mutable_appearance/damage_overlay = mutable_appearance(limb_icon, "[BP.body_zone]_b", bandage_layer)
 					damage_overlay.color = BP.bandage.color
 					damage_overlays += damage_overlay
 					var/mutable_appearance/legdam_overlay = mutable_appearance(limb_icon, "legdam_[BP.body_zone]_b", -LEG_DAMAGE_LAYER)
@@ -192,7 +194,7 @@ There are several things that need to be remembered:
 				var/mutable_appearance/armdam_overlay = mutable_appearance(limb_icon, "armdam_[BP.body_zone]_[wound_overlay]", -ARM_DAMAGE_LAYER)
 				armdam_overlays += armdam_overlay
 		if(!bleed_checker && BP.bandage)
-			var/mutable_appearance/damage_overlay = mutable_appearance(limb_icon, "[BP.body_zone]_b", -DAMAGE_LAYER)
+			var/mutable_appearance/damage_overlay = mutable_appearance(limb_icon, "[BP.body_zone]_b", bandage_layer)
 			damage_overlay.color = BP.bandage.color
 			damage_overlays += damage_overlay
 			var/mutable_appearance/legdam_overlay = mutable_appearance(limb_icon, "legdam_[BP.body_zone]_b", -LEG_DAMAGE_LAYER)
@@ -219,7 +221,7 @@ There are several things that need to be remembered:
 					armdam_overlays += armdam_overlay
 				if(bleed_checker)
 					if(BP.bandage)
-						var/mutable_appearance/damage_overlay = mutable_appearance(limb_icon, "[BP.aux_zone]_b", -DAMAGE_LAYER)
+						var/mutable_appearance/damage_overlay = mutable_appearance(limb_icon, "[BP.aux_zone]_b", bandage_layer)
 						damage_overlay.color = BP.bandage.color
 						damage_overlays += damage_overlay
 						var/mutable_appearance/legdam_overlay = mutable_appearance(limb_icon, "legdam_[BP.aux_zone]_b", -LEG_DAMAGE_LAYER)
@@ -237,7 +239,7 @@ There are several things that need to be remembered:
 					var/mutable_appearance/armdam_overlay = mutable_appearance(limb_icon, "armdam_[BP.aux_zone]_[wound_overlay]", -ARM_DAMAGE_LAYER)
 					armdam_overlays += armdam_overlay
 			if(!bleed_checker && BP.bandage)
-				var/mutable_appearance/damage_overlay = mutable_appearance(limb_icon, "[BP.aux_zone]_b", -DAMAGE_LAYER)
+				var/mutable_appearance/damage_overlay = mutable_appearance(limb_icon, "[BP.aux_zone]_b", bandage_layer)
 				damage_overlay.color = BP.bandage.color
 				damage_overlays += damage_overlay
 				var/mutable_appearance/legdam_overlay = mutable_appearance(limb_icon, "legdam_[BP.aux_zone]_b", -LEG_DAMAGE_LAYER)
@@ -246,7 +248,6 @@ There are several things that need to be remembered:
 				var/mutable_appearance/armdam_overlay = mutable_appearance(limb_icon, "armdam_[BP.aux_zone]_b", -ARM_DAMAGE_LAYER)
 				armdam_overlay.color = BP.bandage.color
 				armdam_overlays += armdam_overlay
-
 		var/used_offset = BP.offset
 		if(gender == FEMALE)
 			used_offset = BP.offset_f

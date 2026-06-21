@@ -534,6 +534,8 @@
 		return 0
 	if(isobj(mover)) // i have no idea at this point
 		return 1
+	if(isdead(mover))
+		return 1
 	return 0
 
 /obj/structure/teambarrier/CheckExit(atom/movable/mover as mob|obj)

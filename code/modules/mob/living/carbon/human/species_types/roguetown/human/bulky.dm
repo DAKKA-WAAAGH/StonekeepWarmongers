@@ -21,8 +21,8 @@
 	changesource_flags = MIRROR_BADMIN | WABBAJACK | MIRROR_MAGIC | MIRROR_PRIDE | ERT_SPAWN | RACE_SWAP | SLIME_EXTRACT
 	limbs_icon_m = 'icons/roguetown/mob/bodies/m/mm.dmi'
 	limbs_icon_f = 'icons/roguetown/mob/bodies/f/ft.dmi'
-	dam_icon = 'icons/roguetown/mob/bodies/dam/dam_male.dmi'
-	dam_icon_f = 'icons/roguetown/mob/bodies/dam/dam_female.dmi'
+	dam_icon = 'icons/roguetown/mob/bodies/dam/dam_male_bulky.dmi'
+	dam_icon_f = 'icons/roguetown/mob/bodies/dam/dam_female_bulky.dmi'
 	hairyness = "t1"
 	soundpack_m = /datum/voicepack/male
 	soundpack_f = /datum/voicepack/female

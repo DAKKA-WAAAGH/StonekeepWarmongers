@@ -9,7 +9,7 @@
 	force = 0
 	throwforce = 0
 	resistance_flags = FLAMMABLE
-	slot_flags = ITEM_SLOT_MOUTH
+	slot_flags = ITEM_SLOT_MOUTH|ITEM_SLOT_NECK
 	max_integrity = 20
 	anvilrepair = /datum/skill/craft/blacksmithing
 	tool_behaviour = TOOL_SUTURE

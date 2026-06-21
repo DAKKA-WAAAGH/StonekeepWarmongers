@@ -75,6 +75,11 @@ body {
   src: url('lupian.ttf'); 
 }
 
+@font-face { 
+  font-family: "GenericTypewriter"; 
+  src: url('typewrite.ttf'); 
+}
+
 /* */
 
 em {

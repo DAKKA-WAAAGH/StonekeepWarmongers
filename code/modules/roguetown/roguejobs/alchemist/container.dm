@@ -16,10 +16,13 @@
 		var/list/humans = list()
 		var/list/all_humans = list()
 		var/turf/T = get_turf(src)
-		for(var/mob/living/carbon/human/H in viewers(4, T))
+		for(var/mob/living/carbon/human/H in viewers(3, T))
 			all_humans += H
 			if(H.stat != DEAD && H.reagents && H.warfare_faction == thrower.warfare_faction)
 				humans += H
+				
+		for(var/obj/effect/hotspot/hotspot in viewers(3,T))
+			qdel(hotspot)
 
 		if(!length(humans))
 			return ..()

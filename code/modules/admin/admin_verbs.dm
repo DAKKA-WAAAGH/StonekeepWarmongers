@@ -96,6 +96,7 @@ GLOBAL_PROTECT(admin_verbs_admin)
 	/client/proc/toggle_combo_hud, // toggle display of the combination pizza antag and taco sci/med/eng hud
 	/client/proc/toggle_AI_interact, /*toggle admin ability to interact with machines as an AI*/
 	/client/proc/join_as_martyr,
+	/client/proc/flipflop_faction,
 	/client/proc/lobbyooc,
 	/client/proc/forceaspect,
 	/datum/admins/proc/open_shuttlepanel, /* Opens shuttle manipulator UI */
@@ -866,6 +867,19 @@ GLOBAL_PROTECT(admin_verbs_hideable)
 			SSticker.round_aspect = RA
 			SSticker.forcing_aspect = TRUE
 			SSticker.round_aspect.apply()
+
+/client/proc/flipflop_faction()
+	set category = "GameMaster"
+	set name = "Flipflop Faction"
+	if(!holder)
+		return
+
+	if(warfare_faction == RED_WARTEAM)
+		warfare_faction = BLUE_WARTEAM
+		to_chat(src, "You are now a member of the [BLUE_WARTEAM]")
+	else
+		warfare_faction = RED_WARTEAM
+		to_chat(src, "You are now a a member of the [RED_WARTEAM]")
 
 /client/proc/join_as_martyr()
 	set category = "GameMaster"

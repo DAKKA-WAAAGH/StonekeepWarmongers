@@ -45,7 +45,7 @@
 	icon_state = "raiseskele"
 	alpha = 150
 	probby = 50
-	spawned = list(	/obj/effect/landmark/events/haunts = 100	)
+	spawned = list(	/obj/effect/landmark/events/aspect_spawners = 100	)
 
 /*	..................   Dungeon stuff   ................... */
 /obj/structure/fluff/statue/xylix

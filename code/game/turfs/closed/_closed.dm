@@ -292,7 +292,7 @@
 	icon_state = "corner"
 
 /turf/closed/indestructible/splashscreen
-	name = ""
+	name = "Splashscreen"
 	icon = 'icons/wartitle.dmi'
 	icon_state = ""
 	layer = FLY_LAYER

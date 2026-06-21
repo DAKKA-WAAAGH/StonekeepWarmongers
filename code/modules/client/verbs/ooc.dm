@@ -344,6 +344,25 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	popup.set_content(contents)
 	popup.open()
 
+/client/verb/explain_gamemode()
+	set name = "EXPLAIN GAMEMODE"
+	set category = "HELP"
+	var/explanation = "Uh... looks like there isn't any explanation. Sorry."
+	var/gamemode = splittext(SSmapping.config.map_name, "-")[1]
+
+	usr.playsound_local(usr, 'sound/misc/type3.ogg', 65, FALSE)
+	switch(gamemode)
+		if("ASLT")
+			explanation = "Regimians must capture control points to win. Unionists must defend them! Unionists can not re-capture control points, this is the final struggle! NEVER LEAVE A DEFENSE!"
+		if("LD")
+			explanation = "Oh, that's weird. This gamemode is out of circulation!"
+		if("CTF")
+			explanation = "The two teams must capture the flags that are in their respective bases. Capture a flag three times to win!"
+		if("TDM")
+			explanation = "Come on, you know what Team Deathmatch is. Just kill people! When the amount of deaths reaches a certain point, the game is won. This can be the longest gamemode. Time between respawns is 30 seconds in this gamemode instead of one minute."
+
+	alert(src, explanation, "WARMONGERS - [gamemode] GAMEMODE", "Understood")
+
 /client/verb/viewstats()
 	set name = "View Persistent Data"
 	set category = "Control"
@@ -380,16 +399,16 @@ GLOBAL_VAR_INIT(normal_ooc_colour, "#002eb8")
 	usr.playsound_local(usr, 'sound/misc/type.ogg', 65, FALSE)
 	contents += "<center>Basic Barker Operation<BR>"
 	contents += "--------------</center><BR>"
-	contents += "To operate a barkshotte, follow this order of preparation:\
-				First, add barkenpowder to the weapon, this can also be done after you insert ammunition\
-				Second, insert ammunition down the barrel\
-				Third, using a ramrod, push the shot down the barrel until it is firmly seated inside\
-				Lastly, bring the clicker back, the weapon is now ready to be fired\
-				You are now ready to fire the barker, press the stock against your shoulder and aim down the barrel,\
-				wait a good second or so to line up your shot and finally squeeze the trigger.\
-				\
-				Do note that some weapons, such as more advanced ones, do not neccessarily follow this method, but the overall\
-				operation is similar enough."
+	contents += {"To operate a barkshotte, follow this order of preparation:<br>
+				<b>First, add barkenpowder to the weapon,</b> this can also be done after you insert ammunition<br>
+				Second, insert ammunition down the barrel.<b> You can get ammo from your pouch (RMB)</b><br>
+				<b>Third, using a ramrod (MMB on gun)</b>, push the shot down the barrel until it is firmly seated inside<br>
+				Lastly, <b>bring the clicker back (shift+MMB)</b>, the weapon is now ready to be fired<br>
+				You are now ready to fire the barker, press the stock against your shoulder and aim down the barrel,<br>
+				<b>wait a good second or so to line up your shot and finally squeeze the trigger. (Releasing the hold)<b><br>
+				<br>
+				Do note that some weapons, such as more advanced ones, do not neccessarily follow this method, but the overall
+				operation is similar enough.<br>For more help with operating items, shift+click them to examine them for tooltips."}
 	var/datum/browser/popup = new(usr, "HELP", "", 420, 420)
 	popup.set_content(contents)
 	popup.open()

@@ -120,6 +120,7 @@
 	smooth = SMOOTH_MORE
 	blade_dulling = DULLING_BASHCHOP
 	max_integrity = 1100
+	explosion_block = 2
 	break_sound = 'sound/combat/hits/onwood/destroywalldoor.ogg'
 	attacked_sound = list('sound/combat/hits/onwood/woodimpact (1).ogg','sound/combat/hits/onwood/woodimpact (2).ogg')
 	canSmoothWith = list(/turf/closed/wall/mineral/rogue/wood, /obj/structure/roguewindow, /obj/structure/roguetent, /turf/closed/wall/mineral/rogue/wooddark)

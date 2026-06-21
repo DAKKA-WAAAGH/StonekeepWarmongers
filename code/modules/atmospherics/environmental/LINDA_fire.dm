@@ -264,7 +264,8 @@
 	..()
 	if(isliving(AM))
 		var/mob/living/L = AM
-		L.fire_act(3, 20)
+		if(!L.has_status_effect(/datum/status_effect/buff/spawn_protection))
+			L.fire_act(3, 20)
 
 /obj/effect/hotspot/singularity_pull()
 	return

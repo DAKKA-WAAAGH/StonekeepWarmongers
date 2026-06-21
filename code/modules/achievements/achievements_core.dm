@@ -44,7 +44,7 @@
 		to_chat(world, "<b>Achievement Unlocked! [ckey] unlocked the '<font color = [H]>[A.name]</font color>' achievement.</b></font>")
 	else
 		to_chat(src, "<b>Achievement Unlocked! You unlocked the '<font color = [H]>[A.name]</font color>' achievement.</b></font>")
-	mob.playsound_local(get_turf(mob), 'sound/achievement.ogg', 70, FALSE)
+	mob.playsound_local(get_turf(mob), 'sound/achievement.ogg', 70, FALSE, pressure_affected=FALSE)
 	if(A.description)
 		to_chat(src, "<i>[A.description]</i>")
 

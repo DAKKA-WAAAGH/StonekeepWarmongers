@@ -740,10 +740,7 @@ GLOBAL_LIST_EMPTY(roundstart_races)
 		if(I.flags_inv & HIDEHAIR)
 			hair_hidden = TRUE
 
-	var/obj/item/bodypart/BP = H.get_bodypart(BODY_ZONE_HEAD)
-	if(BP)
-		if(BP.bandage)
-			hair_hidden = TRUE
+	// Head bandages should not hide hair; hair remains visible over the bandage.
 
 	if(!hair_hidden)
 		var/mutable_appearance/hair_overlay = mutable_appearance(layer = -HAIREXTRA_LAYER)

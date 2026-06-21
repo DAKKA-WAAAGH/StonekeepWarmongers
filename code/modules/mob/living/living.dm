@@ -910,8 +910,7 @@
 			var/mob/living/L = pulledby
 			L.set_pull_offsets(src, pulledby.grab_state)
 
-//	if(active_storage && !(CanReach(active_storage.parent,view_only = TRUE)))
-	if(active_storage)
+	if(active_storage && !(CanReach(active_storage.parent,view_only = TRUE)))
 		active_storage.close(src)
 
 	if(!(mobility_flags & MOBILITY_STAND) && !buckled)
@@ -1920,7 +1919,6 @@
 //	RegisterSignal(src, COMSIG_MOVABLE_PRE_MOVE, PROC_REF(stop_looking)) //We stop looking up if we move.
 
 /mob/living/proc/look_further(turf/T)
-
 	if(client.perspective != MOB_PERSPECTIVE)
 		stop_looking()
 		return
@@ -1931,6 +1929,9 @@
 		return
 	if(!istype(T))
 		return
+
+	if(!fixedeye)
+		toggle_eye_intent()
 	changeNext_move(CLICK_CD_MELEE)
 
 	if(HAS_TRAIT(src, TRAIT_OFFICER))

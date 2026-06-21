@@ -104,7 +104,7 @@
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/outdoors)
 "bt" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town)
 "by" = (
@@ -230,7 +230,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town)
 "dl" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/grass,
 /area/rogue/outdoors)
 "do" = (
@@ -309,7 +309,7 @@
 /obj/structure/bars/grille{
 	dir = 8
 	},
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/transparent/openspace,
 /area/rogue/outdoors)
 "es" = (
@@ -468,7 +468,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors)
 "hr" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors)
 "hx" = (
@@ -582,7 +582,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors)
 "jm" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /obj/effect/shadow{
 	dir = 4
 	},
@@ -696,7 +696,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors)
 "li" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/sand,
 /area/rogue/outdoors)
 "lo" = (
@@ -715,7 +715,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/outdoors/town/roofs)
 "lD" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/church,
 /area/rogue/outdoors)
 "lH" = (
@@ -730,7 +730,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors)
 "lR" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/ruinedwood/turned,
 /area/rogue/indoors/town)
 "lW" = (
@@ -1071,7 +1071,7 @@
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/outdoors)
 "qz" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /obj/machinery/light/rogue/wallfire/candle/l,
 /turf/open/floor/rogue/carpet,
 /area/rogue/indoors/town)
@@ -1134,7 +1134,7 @@
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/outdoors)
 "rp" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/outdoors)
 "ry" = (
@@ -1169,7 +1169,7 @@
 /turf/closed/wall/mineral/rogue/craftstone,
 /area/rogue/indoors/town)
 "rQ" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/blocks,
 /area/rogue/assault/waterfort)
 "rU" = (
@@ -1394,7 +1394,7 @@
 /turf/open/floor/rogue/sand,
 /area/rogue/outdoors)
 "wb" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/outdoors)
 "wh" = (
@@ -1548,7 +1548,7 @@
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town)
 "yV" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/water,
 /area/rogue/outdoors)
 "zj" = (
@@ -1665,7 +1665,7 @@
 "Cn" = (
 /obj/item/natural/stone,
 /obj/item/natural/stone,
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/church,
 /area/rogue/outdoors)
 "Cp" = (
@@ -1772,7 +1772,7 @@
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors)
 "Ey" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /obj/effect/decal/cleanable/blood/old,
 /turf/open/floor/rogue/sand,
 /area/rogue/outdoors)
@@ -1864,7 +1864,7 @@
 /area/rogue/indoors/town)
 "FP" = (
 /obj/item/natural/rock,
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors)
 "Gb" = (
@@ -1924,7 +1924,7 @@
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/outdoors)
 "Hs" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/carpet,
 /area/rogue/assault/throneroom)
 "HA" = (
@@ -2004,7 +2004,7 @@
 /turf/closed/wall/mineral/rogue/stonebrick,
 /area/rogue/indoors)
 "IK" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/wood,
 /area/rogue/indoors/town)
 "IV" = (
@@ -2102,7 +2102,7 @@
 /turf/open/floor/rogue/ruinedwood,
 /area/rogue/indoors/town)
 "Ko" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/outdoors)
 "Ks" = (
@@ -2219,7 +2219,7 @@
 /turf/closed,
 /area/rogue/outdoors)
 "MG" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/closed/wall/mineral/rogue/decostone,
 /area/rogue/outdoors)
 "MH" = (
@@ -2267,7 +2267,7 @@
 /turf/open/floor/rogue/wood/nosmooth,
 /area/rogue/outdoors)
 "Nb" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors)
 "Ng" = (
@@ -2275,7 +2275,7 @@
 /turf/open/floor/rogue/cobble/mossy,
 /area/rogue/outdoors)
 "Ni" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/woodturned,
 /area/rogue/indoors/town)
 "Nj" = (
@@ -2301,7 +2301,7 @@
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors)
 "Nn" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/dirt/road,
 /area/rogue/outdoors)
 "Np" = (
@@ -2500,7 +2500,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors/town/roofs)
 "QD" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /obj/effect/shadow{
 	dir = 4
 	},
@@ -2568,7 +2568,7 @@
 /turf/open/water/bruh,
 /area/rogue/outdoors)
 "RT" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/cobblerock,
 /area/rogue/assault/waterfort)
 "RX" = (
@@ -2656,7 +2656,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/outdoors)
 "TE" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/carpet,
 /area/rogue/indoors/town)
 "TF" = (
@@ -2774,7 +2774,7 @@
 /turf/open/floor/rogue/cobble,
 /area/rogue/indoors)
 "VJ" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/cobble,
 /area/rogue/assault/waterfort)
 "VZ" = (
@@ -2836,7 +2836,7 @@
 /turf/open/floor/rogue/blocks,
 /area/rogue/indoors)
 "Xx" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/naturalstone,
 /area/rogue/indoors)
 "Xy" = (
@@ -2861,7 +2861,7 @@
 /turf/open/floor/carpet/inn,
 /area/rogue/outdoors)
 "XG" = (
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/blocks/stonered,
 /area/rogue/indoors/town)
 "XH" = (
@@ -2912,7 +2912,7 @@
 /area/rogue/outdoors)
 "YF" = (
 /obj/structure/table/wood/treestump,
-/obj/effect/landmark/events/haunts,
+/obj/effect/landmark/events/aspect_spawners,
 /turf/open/floor/rogue/dirt,
 /area/rogue/outdoors)
 "YH" = (

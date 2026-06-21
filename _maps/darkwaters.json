@@ -1,5 +1,5 @@
 {
-    "map_name": "LS-Dark Waters",
+    "map_name": "TDM-Dark Waters",
     "map_path": "map_files/darkwaters",
     "map_file": "darkwaters.dmm",
 	"traits": [{"Up": 1}, {"Up": 1, "Down": -1}, {"Down": -1}],

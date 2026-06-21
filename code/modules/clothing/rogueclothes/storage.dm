@@ -309,6 +309,15 @@
 	equip_sound = 'sound/blank.ogg'
 	bloody_icon_state = "bodyblood"
 
+/obj/item/storage/backpack/rogue/examine(mob/user)
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	if(STR)
+		. += "<span class='tutorial'>Yes, it is a storage device.</span>"
+		. += "<span class='tutorial'>The maximum is [STR.max_items] due to operational concerns, however this is void if the weight reaches [STR.max_combined_w_class].</span>"
+		if(STR.not_while_equipped)
+			. += "<span class='tutorial'>You need to have it in your hand to use it, it's hard to reach.</span>"
+
 /obj/item/storage/backpack/rogue/backpack/ComponentInitialize()
 	. = ..()
 	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
@@ -320,7 +329,7 @@
 
 /obj/item/storage/backpack/rogue/satchel/surgbag
 	name = "surgery bag"
-	desc = "Contains all the phreakish devices one needs to cut a person up."
+	desc = "Can be used to carry surgical implements, or bombs. Your choice, really."
 	slot_flags = ITEM_SLOT_BACK
 	item_state = "doctorbag"
 	icon_state = "doctorbag"
@@ -332,10 +341,9 @@
 	if(STR)
 		STR.max_combined_w_class = 42
 		STR.max_w_class = WEIGHT_CLASS_NORMAL
-		STR.max_items = 14
+		STR.max_items = 16
 
 /obj/item/storage/backpack/rogue/satchel/surgbag/PopulateContents()
-	new /obj/item/needle/blessed(src)
 	new /obj/item/rogueweapon/surgery/scalpel(src)
 	new /obj/item/rogueweapon/surgery/saw(src)
 	new /obj/item/rogueweapon/surgery/hemostat(src)
@@ -346,6 +354,12 @@
 	new /obj/item/rogueweapon/surgery/hammer(src)
 
 //.............Warmongers................
+/obj/item/storage/backpack/rogue/backpack/war/ComponentInitialize()
+	. = ..()
+	var/datum/component/storage/STR = GetComponent(/datum/component/storage)
+	if(STR)
+		STR.not_while_equipped = FALSE // That's gonna hurt our backs.
+
 /obj/item/storage/backpack/rogue/backpack/war/ppr
 	slot_flags = ITEM_SLOT_BACK_L|ITEM_SLOT_BACK_R
 	name = "trashsack"

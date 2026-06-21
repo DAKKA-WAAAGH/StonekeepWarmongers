@@ -95,9 +95,9 @@
 	var/current_capture_point = 1
 	var/base_player_count = 8
 
-	var/blu_spawns = 60
-	var/min_blu_spawns = 20
-	var/max_blu_spawns = 60
+	var/blu_spawns = 30
+	var/min_blu_spawns = 10
+	var/max_blu_spawns = 30
 
 	var/list/capture_points = list()
 	var/list/showers = list()
@@ -141,6 +141,8 @@
 	var/holder = RED_WARTEAM
 	var/capture_order = 0
 	var/capturable = FALSE
+
+	var/warned = FALSE // You only get one warning you filthy bitch
 
 	var/respawn_id_on_cap_attacker // Use a landmark with this ID
 	var/respawn_id_on_cap_defender
@@ -212,8 +214,12 @@
 		if(ASS.attack_progress >= tocapture_points && (holder != BLUE_WARTEAM))
 			to_chat(world, "<span class='userdanger'>[uppertext("[BLUE_WARTEAM] HAVE CAPTURED THE [src]")]!</span>")
 			holder = BLUE_WARTEAM
+
+			C.blu_bonus += 1
+			C.red_bonus += 3 // They're gonna need it for the final defenses.
+
 			ASS.attack_progress = 0
-			ASS.blu_spawns += 20 // To help incentivize unionists to not just sit on their ass doing nothing
+			ASS.blu_spawns += 10 // To help incentivize unionists to not just sit on their ass doing nothing
 			on_capture(holder)
 			SEND_SOUND(world, capture_sound)
 			ASS.current_capture_point++
@@ -245,6 +251,12 @@
 				to_chat(H, "<span class='warning'>[src] can't be captured yet!</span>")
 		else if(H.warfare_faction != holder)
 			to_chat(H, "<span class='tutorial'>Capturing [src]!</span>")
+
+			if(!warned)
+				warned = TRUE
+				for(var/client/client in C.unionists)
+					to_chat(client, "<span class='userdanger'>[uppertext("ATTENTION! THE [BLUE_WARTEAM] ARE CAPTURING THE [src]")]!</span>")
+					SEND_SOUND(client, 'sound/misc/control_points.ogg')
 		else
 			to_chat(H, "<span class='tutorial'>Defending [src]!</span>")
 
@@ -255,6 +267,7 @@
 			grenz -= M
 		else if(M in heart)
 			heart -= M
+			to_chat(M, "<span class='info'>Are you sure? Leaving it unattended is a horrible idea. Most of the time.</span>")
 
 /area/rogue/indoors/airship
 	name = "reinforcement airship"
@@ -284,7 +297,10 @@
 	droning_sound = 'sound/music/firstwhistle.ogg'
 	droning_sound_dusk = 'sound/music/firstwhistle.ogg'
 	droning_sound_night = 'sound/music/firstwhistle.ogg'
-	capture_rate = 90 // might eb too much. 1 second to capture or something idk im not a math guy
+
+	capture_rate = 5 // might eb too much. 1 second to capture or something idk im not a math guy
+	tocapture_points = 100 // 20 seconds to capture
+
 	capture_order = 2
 
 /area/rogue/assault/gates
@@ -292,8 +308,10 @@
 	droning_sound = 'sound/music/firstwhistle.ogg'
 	droning_sound_dusk = 'sound/music/firstwhistle.ogg'
 	droning_sound_night = 'sound/music/firstwhistle.ogg'
-	capture_rate = 5
-	tocapture_points = 150 // 30 seconds to capture if my math is correct
+
+	capture_rate = 2
+	tocapture_points = 100 // 50 seconds to capture if my math is correct
+
 	capture_order = 1
 
 // BDAY
@@ -303,7 +321,9 @@
 	droning_sound = 'sound/music/firstwhistle.ogg'
 	droning_sound_dusk = 'sound/music/firstwhistle.ogg'
 	droning_sound_night = 'sound/music/firstwhistle.ogg'
-	capture_rate = 5
-	tocapture_points = 150 // 30 seconds to capture if my math is correct
+
+	capture_rate = 2
+	tocapture_points = 100 // 50 seconds to capture if my math is correct
+
 	capture_order = 1
 	respawn_id_on_cap_attacker = "Watershouse"

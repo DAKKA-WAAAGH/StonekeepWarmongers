@@ -306,12 +306,12 @@
 		if(DULLING_PICK) //cannot deal damage if not a pick item. aka rock walls
 			if(user.used_intent.blade_class != BCLASS_PICK)
 				return 0
-			var/mob/living/miner = user
+			//var/mob/living/miner = user
 			//Mining Skill force multiplier.
-			var/mineskill = miner.mind.get_skill_level(/datum/skill/labor/mining)
-			newforce = newforce * (8+(mineskill*1.5))
+			//var/mineskill = miner.mind.get_skill_level(/datum/skill/labor/mining)
+			newforce = newforce * 10
 			shake_camera(user, 1, 1)
-			miner.mind.adjust_experience(/datum/skill/labor/mining, (miner.STAINT*0.2))
+			//miner.mind.adjust_experience(/datum/skill/labor/mining, (miner.STAINT*0.2))
 	/*
 	* Ill be honest this final thing is extremely confusing.
 	* Newforce after being altered by strength stat is then

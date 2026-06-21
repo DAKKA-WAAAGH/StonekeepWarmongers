@@ -112,7 +112,7 @@
 	var/vol2use = vol
 	if(client.prefs)
 		vol2use = vol * (client.prefs.mastervol * 0.01)
-	vol2use = min(vol2use, 100)
+	vol2use = min(vol2use, 200)
 
 	S.volume = vol2use
 

@@ -1,5 +1,5 @@
 {
-    "map_name": "LS-Darkpebble",
+    "map_name": "TDM-Darkpebble",
     "map_path": "map_files/darkpebble",
     "map_file": "darkpebble.dmm",
 	"traits": [{"Up": 1}, {"Down": -1}],

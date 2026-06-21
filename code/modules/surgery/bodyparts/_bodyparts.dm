@@ -333,6 +333,8 @@
 /obj/item/bodypart/proc/is_disabled()
 	if(!can_disable() || !owner || HAS_TRAIT(owner, TRAIT_NOLIMBDISABLE))
 		return BODYPART_NOT_DISABLED
+	if(owner.has_status_effect(/datum/status_effect/buff/adrenaline))
+		return BODYPART_NOT_DISABLED
 	//yes this does mean vampires can use rotten limbs
 	if((rotted || skeletonized) && !(owner.mob_biotypes & MOB_UNDEAD))
 		return BODYPART_DISABLED_ROT

@@ -63,6 +63,30 @@
 	var/cooldown = 3 SECONDS
 	var/ringing = FALSE
 
+/obj/structure/stolen_bell
+	name = "bell"
+	desc = "A large cast bronze bell, probably a church bell. It was stolen from its holdings to be melted down by the Unionist army."
+	icon = 'icons/roguetown/misc/96x96.dmi'
+	icon_state = "bell"
+	anchored = TRUE
+	density = TRUE
+	layer = ABOVE_MOB_LAYER
+	plane = GAME_PLANE_UPPER
+
+/obj/structure/stolen_bell/examine(mob/user)
+	. = ..()
+	if(ishuman(user))
+		var/mob/living/carbon/human/H = user
+		var/lore = "A tragedy that such an important piece of religious iconography was stolen to be melted down. History needs to be archived."
+		switch(H.warfare_faction)
+			if(RED_WARTEAM)
+				if(prob(80))
+					lore = "We need this bell for metal-working than the historical museums do. Who cares about some crummy bell?"
+			if(BLUE_WARTEAM)
+				if(prob(80))
+					lore = "Those peasants are nothing but blood-thirsty savages. Always only thinking about needing more metal for their shitty little forges. This bell could've been re-used for churches worshipping the KALIBER and the KAITZAR."
+		. += "<span class='info'>[lore]</span>"
+
 /*
 	/obj/structure/stationary_bell/Initialize()
 		. = ..()
